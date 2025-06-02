@@ -1,0 +1,14 @@
+{
+    "deno.enable": true,
+    "deno.lint": true,
+    "[astro]": {
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    },
+    "[json]": {
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.suggest.insertMode": "replace",
+        "editor.defaultFormatter": "denoland.vscode-deno"
+    }
+}
