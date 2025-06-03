@@ -5,7 +5,12 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://username.github.io", // Replace 'username' with your GitHub username
+  base: "/splurt-webpage", // Replace with your repository name if different
   vite: {
-    plugins: [tailwindcss()]
-  }
+    plugins: [tailwindcss()],
+  },
+  build: {
+    assets: "assets",
+  },
 });

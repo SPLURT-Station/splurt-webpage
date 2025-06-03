@@ -1,0 +1,102 @@
+name: Update Dependencies
+
+on:
+  schedule:
+    # Run weekly on Mondays at 9 AM UTC
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check-dependencies:
+    name: Check for Outdated Dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+          cache: true
+
+      - name: Check for outdated dependencies
+        id: check
+        run: |
+          echo "Checking for outdated dependencies..."
+          if deno outdated --compatible | grep -q "Package"; then
+            echo "outdated=true" >> $GITHUB_OUTPUT
+            echo "Compatible updates available:"
+            deno outdated --compatible
+          else
+            echo "outdated=false" >> $GITHUB_OUTPUT
+            echo "All dependencies are up to date!"
+          fi
+
+      - name: Update compatible dependencies
+        if: steps.check.outputs.outdated == 'true'
+        run: |
+          echo "Updating dependencies to compatible versions..."
+          deno outdated --update --compatible
+
+      - name: Create Pull Request
+        if: steps.check.outputs.outdated == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "deps: update dependencies to latest compatible versions"
+          title: "Update Dependencies"
+          body: |
+            ## 📦 Dependency Updates
+
+            This PR updates dependencies to their latest compatible versions using `deno outdated --update --compatible`.
+
+            ### Changes
+            - Updated dependencies to latest semver-compatible versions
+            - Lock file updated automatically by Deno
+
+            ### Verification
+            - [ ] Dependencies updated successfully
+            - [ ] Tests pass
+            - [ ] Build works correctly
+
+            ---
+            *This PR was created automatically by the dependency update workflow using Deno's built-in dependency management.*
+          branch: update-dependencies
+          delete-branch: true
+
+  check-major-updates:
+    name: Check for Major Updates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+          cache: true
+
+      - name: Check for major updates
+        run: |
+          echo "📋 Checking for all available updates (including major versions)..."
+          echo ""
+          if deno outdated | grep -q "Package"; then
+            echo "📦 Available updates:"
+            deno outdated
+            echo ""
+            echo "ℹ️ To update to latest versions (including breaking changes), run:"
+            echo "   deno outdated --update --latest"
+            echo ""
+            echo "⚠️ Note: Major version updates may contain breaking changes."
+            echo "   Review the changelog before updating manually."
+          else
+            echo "✅ All dependencies are up to date!"
+          fi
