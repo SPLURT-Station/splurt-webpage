@@ -105,7 +105,7 @@ jobs:
                 body: body,
                 labels: ['deno-update', 'enhancement']
               });
-              
+
               console.log('Created issue for Deno update');
             } else {
               console.log('Issue for Deno update already exists');

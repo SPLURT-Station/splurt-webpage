@@ -45,19 +45,19 @@ To learn more about the folder structure of an Astro project, refer to
 All commands are run from the root of the project, from a terminal using
 **Deno** as the runtime:
 
-| Command                      | Action                                       |
-| :--------------------------- | :------------------------------------------- |
-| `deno install`               | Installs dependencies                        |
-| `deno task dev`              | Starts local dev server at `localhost:4321`  |
-| `deno task build`            | Build your production site to `./dist/`      |
-| `deno task preview`          | Preview your build locally, before deploying |
-| `deno task check`            | Run Astro's built-in type checking           |
-| `deno lint`                  | Lint code with Deno's built-in linter        |
-| `deno fmt`                   | Format code with Deno's built-in formatter   |
-| `deno fmt --check`           | Check code formatting without modifying      |
-| `deno outdated`              | Check for outdated dependencies              |
-| `deno outdated --update`     | Update dependencies to compatible versions   |
-| `deno upgrade`               | Update Deno runtime to latest version        |
+| Command                  | Action                                       |
+| :----------------------- | :------------------------------------------- |
+| `deno install`           | Installs dependencies                        |
+| `deno task dev`          | Starts local dev server at `localhost:4321`  |
+| `deno task build`        | Build your production site to `./dist/`      |
+| `deno task preview`      | Preview your build locally, before deploying |
+| `deno task check`        | Run Astro's built-in type checking           |
+| `deno lint`              | Lint code with Deno's built-in linter        |
+| `deno fmt`               | Format code with Deno's built-in formatter   |
+| `deno fmt --check`       | Check code formatting without modifying      |
+| `deno outdated`          | Check for outdated dependencies              |
+| `deno outdated --update` | Update dependencies to compatible versions   |
+| `deno upgrade`           | Update Deno runtime to latest version        |
 
 ## 🔄 CI/CD Pipeline
 
@@ -82,7 +82,8 @@ This project includes a comprehensive CI/CD setup with GitHub Actions using
   - Builds the site for production
   - Deploys to GitHub Pages automatically
 
-- **Dependency Updates** (`dependency-update.yml`): Automated dependency management
+- **Dependency Updates** (`dependency-update.yml`): Automated dependency
+  management
   - Checks for outdated dependencies weekly using `deno outdated`
   - Creates PRs for compatible updates automatically
   - Reports major version updates for manual review
@@ -107,10 +108,14 @@ This project includes a comprehensive CI/CD setup with GitHub Actions using
 
 ### Dependency Management
 
-This project uses **Deno's built-in dependency management** instead of traditional package managers:
+This project uses **Deno's built-in dependency management** instead of
+traditional package managers:
 
-- **Automatic Updates**: Dependencies are checked weekly and updated automatically via PR
-- **Deno Runtime**: Uses [`deno outdated`](https://docs.deno.com/runtime/reference/cli/outdated/) for dependency checking
+- **Automatic Updates**: Dependencies are checked weekly and updated
+  automatically via PR
+- **Deno Runtime**: Uses
+  [`deno outdated`](https://docs.deno.com/runtime/reference/cli/outdated/) for
+  dependency checking
 - **GitHub Actions**: Managed separately via Dependabot for workflow updates
 - **Manual Control**: Major version updates require manual review and approval
 
