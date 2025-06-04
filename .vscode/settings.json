@@ -1,14 +1,14 @@
 {
-    "deno.enable": true,
-    "deno.lint": true,
-    "[astro]": {
-        "editor.defaultFormatter": "denoland.vscode-deno"
+  "deno.enable": true,
+  "deno.lint": true,
+  "[astro]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[json]": {
+    "editor.quickSuggestions": {
+      "strings": true
     },
-    "[json]": {
-        "editor.quickSuggestions": {
-            "strings": true
-        },
-        "editor.suggest.insertMode": "replace",
-        "editor.defaultFormatter": "denoland.vscode-deno"
-    }
+    "editor.suggest.insertMode": "replace",
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  }
 }

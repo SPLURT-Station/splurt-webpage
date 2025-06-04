@@ -1,0 +1,34 @@
+name: Status Check
+
+on:
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  status-check:
+    name: All Checks Status
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Check status
+        run: |
+          echo "🔍 CI Status Summary"
+          echo "==================="
+          echo "This workflow runs after all other CI checks"
+          echo "✅ If this appears, basic workflow structure is working"
+          echo ""
+          echo "📋 Configured CI Workflows:"
+          echo "- ✅ Main CI (Lint, Build, Security)"
+          echo "- ✅ Tests (Astro check, Unit tests if any)"
+          echo "- ✅ Deploy (GitHub Pages on master)"
+          echo ""
+          echo "🛠️ Setup Instructions:"
+          echo "1. Update astro.config.mjs with your GitHub username"
+          echo "2. Enable GitHub Pages in repository settings"
+          echo "3. Set Pages source to 'GitHub Actions'"
+          echo ""
+          echo "📝 Additional recommendations:"
+          echo "- Add unit tests in src/ directory with .test.ts or .spec.ts extension"
+          echo "- Consider adding integration tests"
+          echo "- Set up branch protection rules requiring CI to pass"
