@@ -1,0 +1,230 @@
+---
+import logo from '../assets/logos/splurtpaw2_alt3.png';
+---
+
+<div class="container">
+	<!-- Navigation Bar -->
+	<nav class="navbar">
+		<a href="/" class="nav-link active">Home</a>
+		<a href="https://github.com/splurt/splurt" class="nav-link">GitHub</a>
+		<a href="/rules" class="nav-link">Rules</a>
+		<a href="/wiki" class="nav-link">Wiki</a>
+		<a href="https://discord.gg/splurt" class="nav-link">Discord</a>
+	</nav>
+
+	<!-- Main Content -->
+	<main class="main-content">
+		<img src={logo.src} alt="Splurt Logo" class="logo" />
+		<h1 class="wip-text">Work In Progress...</h1>
+		<button class="play-button">Play</button>
+	</main>
+
+	<!-- Footer -->
+	<footer class="footer">
+		<a href="https://github.com/SPLURT-Station/splurt-webpage" class="footer-link">
+			<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+				<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+			</svg>
+			Splurt Webpage - View on GitHub
+		</a>
+	</footer>
+</div>
+
+<style>
+	.container {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		color: white;
+	}
+
+	/* Navigation */
+	.navbar {
+		display: flex;
+		justify-content: center;
+		gap: 2rem;
+		padding: 1.5rem 0;
+		background: rgba(0, 0, 0, 0.1);
+		backdrop-filter: blur(10px);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.nav-link {
+		color: white;
+		text-decoration: none;
+		font-weight: 500;
+		padding: 0.5rem 1rem;
+		border-radius: 0.5rem;
+		transition: all 0.3s ease;
+		position: relative;
+	}
+
+	.nav-link:hover {
+		background: rgba(255, 255, 255, 0.1);
+		transform: translateY(-2px);
+	}
+
+	.nav-link.active {
+		background: rgba(255, 255, 255, 0.2);
+	}
+
+	.nav-link::after {
+		content: '';
+		position: absolute;
+		width: 0;
+		height: 2px;
+		bottom: -5px;
+		left: 50%;
+		background: #ff4ff0;
+		transition: all 0.3s ease;
+		transform: translateX(-50%);
+	}
+
+	.nav-link:hover::after {
+		width: 100%;
+	}
+
+	/* Main Content */
+	.main-content {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 2rem;
+	}
+
+	.logo {
+		width: 200px;
+		height: auto;
+		margin-bottom: 2rem;
+		filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+		animation: float 3s ease-in-out infinite;
+	}
+
+	@keyframes float {
+		0%, 100% { transform: translateY(0px); }
+		50% { transform: translateY(-10px); }
+	}
+
+	.wip-text {
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin: 0 0 2rem 0;
+		text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+		letter-spacing: -0.02em;
+	}
+
+	.play-button {
+		background: #ff4ff0;
+		color: white;
+		border: none;
+		padding: 1rem 3rem;
+		font-size: 1.25rem;
+		font-weight: 600;
+		border-radius: 50px;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		box-shadow: 0 8px 25px rgba(255, 79, 240, 0.4);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.play-button:hover {
+		background: #e03dd9;
+		transform: translateY(-3px);
+		box-shadow: 0 12px 35px rgba(255, 79, 240, 0.6);
+	}
+
+	.play-button:active {
+		transform: translateY(-1px);
+		box-shadow: 0 6px 20px rgba(255, 79, 240, 0.4);
+	}
+
+	/* Footer */
+	.footer {
+		padding: 1.5rem;
+		text-align: center;
+		background: rgba(0, 0, 0, 0.2);
+		backdrop-filter: blur(10px);
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.footer-link {
+		color: rgba(255, 255, 255, 0.8);
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.9rem;
+		transition: color 0.3s ease;
+	}
+
+	.footer-link:hover {
+		color: white;
+	}
+
+	.footer-link svg {
+		opacity: 0.8;
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		.navbar {
+			flex-wrap: wrap;
+			gap: 1rem;
+			padding: 1rem;
+		}
+
+		.nav-link {
+			padding: 0.5rem 0.75rem;
+			font-size: 0.9rem;
+		}
+
+		.logo {
+			width: 150px;
+			margin-bottom: 1.5rem;
+		}
+
+		.wip-text {
+			font-size: 2rem;
+			margin-bottom: 1.5rem;
+		}
+
+		.play-button {
+			padding: 0.875rem 2.5rem;
+			font-size: 1.125rem;
+		}
+
+		.main-content {
+			padding: 1rem;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.navbar {
+			gap: 0.5rem;
+		}
+
+		.nav-link {
+			padding: 0.4rem 0.6rem;
+			font-size: 0.85rem;
+		}
+
+		.logo {
+			width: 120px;
+		}
+
+		.wip-text {
+			font-size: 1.75rem;
+		}
+
+		.play-button {
+			padding: 0.75rem 2rem;
+			font-size: 1rem;
+		}
+	}
+</style>
