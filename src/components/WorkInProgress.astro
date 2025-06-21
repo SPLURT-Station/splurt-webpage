@@ -18,7 +18,7 @@ import backgroundImage from '../assets/backgrounds/bannerwip.png';
 	<main class="main-content">
 		<Image src={logo} alt="Splurt Logo" class="logo" width={200} height={200} loading="eager" />
 		<h1 class="wip-text">Work In Progress...</h1>
-		<button class="play-button">Play</button>
+		<button class="play-button" onclick="window.location.href='byond://play.splurtstation.com:42055'">Play</button>
 	</main>
 
 	<!-- Footer -->
@@ -105,6 +105,66 @@ import backgroundImage from '../assets/backgrounds/bannerwip.png';
 		25% { opacity: 0.3; transform: translateX(-1px) translateY(2px); }
 		50% { opacity: 0.9; transform: translateX(1px) translateY(-1px); }
 		75% { opacity: 0.2; transform: translateX(-2px) translateY(1px); }
+	}
+
+	/* Additional star layers for more variety */
+	.main-content::before {
+		content: '';
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: 
+			radial-gradient(1px 1px at 53px 103px, rgba(255, 120, 200, 1), rgba(255, 120, 200, 0.3) 20%, transparent 55%),
+			radial-gradient(2px 2px at 97px 47px, rgba(255, 80, 180, 1), rgba(255, 80, 180, 0.4) 30%, transparent 70%),
+			radial-gradient(1px 1px at 139px 151px, rgba(255, 150, 220, 1), rgba(255, 150, 220, 0.3) 25%, transparent 60%),
+			radial-gradient(3px 3px at 181px 79px, rgba(255, 100, 200, 1), rgba(255, 100, 200, 0.5) 35%, transparent 80%),
+			radial-gradient(1px 1px at 223px 127px, rgba(255, 80, 180, 1), rgba(255, 80, 180, 0.3) 20%, transparent 50%),
+			radial-gradient(2px 2px at 271px 43px, rgba(255, 150, 220, 1), rgba(255, 150, 220, 0.4) 30%, transparent 65%);
+		background-repeat: repeat;
+		background-size: 347px 211px;
+		animation: sparkle3 4.3s ease-in-out infinite;
+		pointer-events: none;
+		z-index: 3;
+		filter: blur(0.1px);
+	}
+
+	.main-content::after {
+		content: '';
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: 
+			radial-gradient(1px 1px at 71px 157px, rgba(255, 100, 200, 1), rgba(255, 100, 200, 0.2) 15%, transparent 45%),
+			radial-gradient(2px 2px at 113px 89px, rgba(255, 150, 220, 1), rgba(255, 150, 220, 0.4) 25%, transparent 65%),
+			radial-gradient(1px 1px at 157px 31px, rgba(255, 80, 180, 1), rgba(255, 80, 180, 0.3) 20%, transparent 55%),
+			radial-gradient(3px 3px at 203px 173px, rgba(255, 120, 200, 1), rgba(255, 120, 200, 0.5) 40%, transparent 85%),
+			radial-gradient(1px 1px at 251px 61px, rgba(255, 100, 200, 1), rgba(255, 100, 200, 0.3) 25%, transparent 60%),
+			radial-gradient(2px 2px at 293px 139px, rgba(255, 80, 180, 1), rgba(255, 80, 180, 0.4) 30%, transparent 70%),
+			radial-gradient(1px 1px at 331px 107px, rgba(255, 150, 220, 1), rgba(255, 150, 220, 0.3) 20%, transparent 50%);
+		background-repeat: repeat;
+		background-size: 389px 239px;
+		animation: sparkle4 6.1s ease-in-out infinite reverse;
+		pointer-events: none;
+		z-index: 4;
+		filter: blur(0.15px);
+	}
+
+	@keyframes sparkle3 {
+		0%, 100% { opacity: 0.9; transform: translateX(0) translateY(0); }
+		30% { opacity: 0.2; transform: translateX(1px) translateY(-2px); }
+		60% { opacity: 0.6; transform: translateX(-1px) translateY(1px); }
+	}
+
+	@keyframes sparkle4 {
+		0%, 100% { opacity: 0.7; transform: translateX(0) translateY(0); }
+		20% { opacity: 0.4; transform: translateX(-1px) translateY(1px); }
+		40% { opacity: 0.1; transform: translateX(2px) translateY(-1px); }
+		60% { opacity: 0.8; transform: translateX(-1px) translateY(2px); }
+		80% { opacity: 0.3; transform: translateX(1px) translateY(-1px); }
 	}
 
 	/* Navigation */
