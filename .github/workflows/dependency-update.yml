@@ -38,6 +38,12 @@ jobs:
             echo "All dependencies are up to date!"
           fi
 
+      - name: Delete lock file
+        if: steps.check.outputs.outdated == 'true'
+        run: |
+          echo "Deleting deno.lock file to avoid update issues..."
+          rm -f deno.lock
+
       - name: Update compatible dependencies
         if: steps.check.outputs.outdated == 'true'
         run: |
