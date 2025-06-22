@@ -21,13 +21,15 @@ export default defineConfig({
     assets: "assets",
   },
 
-  integrations: [favicons({
-    input: {
-      favicons: ["public/splurtpaw2_alt3.png"]
-    },
-    name: "S.P.L.U.R.T Station",
-    short_name: "S.P.L.U.R.T",
-    background: "#000000",
-    themes: ["#000000", "#ffffff"],
-  })],
+  integrations: [
+    favicons({
+      input: {
+        favicons: ["public/splurtpaw2_alt3.png"],
+      },
+      name: "S.P.L.U.R.T. Station",
+      short_name: "S.P.L.U.R.T.",
+      background: "#000000",
+      themes: ["#000000", "#ffffff"],
+    }),
+  ],
 });
