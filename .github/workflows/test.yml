@@ -22,7 +22,7 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: deno install
+        run: deno install --allow-scripts
 
       - name: Run Astro check
         run: deno task check

@@ -33,7 +33,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        run: deno install
+        run: deno install --allow-scripts
 
       - name: Build with Astro
         run: |
