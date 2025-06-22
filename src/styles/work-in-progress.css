@@ -1,0 +1,563 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Roboto",
+    sans-serif;
+  background-size: cover;
+  background-position: top right;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.container::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(
+      2px 2px at 23px 47px,
+      rgba(255, 100, 200, 1),
+      rgba(255, 100, 200, 0.3) 30%,
+      transparent 70%
+    ),
+    radial-gradient(
+    1px 1px at 67px 23px,
+    rgba(255, 150, 220, 1),
+    rgba(255, 150, 220, 0.4) 25%,
+    transparent 60%
+  ),
+    radial-gradient(
+    3px 3px at 41px 89px,
+    rgba(255, 80, 180, 1),
+    rgba(255, 80, 180, 0.5) 35%,
+    transparent 80%
+  ),
+    radial-gradient(
+    1px 1px at 91px 13px,
+    rgba(255, 120, 200, 1),
+    rgba(255, 120, 200, 0.3) 20%,
+    transparent 50%
+  ),
+    radial-gradient(
+    2px 2px at 17px 73px,
+    rgba(255, 100, 200, 1),
+    rgba(255, 100, 200, 0.4) 30%,
+    transparent 70%
+  ),
+    radial-gradient(
+    2px 2px at 149px 31px,
+    rgba(255, 150, 220, 1),
+    rgba(255, 150, 220, 0.3) 25%,
+    transparent 65%
+  ),
+    radial-gradient(
+    1px 1px at 187px 67px,
+    rgba(255, 80, 180, 1),
+    rgba(255, 80, 180, 0.5) 30%,
+    transparent 60%
+  );
+  background-repeat: repeat;
+  background-size: 231px 137px;
+  animation: sparkle1 3.7s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+  filter: blur(0.3px);
+}
+
+.container::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(
+      2px 2px at 29px 71px,
+      rgba(255, 100, 200, 1),
+      rgba(255, 100, 200, 0.4) 25%,
+      transparent 60%
+    ),
+    radial-gradient(
+    3px 3px at 83px 19px,
+    rgba(255, 150, 220, 1),
+    rgba(255, 150, 220, 0.6) 40%,
+    transparent 85%
+  ),
+    radial-gradient(
+    1px 1px at 37px 109px,
+    rgba(255, 80, 180, 1),
+    rgba(255, 80, 180, 0.3) 20%,
+    transparent 55%
+  ),
+    radial-gradient(
+    2px 2px at 127px 59px,
+    rgba(255, 120, 200, 1),
+    rgba(255, 120, 200, 0.5) 35%,
+    transparent 75%
+  ),
+    radial-gradient(
+    2px 2px at 173px 97px,
+    rgba(255, 100, 200, 1),
+    rgba(255, 100, 200, 0.3) 25%,
+    transparent 65%
+  ),
+    radial-gradient(
+    1px 1px at 61px 41px,
+    rgba(255, 150, 220, 1),
+    rgba(255, 150, 220, 0.4) 30%,
+    transparent 70%
+  ),
+    radial-gradient(
+    1px 1px at 199px 7px,
+    rgba(255, 80, 180, 1),
+    rgba(255, 80, 180, 0.3) 20%,
+    transparent 50%
+  ),
+    radial-gradient(
+    3px 3px at 11px 113px,
+    rgba(255, 120, 200, 1),
+    rgba(255, 120, 200, 0.4) 30%,
+    transparent 75%
+  );
+  background-repeat: repeat;
+  background-size: 307px 179px;
+  animation: sparkle2 5.2s ease-in-out infinite reverse;
+  pointer-events: none;
+  z-index: 2;
+  filter: blur(0.2px);
+}
+
+@keyframes sparkle1 {
+  0%, 100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+  33% {
+    opacity: 0.4;
+    transform: translateX(2px) translateY(-1px);
+  }
+  66% {
+    opacity: 0.7;
+    transform: translateX(-1px) translateY(1px);
+  }
+}
+
+@keyframes sparkle2 {
+  0%, 100% {
+    opacity: 0.8;
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    opacity: 0.3;
+    transform: translateX(-1px) translateY(2px);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translateX(1px) translateY(-1px);
+  }
+  75% {
+    opacity: 0.2;
+    transform: translateX(-2px) translateY(1px);
+  }
+}
+
+/* Additional star layers for more variety */
+.main-content::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(
+      1px 1px at 53px 103px,
+      rgba(255, 120, 200, 1),
+      rgba(255, 120, 200, 0.3) 20%,
+      transparent 55%
+    ),
+    radial-gradient(
+    2px 2px at 97px 47px,
+    rgba(255, 80, 180, 1),
+    rgba(255, 80, 180, 0.4) 30%,
+    transparent 70%
+  ),
+    radial-gradient(
+    1px 1px at 139px 151px,
+    rgba(255, 150, 220, 1),
+    rgba(255, 150, 220, 0.3) 25%,
+    transparent 60%
+  ),
+    radial-gradient(
+    3px 3px at 181px 79px,
+    rgba(255, 100, 200, 1),
+    rgba(255, 100, 200, 0.5) 35%,
+    transparent 80%
+  ),
+    radial-gradient(
+    1px 1px at 223px 127px,
+    rgba(255, 80, 180, 1),
+    rgba(255, 80, 180, 0.3) 20%,
+    transparent 50%
+  ),
+    radial-gradient(
+    2px 2px at 271px 43px,
+    rgba(255, 150, 220, 1),
+    rgba(255, 150, 220, 0.4) 30%,
+    transparent 65%
+  );
+  background-repeat: repeat;
+  background-size: 347px 211px;
+  animation: sparkle3 4.3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 3;
+  filter: blur(0.1px);
+}
+
+.main-content::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(
+      1px 1px at 71px 157px,
+      rgba(255, 100, 200, 1),
+      rgba(255, 100, 200, 0.2) 15%,
+      transparent 45%
+    ),
+    radial-gradient(
+    2px 2px at 113px 89px,
+    rgba(255, 150, 220, 1),
+    rgba(255, 150, 220, 0.4) 25%,
+    transparent 65%
+  ),
+    radial-gradient(
+    1px 1px at 157px 31px,
+    rgba(255, 80, 180, 1),
+    rgba(255, 80, 180, 0.3) 20%,
+    transparent 55%
+  ),
+    radial-gradient(
+    3px 3px at 203px 173px,
+    rgba(255, 120, 200, 1),
+    rgba(255, 120, 200, 0.5) 40%,
+    transparent 85%
+  ),
+    radial-gradient(
+    1px 1px at 251px 61px,
+    rgba(255, 100, 200, 1),
+    rgba(255, 100, 200, 0.3) 25%,
+    transparent 60%
+  ),
+    radial-gradient(
+    2px 2px at 293px 139px,
+    rgba(255, 80, 180, 1),
+    rgba(255, 80, 180, 0.4) 30%,
+    transparent 70%
+  ),
+    radial-gradient(
+    1px 1px at 331px 107px,
+    rgba(255, 150, 220, 1),
+    rgba(255, 150, 220, 0.3) 20%,
+    transparent 50%
+  );
+  background-repeat: repeat;
+  background-size: 389px 239px;
+  animation: sparkle4 6.1s ease-in-out infinite reverse;
+  pointer-events: none;
+  z-index: 4;
+  filter: blur(0.15px);
+}
+
+@keyframes sparkle3 {
+  0%, 100% {
+    opacity: 0.9;
+    transform: translateX(0) translateY(0);
+  }
+  30% {
+    opacity: 0.2;
+    transform: translateX(1px) translateY(-2px);
+  }
+  60% {
+    opacity: 0.6;
+    transform: translateX(-1px) translateY(1px);
+  }
+}
+
+@keyframes sparkle4 {
+  0%, 100% {
+    opacity: 0.7;
+    transform: translateX(0) translateY(0);
+  }
+  20% {
+    opacity: 0.4;
+    transform: translateX(-1px) translateY(1px);
+  }
+  40% {
+    opacity: 0.1;
+    transform: translateX(2px) translateY(-1px);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateX(-1px) translateY(2px);
+  }
+  80% {
+    opacity: 0.3;
+    transform: translateX(1px) translateY(-1px);
+  }
+}
+
+/* Navigation */
+.navbar {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  position: relative;
+  z-index: 10;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  background: rgba(255, 100, 200, 0.2);
+  transform: translateY(-2px);
+  text-shadow: 0 0 10px rgba(255, 100, 200, 0.8);
+}
+
+.nav-link.active {
+  background: rgba(255, 80, 180, 0.3);
+  text-shadow: 0 0 8px rgba(255, 100, 200, 0.6);
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -5px;
+  left: 50%;
+  background: linear-gradient(90deg, #ff50b0, #ff80d0, #ff50b0);
+  box-shadow: 0 0 8px rgba(255, 80, 180, 0.8);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+  z-index: 10;
+}
+
+.logo {
+  width: 200px;
+  height: auto;
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+  opacity: 0;
+  transform: translateY(30px);
+  animation:
+    logoEntrance 1s ease-out 0.5s forwards,
+    logoFloat 3s ease-in-out 1.5s infinite;
+}
+
+@keyframes logoEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wip-text {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 2rem 0;
+  text-shadow:
+    0 0 20px rgba(255, 80, 180, 0.8),
+    0 0 40px rgba(255, 100, 200, 0.6),
+    0 4px 8px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease-out 1s forwards;
+}
+
+.play-button {
+  background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
+  color: white;
+  border: 2px solid rgba(255, 100, 200, 0.5);
+  padding: 1rem 3rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 8px 25px rgba(255, 80, 180, 0.4),
+    0 0 20px rgba(255, 100, 200, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease-out 1.5s forwards;
+}
+
+.play-button:hover {
+  background: linear-gradient(135deg, #ff30a0, #ff60c0, #ff30a0);
+  transform: translateY(-3px);
+  box-shadow:
+    0 12px 35px rgba(255, 80, 180, 0.6),
+    0 0 30px rgba(255, 100, 200, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 150, 220, 0.8);
+}
+
+.play-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 79, 240, 0.4);
+}
+
+/* Footer */
+.footer {
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.footer-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: white;
+}
+
+.footer-link svg {
+  opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .logo {
+    width: 150px;
+    margin-bottom: 1.5rem;
+  }
+
+  .wip-text {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .play-button {
+    padding: 0.875rem 2.5rem;
+    font-size: 1.125rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .logo {
+    width: 120px;
+  }
+
+  .wip-text {
+    font-size: 1.75rem;
+  }
+
+  .play-button {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+  }
+}

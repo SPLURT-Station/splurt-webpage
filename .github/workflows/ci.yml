@@ -22,7 +22,7 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: deno install
+        run: deno install --allow-scripts
 
       - name: Check TypeScript
         run: deno check **/*.ts **/*.tsx **/*.astro
@@ -49,7 +49,7 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: deno install
+        run: deno install --allow-scripts
 
       - name: Build project
         run: deno task build
