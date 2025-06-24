@@ -1,3 +1,65 @@
+---
+import { getImage } from 'astro:assets';
+import thumbnail from '../assets/thumbnail.png';
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+	url?: string;
+	type?: string;
+	imageStrategy?: 'auto' | 'thumbnail' | 'logo' | 'both';
+}
+
+const {
+	title = "S.P.L.U.R.T. Station",
+	description = "S.P.L.U.R.T. Station - A NSFW furry roleplaying server for Space Station 13. Join our community for exciting lewdness!",
+	image,
+	url = Astro.url.href,
+	type = "website",
+	imageStrategy = 'auto'
+} = Astro.props;
+
+// Get optimized thumbnail image
+const optimizedThumbnail = await getImage({ 
+	src: thumbnail, 
+	format: 'webp',
+	width: 1200,
+	height: 630
+});
+
+// Smart image selection based on service capabilities
+let ogImage: string, ogWidth: string, ogHeight: string, twitterImage: string;
+
+if (imageStrategy === 'auto' || imageStrategy === 'both') {
+	// Use thumbnail for Open Graph (Facebook, LinkedIn, Discord, WhatsApp, Telegram)
+	// These services render large images well
+	ogImage = image || optimizedThumbnail.src;
+	ogWidth = "1200";
+	ogHeight = "630";
+	
+	// Use logo for Twitter Card as fallback for better compatibility
+	// Twitter actually handles both well, but logo ensures compatibility
+	twitterImage = image || "/splurtpaw2_alt3.png";
+} else if (imageStrategy === 'thumbnail') {
+	// Force thumbnail for everything
+	ogImage = image || optimizedThumbnail.src;
+	ogWidth = "1200";
+	ogHeight = "630";
+	twitterImage = image || optimizedThumbnail.src;
+} else { // imageStrategy === 'logo'
+	// Force logo for everything (smaller, square format)
+	ogImage = image || "/splurtpaw2_alt3.png";
+	ogWidth = "512";
+	ogHeight = "512";
+	twitterImage = image || "/splurtpaw2_alt3.png";
+}
+
+// Ensure the image URLs are absolute
+const ogImageUrl = new URL(ogImage, Astro.site || Astro.url.origin).href;
+const twitterImageUrl = new URL(twitterImage, Astro.site || Astro.url.origin).href;
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -5,7 +67,42 @@
 		<meta name="viewport" content="width=device-width" />
 		<!-- <link rel="icon" type="image/png" href="/splurtpaw2_alt3.png" /> -->
 		<meta name="generator" content={Astro.generator} />
-		<title>S.P.L.U.R.T. Station</title>
+		
+		<!-- Basic Meta Tags -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		
+		<!-- Open Graph Meta Tags (Facebook, LinkedIn, Discord, WhatsApp, Telegram) -->
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:image:width" content={ogWidth} />
+		<meta property="og:image:height" content={ogHeight} />
+		<meta property="og:image:alt" content="S.P.L.U.R.T. Station" />
+		<meta property="og:url" content={url} />
+		<meta property="og:type" content={type} />
+		<meta property="og:site_name" content="S.P.L.U.R.T. Station" />
+		<meta property="og:locale" content="en_US" />
+		
+		<!-- Twitter Card Meta Tags (Optimized for Twitter's rendering) -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={twitterImageUrl} />
+		<meta name="twitter:image:alt" content="S.P.L.U.R.T. Station" />
+		
+		<!-- Additional Meta Tags -->
+		<meta name="robots" content="index, follow" />
+		<meta name="author" content="S.P.L.U.R.T. Station" />
+		<meta name="keywords" content="Space Station 13, SS13, Gaming, Multiplayer, S.P.L.U.R.T., SPLURT, furry, furry games, furry roleplay, furry rp, furry roleplaying, furry roleplay games, furry roleplaying games, furry roleplaying server, furry roleplaying servers, furry roleplaying servers list, furry roleplaying servers list 2025, furry roleplaying servers list 2026, furry roleplaying servers list 2027, furry roleplaying servers list 2028, furry roleplaying servers list 2029, furry roleplaying servers list 2030, furry fandom" />
+		
+		<!-- Discord/Social Media Optimization -->
+		<meta property="og:color" content="#ff50b0" />
+		
+		<!-- Additional platform-specific optimizations -->
+		<meta property="og:image:type" content="image/webp" />
+		<meta name="twitter:image:src" content={twitterImageUrl} />
+		<meta name="msapplication-navbutton-color" content="#ff50b0" />
 	</head>
 	<body>
 		<slot />
