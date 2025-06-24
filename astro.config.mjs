@@ -8,10 +8,10 @@ import favicons from "astro-favicons";
 // https://astro.build/config
 export default defineConfig({
   // Replace 'username' with your GitHub username
-  site: "https://splurt-station.github.io",
+  site: "https://splurt.space",
 
   // Replace with your repository name if different
-  base: "/splurt-webpage",
+  base: "/",
 
   vite: {
     plugins: [tailwindcss()],

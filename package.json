@@ -10,10 +10,12 @@
     "check": "astro check",
     "lint": "deno lint",
     "fmt": "deno fmt",
+    "launch": "deno run --allow-net --allow-read --allow-env ./dist/server/entry.mjs",
     "fmt:check": "deno fmt --check"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
+    "@deno/astro-adapter": "^0.3.1",
     "@tailwindcss/vite": "^4.1.8",
     "astro": "^5.8.1",
     "astro-favicons": "^3.1.5",
