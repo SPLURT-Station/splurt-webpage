@@ -1,0 +1,81 @@
+name: Deploy to VPS (Proxmox LXC)
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build and Deploy to VPS
+    runs-on: [self-hosted, splurt-webpage-production]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check Node.js installation
+        id: check-node
+        run: |
+          if command -v node &> /dev/null; then
+            echo "node-installed=true" >> $GITHUB_OUTPUT
+            echo "Node.js is already installed:"
+            node --version
+            npm --version
+          else
+            echo "node-installed=false" >> $GITHUB_OUTPUT
+            echo "Node.js is not installed"
+          fi
+
+      - name: Install Node.js
+        if: steps.check-node.outputs.node-installed == 'false'
+        run: |
+          echo "Installing Node.js..."
+          curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          echo "Node.js installed successfully:"
+          node --version
+          npm --version
+
+      - name: Check Deno installation
+        id: check-deno
+        run: |
+          if command -v deno &> /dev/null; then
+            echo "deno-installed=true" >> $GITHUB_OUTPUT
+            echo "Deno is already installed:"
+            deno --version
+          else
+            echo "deno-installed=false" >> $GITHUB_OUTPUT
+            echo "Deno is not installed"
+          fi
+
+      - name: Install Deno via npm
+        if: steps.check-deno.outputs.deno-installed == 'false'
+        run: |
+          echo "Installing Deno via npm..."
+          npm install -g deno
+          echo "Deno installed successfully:"
+          deno --version
+
+      - name: Check for Deno updates
+        run: |
+          echo "Checking for Deno updates..."
+          if deno upgrade --dry-run | grep -q "Local deno version"; then
+            echo "Deno is up to date"
+          else
+            echo "Updating Deno..."
+            deno upgrade
+            echo "Deno updated successfully:"
+            deno --version
+          fi
+
+      - name: Install dependencies
+        run: deno install --allow-scripts
+
+      - name: Build application
+        run: deno task build --allow-scripts
+
+      - name: Deployment complete
+        run: |
+          echo "✅ Build completed successfully!"
+          echo "Application built and ready at: $(pwd)/dist"
