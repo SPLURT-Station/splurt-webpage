@@ -29,7 +29,7 @@ export default defineConfig({
       name: "S.P.L.U.R.T. Station",
       short_name: "S.P.L.U.R.T.",
       background: "#000000",
-      themes: ["#000000", "#ffffff"],
+      themes: ["#ff50b0", "#1a0b2e"],
     }),
   ],
 });
