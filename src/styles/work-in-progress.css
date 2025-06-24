@@ -174,8 +174,8 @@
   }
 }
 
-/* Additional star layers for more variety */
-.main-content::before {
+/* Additional star layers for more variety - moved to body level to prevent overlapping content */
+body::before {
   content: "";
   position: fixed;
   top: 0;
@@ -223,11 +223,11 @@
   background-size: 347px 211px;
   animation: sparkle3 4.3s ease-in-out infinite;
   pointer-events: none;
-  z-index: 3;
+  z-index: -1;
   filter: blur(0.1px);
 }
 
-.main-content::after {
+body::after {
   content: "";
   position: fixed;
   top: 0;
@@ -281,7 +281,7 @@
   background-size: 389px 239px;
   animation: sparkle4 6.1s ease-in-out infinite reverse;
   pointer-events: none;
-  z-index: 4;
+  z-index: -2;
   filter: blur(0.15px);
 }
 
