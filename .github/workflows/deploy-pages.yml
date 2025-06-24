@@ -1,3 +1,5 @@
+# Deploy to GitHub Pages (fallback deployment)
+# Note: Main deployment target is VPS at splurt.space
 name: Deploy to GitHub Pages
 
 on:
@@ -35,11 +37,15 @@ jobs:
       - name: Install dependencies
         run: deno install --allow-scripts
 
-      - name: Build with Astro
+      - name: Build with Astro for GitHub Pages
         run: |
           deno task build \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
+        env:
+          # Override config for GitHub Pages deployment
+          ASTRO_SITE: "${{ steps.pages.outputs.origin }}"
+          ASTRO_BASE: "${{ steps.pages.outputs.base_path }}"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
