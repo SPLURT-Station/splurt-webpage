@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [master, main]
 
+permissions:
+  contents: write # Allow writing to repository for auto-formatting
+
 jobs:
   lint-and-test:
     name: Lint and Test
@@ -14,6 +17,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
 
       - name: Setup Deno
         uses: denoland/setup-deno@v2
@@ -25,13 +31,76 @@ jobs:
         run: deno install --allow-scripts
 
       - name: Check TypeScript
-        run: deno check **/*.ts **/*.tsx **/*.astro
+        run: |
+          files=$(find . -type f \( -name "*.ts" -o -name "*.tsx" \))
+          if [ -z "$files" ]; then
+            echo "No files to check."
+          else
+            deno check $files
+          fi
 
       - name: Lint code
         run: deno lint
 
-      - name: Format check
-        run: deno fmt --check
+      - name: Format check and auto-fix
+        run: |
+          # Determine if we can auto-format based on event type and permissions
+          can_auto_format=false
+
+          if [ "${{ github.event_name }}" = "push" ]; then
+            can_auto_format=true
+            echo "✅ Auto-format enabled: Push event"
+          elif [ "${{ github.event_name }}" = "pull_request" ]; then
+            # Check if PR is from same repository (not a fork)
+            if [ "${{ github.event.pull_request.head.repo.full_name }}" = "${{ github.repository }}" ]; then
+              can_auto_format=true
+              echo "✅ Auto-format enabled: PR from same repository"
+            # Check if maintainer can modify the PR
+            elif [ "${{ github.event.pull_request.maintainer_can_modify }}" = "true" ]; then
+              can_auto_format=true
+              echo "✅ Auto-format enabled: PR allows maintainer edits"
+            else
+              echo "⚠️ Auto-format disabled: PR from fork without maintainer edit permission"
+            fi
+          fi
+
+          if [ "$can_auto_format" = "true" ]; then
+            echo "Running format check with auto-fix enabled..."
+
+            # Check if formatting is needed
+            if ! deno fmt --check; then
+              echo "❌ Code formatting issues detected. Auto-fixing..."
+
+              # Configure git
+              git config --local user.email "action@github.com"
+              git config --local user.name "GitHub Action Auto-Format"
+
+              # Run formatter
+              deno fmt
+
+              # Check if there are changes to commit
+              if git diff --quiet; then
+                echo "✅ No formatting changes needed after running deno fmt"
+              else
+                echo "📝 Committing formatting changes..."
+                git add .
+                git commit -m "Auto-format code with deno fmt [skip ci]"
+                # Handle detached HEAD for PRs
+                if [ "${{ github.event_name }}" = "pull_request" ]; then
+                  echo "Pushing to PR branch: ${{ github.head_ref }}"
+                  git push origin HEAD:${{ github.head_ref }}
+                else
+                  git push
+                fi
+                echo "✅ Formatting changes committed and pushed"
+              fi
+            else
+              echo "✅ Code formatting is already correct"
+            fi
+          else
+            echo "Running format check only (read-only mode)..."
+            deno fmt --check
+          fi
 
   build:
     name: Build Project
