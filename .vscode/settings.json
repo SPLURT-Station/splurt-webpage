@@ -1,5 +1,6 @@
 {
   "deno.enable": true,
+  "deno.enablePaths": ["./deno.json"],
   "deno.lint": true,
   "editor.defaultFormatter": "denoland.vscode-deno",
   "[astro]": {
@@ -11,5 +12,6 @@
     },
     "editor.suggest.insertMode": "replace",
     "editor.defaultFormatter": "denoland.vscode-deno"
-  }
+  },
+  "json.schemaDownload.enable": true
 }
