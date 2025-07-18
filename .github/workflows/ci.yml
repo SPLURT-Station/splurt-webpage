@@ -28,7 +28,7 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: deno install --allow-scripts
+        run: deno install -r --allow-scripts
 
       - name: Check TypeScript (Astro)
         run: deno task check
@@ -115,7 +115,7 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: deno install --allow-scripts
+        run: deno install -r --allow-scripts
 
       - name: Build project
         run: deno task build

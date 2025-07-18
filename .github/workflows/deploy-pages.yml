@@ -35,7 +35,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        run: deno install --allow-scripts
+        run: deno install -r --allow-scripts
 
       - name: Build with Astro for GitHub Pages
         run: |

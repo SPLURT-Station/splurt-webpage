@@ -109,7 +109,7 @@ jobs:
           fi
 
       - name: Install dependencies
-        run: deno install --allow-scripts
+        run: deno install -r --allow-scripts
 
       - name: Build application
         run: deno task build --allow-scripts
