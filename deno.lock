@@ -8,7 +8,7 @@
     "npm:astro-favicons@^3.1.5": "3.1.5_astro@5.12.0__typescript@5.8.3__vite@6.3.5___picomatch@4.0.3__zod@3.25.76_typescript@5.8.3",
     "npm:astro@5.12.0": "5.12.0_typescript@5.8.3_vite@6.3.5__picomatch@4.0.3_zod@3.25.76",
     "npm:astro@^5.8.1": "5.12.0_typescript@5.8.3_vite@6.3.5__picomatch@4.0.3_zod@3.25.76",
-    "npm:sharp@~0.34.2": "0.34.3",
+    "npm:sharp@~0.34.3": "0.34.3",
     "npm:tailwind@4": "4.0.0",
     "npm:tailwindcss@^4.1.8": "4.1.11",
     "npm:typescript@^5.8.3": "5.8.3"
@@ -4893,7 +4893,7 @@
         "npm:@tailwindcss/vite@^4.1.8",
         "npm:astro-favicons@^3.1.5",
         "npm:astro@^5.8.1",
-        "npm:sharp@~0.34.2",
+        "npm:sharp@~0.34.3",
         "npm:tailwind@4",
         "npm:tailwindcss@^4.1.8",
         "npm:typescript@^5.8.3"
