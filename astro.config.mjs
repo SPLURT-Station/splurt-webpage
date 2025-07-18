@@ -1,4 +1,4 @@
-// @ts-check
+// @ts-expect-error //until the next version of astro is released
 import { defineConfig } from "astro/config";
 
 import tailwindcss from "@tailwindcss/vite";
