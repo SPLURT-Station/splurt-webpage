@@ -15,18 +15,6 @@
     "launch": "deno run --allow-net --allow-read --allow-env ./dist/server/entry.mjs",
     "fmt:check": "deno fmt --check"
   },
-  "imports": {
-    "@astrojs/check": "npm:@astrojs/check@^0.9.4",
-    "@deno/astro-adapter": "npm:@deno/astro-adapter@^0.3.1",
-    "@tailwindcss/vite": "npm:@tailwindcss/vite@^4.1.8",
-    "astro": "npm:astro@^5.8.1",
-    "astro-favicons": "npm:astro-favicons@^3.1.5",
-    "sharp": "npm:sharp@^0.34.2",
-    "tailwind": "npm:tailwind@^4.0.0",
-    "tailwindcss": "npm:tailwindcss@^4.1.8",
-    "typescript": "npm:typescript@^5.8.3",
-    "@csstools/postcss-sass": "npm:@csstools/postcss-sass@^5.1.1"
-  },
   "fmt": {
     "proseWrap": "preserve"
   },
