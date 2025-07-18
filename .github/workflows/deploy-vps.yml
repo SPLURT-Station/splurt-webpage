@@ -116,7 +116,9 @@ jobs:
         run: deno install -r --allow-scripts
 
       - name: Build application
-        run: deno run -r --allow-all build
+        run: |
+          deno add npm:sharp --allow-scripts
+          deno run -r --allow-all build
 
       - name: Deployment complete
         run: |
