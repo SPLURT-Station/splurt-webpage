@@ -48,7 +48,8 @@ jobs:
         if: steps.check.outputs.outdated == 'true'
         run: |
           echo "Updating dependencies to compatible versions..."
-          deno outdated --update --compatible
+          deno install --allow-scripts
+          deno update
 
       - name: Create Pull Request
         if: steps.check.outputs.outdated == 'true'
