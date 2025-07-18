@@ -110,7 +110,7 @@ jobs:
       - name: Clean deno cache
         run: |
           deno clean
-          deno clean --except deno.json
+          deno clean --except deno.json --vendor
 
       - name: Install dependencies
         run: deno install -r --allow-scripts
