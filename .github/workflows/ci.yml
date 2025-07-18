@@ -118,7 +118,7 @@ jobs:
         run: deno install -r --allow-scripts
 
       - name: Build project
-        run: deno run --allow-all build
+        run: deno run -r --allow-all build
 
       - name: Check build output
         run: |

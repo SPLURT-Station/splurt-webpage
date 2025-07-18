@@ -40,5 +40,5 @@ jobs:
       - name: Test build
         run: |
           echo "Testing build process..."
-          deno run --allow-all build
+          deno run -r --allow-all build
           echo "Build test completed successfully"

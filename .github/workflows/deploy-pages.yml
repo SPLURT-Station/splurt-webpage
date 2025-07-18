@@ -39,7 +39,7 @@ jobs:
 
       - name: Build with Astro for GitHub Pages
         run: |
-          deno run --allow-all build \
+          deno run -r --allow-all build \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         env:

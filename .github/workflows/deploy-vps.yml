@@ -112,7 +112,7 @@ jobs:
         run: deno install -r --allow-scripts
 
       - name: Build application
-        run: deno run --allow-all build
+        run: deno run -r --allow-all build
 
       - name: Deployment complete
         run: |
