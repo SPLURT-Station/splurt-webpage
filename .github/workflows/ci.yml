@@ -31,13 +31,13 @@ jobs:
         run: deno install -r --allow-scripts
 
       - name: Check TypeScript (Astro)
-        run: deno run --allow-ffi --allow-scripts check
+        run: deno run --allow-all check
 
       - name: Check TypeScript (Deno)
         run: deno check
 
       - name: Lint code
-        run: deno run --allow-ffi --allow-scripts lint
+        run: deno run --allow-all lint
 
       - name: Format check and auto-fix
         run: |
@@ -118,7 +118,7 @@ jobs:
         run: deno install -r --allow-scripts
 
       - name: Build project
-        run: deno run --allow-ffi --allow-scripts build
+        run: deno run --allow-all build
 
       - name: Check build output
         run: |

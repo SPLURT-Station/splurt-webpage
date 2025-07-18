@@ -25,7 +25,7 @@ jobs:
         run: deno install -r --allow-scripts
 
       - name: Run Astro check
-        run: deno run --allow-ffi --allow-scripts check
+        run: deno run --allow-all check
 
       - name: Run tests (if any)
         run: |
@@ -40,5 +40,5 @@ jobs:
       - name: Test build
         run: |
           echo "Testing build process..."
-          deno run --allow-ffi --allow-scripts build
+          deno run --allow-all build
           echo "Build test completed successfully"
