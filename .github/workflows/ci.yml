@@ -30,8 +30,11 @@ jobs:
       - name: Install dependencies
         run: deno install --allow-scripts
 
-      - name: Check TypeScript
+      - name: Check TypeScript (Astro)
         run: deno task check
+
+      - name: Check TypeScript (Deno)
+        run: deno check
 
       - name: Lint code
         run: deno task lint
