@@ -35,11 +35,11 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        run: deno install --allow-scripts
+        run: deno install -r --allow-scripts
 
       - name: Build with Astro for GitHub Pages
         run: |
-          deno task build \
+          deno run -r --allow-all build \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         env:

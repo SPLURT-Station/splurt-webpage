@@ -22,10 +22,10 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: deno install --allow-scripts
+        run: deno install -r --allow-scripts
 
       - name: Run Astro check
-        run: deno task check
+        run: deno run --allow-all check
 
       - name: Run tests (if any)
         run: |
@@ -40,5 +40,5 @@ jobs:
       - name: Test build
         run: |
           echo "Testing build process..."
-          deno task build
+          deno run -r --allow-all build
           echo "Build test completed successfully"

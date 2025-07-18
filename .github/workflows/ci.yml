@@ -28,16 +28,16 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: deno install --allow-scripts
+        run: deno install -r --allow-scripts
 
       - name: Check TypeScript (Astro)
-        run: deno task check
+        run: deno run --allow-all check
 
       - name: Check TypeScript (Deno)
         run: deno check
 
       - name: Lint code
-        run: deno task lint
+        run: deno run --allow-all lint
 
       - name: Format check and auto-fix
         run: |
@@ -115,10 +115,10 @@ jobs:
           cache: true
 
       - name: Install dependencies
-        run: deno install --allow-scripts
+        run: deno install -r --allow-scripts
 
       - name: Build project
-        run: deno task build
+        run: deno run -r --allow-all build
 
       - name: Check build output
         run: |
