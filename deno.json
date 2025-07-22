@@ -1,6 +1,6 @@
 {
   "version": "0.0.1",
-  "unstable": ["fmt-component"],
+  "unstable": ["fmt-component", "sloppy-imports", "bare-node-builtins"],
   "compilerOptions": {
     "checkJs": true
   },
