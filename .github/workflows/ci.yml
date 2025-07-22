@@ -35,7 +35,7 @@ jobs:
 
       - name: Check TypeScript (Deno)
         run: |
-          files=$(find . -type f \( -name "*.ts" -o -name "*.tsx" \))
+          files=$(find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" -o -name "*.astro" \))
           if [ -z "$files" ]; then
             echo "No files to check."
           else
