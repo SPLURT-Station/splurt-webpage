@@ -34,7 +34,14 @@ jobs:
         run: deno run --allow-all check
 
       - name: Check TypeScript (Deno)
-        run: deno check
+        run: |
+          files=$(find . -type f \( -name "*.ts" -o -name "*.tsx" \))
+          if [ -z "$files" ]; then
+            echo "No files to check."
+          else
+            deno check $files
+          fi
+
 
       - name: Lint code
         run: deno run --allow-all lint
