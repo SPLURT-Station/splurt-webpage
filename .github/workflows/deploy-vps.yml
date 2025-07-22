@@ -99,7 +99,7 @@ jobs:
       - name: Check for Deno updates
         run: |
           echo "Checking for Deno updates..."
-          if deno upgrade --dry-run | grep -q "Local deno version"; then
+          if deno upgrade --dry-run 2>&1 | grep -q "Local deno version"; then
             echo "Deno is up to date"
           else
             echo "Updating Deno..."
@@ -107,6 +107,10 @@ jobs:
             echo "Deno updated successfully:"
             deno --version
           fi
+      - name: Clean deno cache
+        run: |
+          deno clean
+          deno clean --except deno.json --node-modules-dir=auto
 
       - name: Install dependencies
         run: deno install -r --allow-scripts
