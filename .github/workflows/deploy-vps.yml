@@ -107,10 +107,6 @@ jobs:
             echo "Deno updated successfully:"
             deno --version
           fi
-      - name: Clean deno cache
-        run: |
-          deno clean
-          deno clean --except deno.json --node-modules-dir=auto
 
       - name: Install dependencies
         run: deno install -r --allow-scripts
