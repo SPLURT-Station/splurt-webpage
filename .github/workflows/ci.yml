@@ -42,7 +42,6 @@ jobs:
             deno check $files
           fi
 
-
       - name: Lint code
         run: deno run --allow-all lint
 
