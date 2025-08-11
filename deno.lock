@@ -6,6 +6,7 @@
     "npm:@deno/astro-adapter@~0.3.1": "0.3.1_astro@5.12.9__typescript@5.9.2__vite@6.3.5___picomatch@4.0.3__zod@3.25.76_typescript@5.9.2",
     "npm:@tailwindcss/vite@^4.1.8": "4.1.11_vite@7.1.1__picomatch@4.0.3",
     "npm:astro-favicons@^3.1.5": "3.1.5_astro@5.12.9__typescript@5.9.2__vite@6.3.5___picomatch@4.0.3__zod@3.25.76_typescript@5.9.2",
+    "npm:astro@5.12.9": "5.12.9_typescript@5.9.2_vite@6.3.5__picomatch@4.0.3_zod@3.25.76",
     "npm:astro@^5.8.1": "5.12.9_typescript@5.9.2_vite@6.3.5__picomatch@4.0.3_zod@3.25.76",
     "npm:sharp@~0.34.2": "0.34.3",
     "npm:tailwind@4": "4.0.0",
