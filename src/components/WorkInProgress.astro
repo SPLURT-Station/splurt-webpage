@@ -11,7 +11,7 @@ const optimizedBackgroundImage = await getImage({
 ---
 
 <!-- Age Gate Overlay -->
-<div id="age-gate-overlay" class="age-gate-overlay">
+<section id="age-gate-overlay" class="age-gate-overlay">
   <div
     class="age-gate-modal"
     role="dialog"
@@ -20,14 +20,17 @@ const optimizedBackgroundImage = await getImage({
     aria-describedby="age-gate-description"
   >
     <div class="age-gate-header">
-      <Image
-        src={logo}
-        alt="Splurt Logo"
-        class="age-gate-logo"
-        width={72}
-        height={72}
-        loading="eager"
-      />
+      <div class="age-gate-logo-wrap">
+        <Image
+          src={logo}
+          alt="Splurt Logo"
+          class="age-gate-logo"
+          width={72}
+          height={72}
+          loading="eager"
+        />
+        <span class="age-gate-badge" aria-hidden="true">18+</span>
+      </div>
       <h2 id="age-gate-title" class="age-gate-title">Adults Only</h2>
     </div>
     <p id="age-gate-description" class="age-gate-text">
@@ -79,9 +82,9 @@ const optimizedBackgroundImage = await getImage({
     }
   })();
   </script>
-</div>
+</section>
 
-<div
+<section
   class="container"
   style={`background-image: linear-gradient(135deg, rgba(5, 0, 15, 0.95) 0%, rgba(25, 5, 30, 0.92) 30%, rgba(60, 15, 40, 0.88) 70%, rgba(120, 30, 80, 0.85) 100%), url(${optimizedBackgroundImage.src})`}
 >
@@ -128,4 +131,4 @@ const optimizedBackgroundImage = await getImage({
       S.P.L.U.R.T. Station Webpage - View on GitHub
     </a>
   </footer>
-</div>
+</section>
