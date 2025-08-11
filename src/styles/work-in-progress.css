@@ -99,6 +99,41 @@
   margin-bottom: 0.75rem;
 }
 
+.age-gate-logo-wrap {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.age-gate-logo {
+  filter: drop-shadow(0 6px 20px rgba(255, 80, 180, 0.15));
+  border-radius: 50%;
+}
+
+.age-gate-badge {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
+  color: white;
+  font-weight: 800;
+  font-size: 10px;
+  letter-spacing: 0.02em;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 4px 12px rgba(255, 80, 180, 0.45),
+    0 0 10px rgba(255, 100, 200, 0.6);
+}
+
 .age-gate-logo {
   filter: drop-shadow(0 6px 20px rgba(255, 80, 180, 0.15));
 }
