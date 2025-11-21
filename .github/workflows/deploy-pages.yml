@@ -24,22 +24,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          deno-version: v2.x
-          cache: true
+          bun-version: latest
 
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        run: deno install -r --allow-scripts
+        run: bun install
 
       - name: Build with Astro for GitHub Pages
         run: |
-          deno run -r --allow-all build \
+          bun run build \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         env:

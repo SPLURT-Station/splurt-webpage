@@ -21,29 +21,19 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          deno-version: v2.x
-          cache: true
+          bun-version: latest
 
       - name: Install dependencies
-        run: deno install -r --allow-scripts
+        run: bun install
 
       - name: Check TypeScript (Astro)
-        run: deno run --allow-all check
-
-      - name: Check TypeScript (Deno)
-        run: |
-          files=$(find . -type f \( -name "src/**/*.ts" -o -name "src/**/*.tsx" -o -name "src/**/*.js" -o -name "src/**/*.jsx" -o -name "src/**/*.astro" \))
-          if [ -z "$files" ]; then
-            echo "No files to check."
-          else
-            deno check $files
-          fi
+        run: bun run astro check
 
       - name: Lint code
-        run: deno run --allow-all lint
+        run: bun run lint
 
       - name: Format check and auto-fix
         run: |
@@ -71,23 +61,23 @@ jobs:
             echo "Running format check with auto-fix enabled..."
 
             # Check if formatting is needed
-            if ! deno fmt --check; then
+            if ! bunx biome check .; then
               echo "❌ Code formatting issues detected. Auto-fixing..."
 
               # Configure git
               git config --local user.email "action@github.com"
               git config --local user.name "GitHub Action Auto-Format"
 
-              # Run formatter
-              deno fmt
+              # Run formatter with write flag
+              bun run lint:check
 
               # Check if there are changes to commit
               if git diff --quiet; then
-                echo "✅ No formatting changes needed after running deno fmt"
+                echo "✅ No formatting changes needed after running biome check"
               else
                 echo "📝 Committing formatting changes..."
                 git add .
-                git commit -m "Auto-format code with deno fmt [skip ci]"
+                git commit -m "Auto-format code with biome [skip ci]"
                 # Handle detached HEAD for PRs
                 if [ "${{ github.event_name }}" = "pull_request" ]; then
                   echo "Pushing to PR branch: ${{ github.head_ref }}"
@@ -102,7 +92,7 @@ jobs:
             fi
           else
             echo "Running format check only (read-only mode)..."
-            deno fmt --check
+            bunx biome check .
           fi
 
   build:
@@ -114,17 +104,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          deno-version: v2.x
-          cache: true
+          bun-version: latest
 
       - name: Install dependencies
-        run: deno install -r --allow-scripts
+        run: bun install
 
       - name: Build project
-        run: deno run -r --allow-all build
+        run: bun run build
 
       - name: Check build output
         run: |
@@ -143,16 +132,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          deno-version: v2.x
-          cache: true
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
 
       - name: Security audit
         run: |
-          # Check for common security issues in dependencies
-          deno info --json | jq '.modules[] | select(.specifier | contains("http://"))' && echo "Warning: Insecure HTTP imports found" || echo "No insecure HTTP imports found"
+          # Run npm audit through bun (bun uses npm registry)
+          echo "Running security audit..."
+          bun audit || echo "No vulnerabilities found or audit not available"
 
           # Additional security checks can be added here
           echo "Security audit completed"

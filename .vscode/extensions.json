@@ -1,8 +1,4 @@
 {
-  "recommendations": [
-    "astro-build.astro-vscode",
-    "denoland.vscode-deno",
-    "imgildev.vscode-astro-pack"
-  ],
+  "recommendations": ["astro-build.astro-vscode"],
   "unwantedRecommendations": []
 }

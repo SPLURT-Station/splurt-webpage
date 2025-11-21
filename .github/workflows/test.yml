@@ -15,24 +15,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          deno-version: v2.x
-          cache: true
+          bun-version: latest
 
       - name: Install dependencies
-        run: deno install -r --allow-scripts
+        run: bun install
 
       - name: Run Astro check
-        run: deno run --allow-all check
+        run: bun run astro check
 
       - name: Run tests (if any)
         run: |
           # Check if there are any test files
           if find src -name "*.test.*" -o -name "*.spec.*" | grep -q .; then
             echo "Running tests..."
-            deno test --allow-all
+            bun test
           else
             echo "No test files found, skipping tests"
           fi
@@ -40,5 +39,5 @@ jobs:
       - name: Test build
         run: |
           echo "Testing build process..."
-          deno run -r --allow-all build
+          bun run build
           echo "Build test completed successfully"

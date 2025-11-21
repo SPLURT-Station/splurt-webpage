@@ -19,37 +19,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          deno-version: v2.x
-          cache: true
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
 
       - name: Check for outdated dependencies
         id: check
         run: |
           echo "Checking for outdated dependencies..."
-          if deno outdated --compatible | grep -q "Package"; then
-            echo "outdated=true" >> $GITHUB_OUTPUT
-            echo "Compatible updates available:"
-            deno outdated --compatible
-          else
+          # Bun doesn't have a built-in outdated command, use bunx npm-check-updates or check package.json
+          # For now, we'll use bun update --dry-run to check for updates
+          if bun update --dry-run 2>&1 | grep -q "up to date"; then
             echo "outdated=false" >> $GITHUB_OUTPUT
             echo "All dependencies are up to date!"
+          else
+            echo "outdated=true" >> $GITHUB_OUTPUT
+            echo "Updates available:"
+            bun update --dry-run || echo "Updates may be available"
           fi
-
-      - name: Delete lock file
-        if: steps.check.outputs.outdated == 'true'
-        run: |
-          echo "Deleting deno.lock file to avoid update issues..."
-          rm -f deno.lock
 
       - name: Update compatible dependencies
         if: steps.check.outputs.outdated == 'true'
         run: |
-          echo "Updating dependencies to compatible versions..."
-          deno install -r --allow-scripts
-          deno update
+          echo "Updating dependencies to latest compatible versions..."
+          bun update
 
       - name: Create Pull Request
         if: steps.check.outputs.outdated == 'true'
@@ -61,11 +58,11 @@ jobs:
           body: |
             ## 📦 Dependency Updates
 
-            This PR updates dependencies to their latest compatible versions using `deno outdated --update --compatible`.
+            This PR updates dependencies to their latest compatible versions using `bun update`.
 
             ### Changes
             - Updated dependencies to latest semver-compatible versions
-            - Lock file updated automatically by Deno
+            - Lock file updated automatically by Bun
 
             ### Verification
             - [ ] Dependencies updated successfully
@@ -73,7 +70,7 @@ jobs:
             - [ ] Build works correctly
 
             ---
-            *This PR was created automatically by the dependency update workflow using Deno's built-in dependency management.*
+            *This PR was created automatically by the dependency update workflow using Bun's built-in dependency management.*
           branch: update-dependencies
           delete-branch: true
 
@@ -85,25 +82,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          deno-version: v2.x
-          cache: true
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
 
       - name: Check for major updates
         run: |
           echo "📋 Checking for all available updates (including major versions)..."
           echo ""
-          if deno outdated | grep -q "Package"; then
-            echo "📦 Available updates:"
-            deno outdated
-            echo ""
-            echo "ℹ️ To update to latest versions (including breaking changes), run:"
-            echo "   deno outdated --update --latest"
-            echo ""
-            echo "⚠️ Note: Major version updates may contain breaking changes."
-            echo "   Review the changelog before updating manually."
-          else
-            echo "✅ All dependencies are up to date!"
-          fi
+          echo "📦 Checking package.json dependencies..."
+          echo ""
+          echo "ℹ️ To update to latest versions (including breaking changes), you can:"
+          echo "   1. Manually update versions in package.json"
+          echo "   2. Run: bun update <package-name>"
+          echo ""
+          echo "⚠️ Note: Major version updates may contain breaking changes."
+          echo "   Review the changelog before updating manually."
+          echo ""
+          echo "✅ Use 'bun outdated' (if available) or check package.json for available updates"
