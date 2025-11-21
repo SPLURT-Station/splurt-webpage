@@ -10,6 +10,9 @@ if [ -z "$(git diff --cached --name-only)" ]; then
   exit 0
 fi
 
+# Store the hash of staged changes to detect modifications
+STAGED_HASH=$(git diff --cached | sha256sum | cut -d' ' -f1)
+
 # Save list of staged files (handling all file states)
 STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR)
 PARTIALLY_STAGED=$(git diff --name-only)
@@ -22,13 +25,6 @@ STASHED=$?
 # Run formatter on the staged files
 bun x ultracite fix
 FORMAT_EXIT_CODE=$?
-
-# Check if files were actually changed by formatter (cross-platform)
-# Check if working directory has changes after formatting (before re-staging)
-FILES_WERE_FORMATTED=false
-if ! git diff --quiet 2>/dev/null; then
-  FILES_WERE_FORMATTED=true
-fi
 
 # Restore working directory state
 if [ $STASHED -eq 0 ]; then
@@ -65,8 +61,9 @@ else
   fi
 fi
 
-# Show message if files were formatted
-if [ "$FILES_WERE_FORMATTED" = "true" ]; then
+# Check if staged files actually changed
+NEW_STAGED_HASH=$(git diff --cached | sha256sum | cut -d' ' -f1)
+if [ "$STAGED_HASH" != "$NEW_STAGED_HASH" ]; then
   echo "✨ Files formatted by Ultracite"
 fi
 
