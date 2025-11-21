@@ -22,46 +22,35 @@ jobs:
         run: |
           if command -v bun &> /dev/null; then
             echo "bun-installed=true" >> $GITHUB_OUTPUT
-            current_version=$(bun --version)
-            echo "current-version=$current_version" >> $GITHUB_OUTPUT
-            echo "Bun is already installed - Current version: $current_version"
-            
-            # Get latest version from GitHub releases
-            latest_version=$(curl -s https://api.github.com/repos/oven-sh/bun/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/' | sed 's/v//')
-            echo "latest-version=$latest_version" >> $GITHUB_OUTPUT
-            echo "Latest version: $latest_version"
-            
-            # Compare versions (simplified - just check if update is available)
-            echo "needs-update=false" >> $GITHUB_OUTPUT
-            echo "✅ Bun is installed (version check can be improved)"
+            echo "✅ Bun is already installed"
           else
             echo "bun-installed=false" >> $GITHUB_OUTPUT
-            echo "needs-update=true" >> $GITHUB_OUTPUT
             echo "Bun is not installed"
           fi
 
-      - name: Install or Update Bun
-        if: steps.check-bun.outputs.bun-installed == 'false' || steps.check-bun.outputs.needs-update == 'true'
+      - name: Install Bun
+        if: steps.check-bun.outputs.bun-installed == 'false'
         run: |
-          echo "Installing/Updating Bun..."
+          echo "Installing Bun..."
+
+          # Ensure HOME is set (handle unbound variable)
+          export HOME="${HOME:-$(eval echo ~$(whoami))}"
 
           # Install Bun using the official install script
           curl -fsSL https://bun.sh/install | bash
 
-          # Add Bun to PATH for this session
-          export BUN_INSTALL="$HOME/.bun"
-          export PATH="$BUN_INSTALL/bin:$PATH"
-
-          # Verify installation
+          # Verify installation and set PATH for subsequent steps
           echo "Bun installed successfully:"
-          bun --version
-
-      - name: Setup Bun in PATH
-        run: |
           export BUN_INSTALL="$HOME/.bun"
           export PATH="$BUN_INSTALL/bin:$PATH"
           echo "BUN_INSTALL=$BUN_INSTALL" >> $GITHUB_ENV
           echo "PATH=$BUN_INSTALL/bin:$PATH" >> $GITHUB_ENV
+          bun --version
+
+      - name: Upgrade Bun
+        run: |
+          echo "Upgrading Bun to latest version..."
+          bun upgrade
 
       - name: Install dependencies
         run: bun install
