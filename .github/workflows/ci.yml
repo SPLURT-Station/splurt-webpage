@@ -33,7 +33,7 @@ jobs:
         run: bun run astro check
 
       - name: Lint code
-        run: bun run lint
+        run: bunx ultracite fix
 
       - name: Format check and auto-fix
         run: |
@@ -61,7 +61,7 @@ jobs:
             echo "Running format check with auto-fix enabled..."
 
             # Check if formatting is needed
-            if ! bunx biome check .; then
+            if ! bunx ultracite check; then
               echo "❌ Code formatting issues detected. Auto-fixing..."
 
               # Configure git
@@ -69,15 +69,15 @@ jobs:
               git config --local user.name "GitHub Action Auto-Format"
 
               # Run formatter with write flag
-              bun run lint:check
+              bunx ultracite fix
 
               # Check if there are changes to commit
               if git diff --quiet; then
-                echo "✅ No formatting changes needed after running biome check"
+                echo "✅ No formatting changes needed after running ultracite check"
               else
                 echo "📝 Committing formatting changes..."
                 git add .
-                git commit -m "Auto-format code with biome [skip ci]"
+                git commit -m "Auto-format code with ultracite [skip ci]"
                 # Handle detached HEAD for PRs
                 if [ "${{ github.event_name }}" = "pull_request" ]; then
                   echo "Pushing to PR branch: ${{ github.head_ref }}"
@@ -92,7 +92,7 @@ jobs:
             fi
           else
             echo "Running format check only (read-only mode)..."
-            bunx biome check .
+            bunx ultracite check
           fi
 
   build:
