@@ -1,15 +1,106 @@
 ---
-import WorkInProgress from "../components/work-in-progress.astro";
+import { Image } from "astro:assets";
+import preview1 from "../assets/logos/splurtpaw2_alt3.png";
+import preview2 from "../assets/logos/splurtpaw2_alt3.png";
+import HeroHeader from "../components/hero-header.astro";
 import Layout from "../layouts/main-layout.astro";
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import "../styles/home.css";
+import "../styles/global.css";
 ---
 
 <Layout
-	title="S.P.L.U.R.T. Station - Work In Progress"
-	description="Website in progress!"
-	type="website"
+	title="S.P.L.U.R.T. Station - Welcome"
+	description="S.P.L.U.R.T. Station - A NSFW furry roleplaying server for Space Station 13. Join our community for exciting lewdness!"
 >
-	<WorkInProgress/>
+	<div class="h-full">
+		<HeroHeader/>
+
+		<main class="content py-12 lg:text-lg lg:py-16 xl:py-24 debris-bg">
+			<div class="max-w-7xl mx-auto px-4">
+				<div class="card mb-8 lg:mb-12">
+					<h2 class="mb-4 lg:mb-5 content-heading content-heading--primary">
+						Lewd adventures await
+					</h2>
+
+					<p class="mb-4 lg:mb-6">
+						In the not too distant future, crewmembers aboard space stations
+						owned by corporations work tirelessly to keep the lights on. But on
+						S.P.L.U.R.T. Station, life is about more than just survival - it's
+						about connection, adventure, and embracing your desires in a safe
+						and welcoming community.
+					</p>
+					<p>
+						Tell your own story in the world of S.P.L.U.R.T. Station, a NSFW
+						furry roleplaying server for Space Station 13. Join a community of
+						like-minded individuals where creativity, lewdness, and fun come
+						together in an ever-changing universe of possibilities.
+					</p>
+				</div>
+
+				<div class="flex flex-col lg:flex-row lg:mb-8">
+					<div class="flex flex-col mb-8 lg:mr-8 lg:mb-0">
+						<h2 class="mb-4 lg:mb-8 content-heading content-heading--primary">
+							Gameplay &amp; features
+						</h2>
+
+						<ul
+							class="flex h-full flex-col justify-between gap-4 ml-6 features"
+						>
+							<li>
+								Play a variety of roles on the station, ranging from simple
+								assistants to experienced engineers, from skilled medical
+								professionals to the captain leading the crew.
+							</li>
+							<li>
+								Engage in immersive roleplay with a welcoming furry community
+								that celebrates creativity and expression.
+							</li>
+							<li>
+								Unleash your creativity with a myriad of complex systems,
+								including detailed medical simulation, research mechanics, and
+								interactive environments.
+							</li>
+							<li>
+								Experience 100% player-driven gameplay, where no two rounds will
+								play the same.
+							</li>
+							<li>
+								Discover hidden areas of the station and uncover their secrets
+								with friends.
+							</li>
+							<li>
+								Enjoy NSFW content in a safe, consensual, and respectful
+								environment with clear rules and moderation.
+							</li>
+							<li>
+								Experience random events and challenges that keep gameplay fresh
+								and exciting.
+							</li>
+						</ul>
+					</div>
+
+					<div
+						class="flex gap-6 justify-center flex-wrap lg:justify-start lg:flex-col lg:gap-8 lg:shrink-0 lg:w-4/12"
+					>
+						<Image
+							class="game-shot-card rounded-sm w-full"
+							src={preview1}
+							width={1000}
+							height={710}
+							alt="Preview 1"
+							loading="lazy"
+						/>
+						<Image
+							class="game-shot-card rounded-sm w-full"
+							src={preview2}
+							width={1000}
+							height={714}
+							alt="Preview 2"
+							loading="lazy"
+						/>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
 </Layout>

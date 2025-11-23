@@ -1,5 +1,8 @@
 import { describe, expect, test } from "bun:test";
-import { generateOGImageUrl, generateTwitterImageUrl } from "./meta-tags";
+import {
+	generateOGImageUrl,
+	generateTwitterImageUrl,
+} from "../utils/meta-tags";
 
 describe("Meta Tags Utilities", () => {
 	const mockSite = "https://splurt.space";

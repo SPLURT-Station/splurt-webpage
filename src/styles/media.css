@@ -1,0 +1,26 @@
+.media-item {
+	position: relative;
+	overflow: hidden;
+	border-radius: 0.125rem;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+	}
+
+	img {
+		width: 100%;
+		height: auto;
+		object-fit: cover;
+		min-height: 200px;
+		background: linear-gradient(
+			135deg,
+			rgba(255, 80, 180, 0.1),
+			rgba(255, 150, 220, 0.1)
+		);
+	}
+}

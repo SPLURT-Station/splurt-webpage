@@ -1,1 +1,121 @@
 @import "tailwindcss";
+
+:root {
+	--color-primary: #ff50b0;
+	--color-secondary: #343841;
+	--color-tertiary: #d5d5d5;
+	--color-background: #0e1118;
+	--nav-height: 3.5rem;
+}
+
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	font-family: "Open Sans", sans-serif;
+}
+
+body {
+	background-color: #0e1118;
+	color: white;
+	background-image:
+		radial-gradient(
+			2px 2px at 23px 47px,
+			rgba(255, 100, 200, 0.3),
+			transparent 70%
+		),
+		radial-gradient(
+			1px 1px at 67px 23px,
+			rgba(255, 150, 220, 0.25),
+			transparent 60%
+		),
+		radial-gradient(
+			3px 3px at 41px 89px,
+			rgba(255, 80, 180, 0.35),
+			transparent 80%
+		);
+	background-repeat: repeat;
+	background-size: 231px 137px;
+	background-attachment: fixed;
+}
+
+a {
+	color: color-mix(in srgb, var(--color-primary) 95%, white);
+	transition: color 0.2s ease;
+
+	&:hover,
+	&:active {
+		color: var(--color-primary);
+	}
+}
+
+/* Content styles */
+.content {
+	padding: 3rem 0;
+}
+
+@media (min-width: 1024px) {
+	.content {
+		font-size: 1.125rem;
+		padding: 4rem 0;
+	}
+}
+
+@media (min-width: 1280px) {
+	.content {
+		padding: 6rem 0;
+	}
+}
+
+.debris-bg {
+	/* Background pattern can be added here */
+}
+
+.card {
+	background-color: rgba(52, 56, 65, 0.5);
+	backdrop-filter: blur(4px);
+	border-radius: 0.5rem;
+	padding: 1.5rem;
+	box-shadow:
+		0 10px 15px -3px rgba(0, 0, 0, 0.1),
+		0 4px 6px -2px rgba(0, 0, 0, 0.05);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.content-heading {
+	font-size: 1.5rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	margin-bottom: 1rem;
+}
+
+@media (min-width: 1024px) {
+	.content-heading {
+		font-size: 1.875rem;
+		margin-bottom: 1.25rem;
+	}
+}
+
+.content-heading--primary {
+	color: white;
+}
+
+.content-heading--primary-dark {
+	color: #ff50b0;
+}
+
+.content-heading--secondary {
+	font-size: 1.25rem;
+	color: white;
+}
+
+@media (min-width: 1024px) {
+	.content-heading--secondary {
+		font-size: 1.5rem;
+	}
+}

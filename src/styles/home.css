@@ -1,0 +1,21 @@
+.features {
+	li {
+		position: relative;
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: 10px;
+			left: -16px;
+			width: 8px;
+			height: 8px;
+			background: #ff50b0;
+		}
+	}
+}
+
+.game-shot-card {
+	background-color: rgba(14, 17, 24, 0.5);
+	border-radius: 0.125rem;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}

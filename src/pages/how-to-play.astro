@@ -1,0 +1,166 @@
+---
+import { Image } from "astro:assets";
+import preview from "../assets/logos/splurtpaw2_alt3.png";
+import Layout from "../layouts/main-layout.astro";
+import "../styles/how-to-play.css";
+---
+
+<Layout
+	title="How To Play - S.P.L.U.R.T. Station"
+	description="Learn how to join and play on S.P.L.U.R.T. Station, a NSFW furry roleplaying server for Space Station 13."
+>
+	<div class="container mx-auto px-4">
+		<div class="flex items-center gap-8 lg:gap-14 mb-8">
+			<Image
+				class="hidden md:block game-shot-card max-w-[420px]"
+				src={preview}
+				width={1000}
+				height={711}
+				alt="Preview"
+			/>
+
+			<div class="grow">
+				<h2 class="mb-4 lg:mb-8 font-semibold uppercase tracking-wide text-3xl">
+					Welcome to S.P.L.U.R.T. Station
+				</h2>
+				<p class="text-xl leading-8">
+					Getting started is quick, easy, and completely free! Just follow these
+					simple steps below and you'll be playing on our NSFW furry roleplaying
+					server in no time.
+				</p>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="flex gap-4 sm:gap-8">
+				<div class="how-to-step">
+					<span>1</span>
+				</div>
+				<div class="grow pb-6 md:pb-10 pt-2">
+					<h3 class="content-heading content-heading--secondary mb-4">
+						Download
+					</h3>
+					<p class="mb-4">
+						S.P.L.U.R.T. Station is built on a game platform called BYOND (Build
+						Your Own Net Dream), which you'll need to download and install to
+						play.
+					</p>
+					<a
+						href="https://www.byond.com/download/"
+						class="cta"
+						target="_blank"
+						rel="external"
+					>
+						Download BYOND
+						<svg
+							class="inline-block ml-2 w-4 h-4"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							aria-hidden="true"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+					</a>
+				</div>
+			</div>
+
+			<div class="flex gap-4 sm:gap-8">
+				<div class="how-to-step">
+					<span>2</span>
+				</div>
+				<div class="grow pb-6 md:pb-10 pt-2">
+					<h3 class="content-heading content-heading--secondary mb-4">
+						Register
+					</h3>
+					<p class="mb-4">
+						Next, register a BYOND account. You'll be prompted to login to this
+						account when you launch BYOND, and S.P.L.U.R.T. Station requires it.
+					</p>
+					<a
+						href="https://secure.byond.com/Join"
+						class="cta"
+						target="_blank"
+						rel="external"
+					>
+						Register Account
+						<svg
+							class="inline-block ml-2 w-4 h-4"
+							fill="currentColor"
+							viewBox="0 0 20 20"
+							aria-hidden="true"
+						>
+							<path
+								fill-rule="evenodd"
+								d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+					</a>
+				</div>
+			</div>
+
+			<div class="flex gap-4 sm:gap-8">
+				<div class="how-to-step how-to-step--no-line">
+					<span>3</span>
+				</div>
+				<div class="grow pt-2">
+					<h3 class="content-heading content-heading--secondary mb-4">Play!</h3>
+					<p class="mb-4">
+						Now you're ready to join S.P.L.U.R.T. Station! Once you have BYOND
+						installed and your account registered, you can connect to our server
+						using one of the following methods:
+					</p>
+					<div class="play-methods">
+						<div class="method-card">
+							<strong>Direct Connection</strong>
+							<p>
+								Click the button below to open the game directly, or enter this
+								address in BYOND:
+							</p>
+							<code class="server-address">
+								byond://play.splurt.space:42069
+							</code>
+							<a
+								href="byond://play.splurt.space:42069"
+								class="cta mt-4 inline-block"
+							>
+								Connect Now
+							</a>
+						</div>
+						<div class="method-card">
+							<strong>Read Our Rules</strong>
+							<p>
+								Before you start playing, make sure to familiarize yourself with
+								our server rules and guidelines.
+							</p>
+							<a
+								href="https://wiki.splurt.space/Rules"
+								class="cta mt-4 inline-block"
+								target="_blank"
+								rel="external"
+							>
+								View Rules
+								<svg
+									class="inline-block ml-2 w-4 h-4"
+									fill="currentColor"
+									viewBox="0 0 20 20"
+									aria-hidden="true"
+								>
+									<path
+										fill-rule="evenodd"
+										d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+										clip-rule="evenodd"
+									/>
+								</svg>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>

@@ -1,0 +1,15 @@
+---
+description: Optimizations related to this project
+globs: **/*.tsx,**/*.ts,**/*.js,**/*.jsx,**/*.json,**/*.jsonc,**/*.html,**/*.vue,**/*.svelte,**/*.astro,**/*.css,**/*.yaml,**/*.yml,**/*.graphql,**/*.gql,**/*.md,**/*.mdx,**/*.grit
+alwaysApply: false
+---
+
+# General optimization tips
+
+This project uses Astro as a framework, and also Solid to load certain javascript elements
+
+- Use Astro optimizations wherever possible, for example using custom tags, actions, etc.
+
+# Image optimizations
+
+- use `<Image>`, an astro component, instead of `<img>`

@@ -1,0 +1,33 @@
+---
+import { Image } from "astro:assets";
+import logo from "../assets/logos/splurtpaw2_alt3.png";
+import "../styles/hero-header.css";
+---
+
+<header class="intro">
+	<div class="relative z-30">
+		<Image
+			src={logo}
+			alt="S.P.L.U.R.T. Station"
+			class="logo max-w-full p-4"
+			width={550}
+			height={273}
+		/>
+		<div class="text-center mt-8 mx-4">
+			<a href="/how-to-play" class="cta">Play Now</a>
+		</div>
+	</div>
+	<!-- Video background placeholder - will be replaced when video is available -->
+	<!-- 
+	<video
+		playsinline
+		autoplay
+		loop
+		muted
+		poster="/video-poster.webp"
+		class="absolute z-10 w-auto min-w-full min-h-full max-w-none"
+	>
+		<source src="/hero.mp4" type="video/mp4" />
+	</video>
+	-->
+</header>

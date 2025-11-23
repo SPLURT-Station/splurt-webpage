@@ -1,0 +1,75 @@
+---
+import Layout from "../layouts/main-layout.astro";
+import "../styles/media.css";
+
+// These would be replaced with actual image paths when available
+// For now, using placeholder structure
+const splashScreens = [
+	{ id: 1, alt: "Splashscreen 1" },
+	{ id: 2, alt: "Splashscreen 2" },
+	{ id: 3, alt: "Splashscreen 3" },
+	{ id: 4, alt: "Splashscreen 4" },
+	{ id: 5, alt: "Splashscreen 5" },
+	{ id: 6, alt: "Splashscreen 6" },
+];
+
+const inGameScreenshots = [
+	{ id: 1, alt: "In-game screenshot 1" },
+	{ id: 2, alt: "In-game screenshot 2" },
+	{ id: 3, alt: "In-game screenshot 3" },
+	{ id: 4, alt: "In-game screenshot 4" },
+	{ id: 5, alt: "In-game screenshot 5" },
+	{ id: 6, alt: "In-game screenshot 6" },
+	{ id: 7, alt: "In-game screenshot 7" },
+	{ id: 8, alt: "In-game screenshot 8" },
+];
+---
+
+<Layout
+	title="Media - S.P.L.U.R.T. Station"
+	description="View splashscreens and in-game screenshots from S.P.L.U.R.T. Station."
+>
+	<div class="container mx-auto px-4">
+		<!-- Splashscreens Section -->
+		<div class="card mb-8">
+			<h2 class="content-heading content-heading--primary-dark mb-4">
+				Splashscreens
+			</h2>
+
+			<div class="grid lg:grid-cols-2 gap-4">
+				{splashScreens.map((item) => (
+					<div class="media-item">
+						<img
+							src={`/img/media/splash/${item.id}.jpg`}
+							alt={item.alt}
+							class="lazyload bg-background bg-opacity-50 rounded-sm w-full"
+							loading="lazy"
+							onerror="this.src='/img/media/splash/placeholder.jpg'; this.onerror=null;"
+						/>
+					</div>
+				))}
+			</div>
+		</div>
+
+		<!-- In-Game Screenshots Section -->
+		<div class="card">
+			<h2 class="content-heading content-heading--primary-dark mb-4">
+				In-Game Screenshots
+			</h2>
+
+			<div class="grid lg:grid-cols-2 gap-4">
+				{inGameScreenshots.map((item) => (
+					<div class="media-item">
+						<img
+							src={`/img/media/screenshots/${item.id}.jpg`}
+							alt={item.alt}
+							class="lazyload bg-background bg-opacity-50 rounded-sm w-full"
+							loading="lazy"
+							onerror="this.src='/img/media/screenshots/placeholder.jpg'; this.onerror=null;"
+						/>
+					</div>
+				))}
+			</div>
+		</div>
+	</div>
+</Layout>

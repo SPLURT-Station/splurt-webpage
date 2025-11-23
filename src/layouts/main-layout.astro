@@ -1,6 +1,11 @@
 ---
 import { getImage } from "astro:assets";
+import logo from "../assets/logos/splurtpaw2_alt3.png";
 import thumbnail from "../assets/thumbnail.png";
+import AgeGate from "../components/age-gate";
+import Footer from "../components/footer.astro";
+import Navigation from "../components/navigation";
+import "../styles/global.css";
 
 type Props = {
 	title?: string;
@@ -26,6 +31,14 @@ const optimizedThumbnail = await getImage({
 	format: "webp",
 	width: 1200,
 	height: 630,
+});
+
+// Get optimized logo for Navigation and AgeGate components
+const optimizedLogo = await getImage({
+	src: logo,
+	format: "webp",
+	width: 72,
+	height: 72,
 });
 
 // Smart image selection based on service capabilities
@@ -109,8 +122,13 @@ const twitterImageUrl = new URL(twitterImage, Astro.site || Astro.url.origin)
 		<meta name="twitter:image:src" content={twitterImageUrl}>
 		<meta name="msapplication-navbutton-color" content="#ff50b0">
 	</head>
-	<body>
-		<slot/>
+	<body class="flex flex-col min-h-screen">
+		<AgeGate client:load logoUrl={optimizedLogo.src}/>
+		<Navigation client:load logoUrl={optimizedLogo.src}/>
+		<main class="flex-1 pt-14">
+			<slot/>
+		</main>
+		<Footer/>
 	</body>
 </html>
 
@@ -120,6 +138,6 @@ const twitterImageUrl = new URL(twitterImage, Astro.site || Astro.url.origin)
 		margin: 0;
 		padding: 0;
 		width: 100%;
-		height: 100%;
+		min-height: 100%;
 	}
 </style>
