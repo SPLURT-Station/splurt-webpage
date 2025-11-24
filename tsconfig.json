@@ -5,6 +5,7 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "jsx": "preserve",
-    "jsxImportSource": "solid-js"
+    "jsxImportSource": "solid-js",
+    "types": ["vite-plugin-solid-svg/types"]
   }
 }

@@ -1,5 +1,7 @@
 import { createSignal, Show } from "solid-js";
 import "../styles/navigation.css";
+import DiscordIconSvg from "../assets/svg/discord-icon-svgrepo-com.svg?component-solid";
+import GithubIconSvg from "../assets/svg/github-svgrepo-com.svg?component-solid";
 
 type Props = {
 	logoUrl?: string;
@@ -56,19 +58,44 @@ export default function Navigation(props: Props) {
 							Rules
 						</a>
 					</div>
-					<div class="social-links ml-auto flex items-center gap-2 pl-4">
-						<a
-							aria-label="Discord"
-							class="discord-button"
-							href="https://discord.gg/splurt"
-							rel="noopener external"
-							target="_blank"
-						>
-							Discord
-						</a>
+					<div class="nav-right-section ml-auto flex items-center">
+						<div class="nav-separator" />
 						<a class="play-now-button" href="/how-to-play">
 							Play Now
 						</a>
+						<div class="nav-separator" />
+						<div class="social-icons flex items-center gap-3">
+							<a
+								aria-label="Discord"
+								class="social-icon"
+								href="https://discord.gg/splurt"
+								rel="noopener external"
+								target="_blank"
+							>
+								<DiscordIconSvg
+									aria-hidden="true"
+									class="discord-icon"
+									fill="currentColor"
+									height={20}
+									width={20}
+								/>
+							</a>
+							<a
+								aria-label="GitHub"
+								class="social-icon"
+								href="https://github.com/splurt-station"
+								rel="noopener external"
+								target="_blank"
+							>
+								<GithubIconSvg
+									aria-hidden="true"
+									class="github-icon"
+									fill="currentColor"
+									height={20}
+									width={20}
+								/>
+							</a>
+						</div>
 					</div>
 				</div>
 				<div class="ml-auto flex items-center pl-4 sm:hidden">
@@ -113,17 +140,41 @@ export default function Navigation(props: Props) {
 						>
 							Rules
 						</a>
-						<a
-							class="discord-button mt-2"
-							href="https://discord.gg/splurt"
-							rel="noopener external"
-							target="_blank"
-						>
-							Discord
-						</a>
 						<a class="play-now-button mt-2" href="/how-to-play">
 							Play Now
 						</a>
+						<div class="social-icons-mobile mt-2 flex items-center gap-3">
+							<a
+								aria-label="Discord"
+								class="social-icon"
+								href="https://discord.gg/splurt"
+								rel="noopener external"
+								target="_blank"
+							>
+								<DiscordIconSvg
+									aria-hidden="true"
+									class="discord-icon"
+									fill="currentColor"
+									height={20}
+									width={20}
+								/>
+							</a>
+							<a
+								aria-label="GitHub"
+								class="social-icon"
+								href="https://github.com/splurt-station"
+								rel="noopener external"
+								target="_blank"
+							>
+								<GithubIconSvg
+									aria-hidden="true"
+									class="github-icon"
+									fill="currentColor"
+									height={20}
+									width={20}
+								/>
+							</a>
+						</div>
 					</div>
 				</div>
 			</Show>

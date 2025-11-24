@@ -78,34 +78,122 @@
 	}
 }
 
-.discord-button {
-	color: white;
-	background-color: #5865f2;
-	padding: 0.5rem 1rem;
-	border-radius: 0.25rem;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	transition: background-color 200ms;
+.nav-right-section {
+	gap: 0.75rem;
+}
 
-	&:hover {
-		background-color: #4752c4;
-	}
+.nav-separator {
+	width: 1px;
+	height: 1.5rem;
+	background-color: rgba(255, 255, 255, 0.1);
 }
 
 .play-now-button {
+	background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
 	color: white;
-	background-color: #ff50b0;
+	border: 2px solid rgba(255, 100, 200, 0.5);
 	padding: 0.5rem 1rem;
 	border-radius: 0.25rem;
 	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
-	transition: background-color 200ms;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	box-shadow:
+		0 8px 25px rgba(255, 80, 180, 0.4),
+		0 0 20px rgba(255, 100, 200, 0.3),
+		inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 
 	&:hover {
-		background-color: #ff40a0;
+		background: linear-gradient(135deg, #ff30a0, #ff60c0, #ff30a0);
+		color: white;
+		transform: translateY(-3px);
+		box-shadow:
+			0 12px 35px rgba(255, 80, 180, 0.6),
+			0 0 30px rgba(255, 100, 200, 0.8),
+			inset 0 1px 0 rgba(255, 255, 255, 0.2);
+		border-color: rgba(255, 150, 220, 0.8);
+		text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 	}
+
+	&:active {
+		transform: translateY(-1px);
+		box-shadow:
+			0 6px 20px rgba(255, 79, 240, 0.4),
+			inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	}
+}
+
+.social-icons {
+	padding: 0 0.5rem;
+}
+
+.social-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 0.25rem;
+	transition:
+		background-color 200ms,
+		opacity 200ms;
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+		opacity: 0.8;
+	}
+}
+
+.discord-icon {
+	color: #9ca3af;
+	transition: color 200ms;
+	overflow: hidden;
+}
+
+.discord-icon svg {
+	width: 100%;
+	height: 100%;
+	max-width: 20px;
+	max-height: 20px;
+	filter: grayscale(100%) brightness(0.8);
+	transition: filter 200ms;
+}
+
+.social-icon:hover .discord-icon {
+	color: #5865f2;
+}
+
+.social-icon:hover .discord-icon svg {
+	filter: grayscale(0%) brightness(1);
+}
+
+.github-icon {
+	color: #9ca3af;
+	transition: color 200ms;
+	overflow: hidden;
+}
+
+.github-icon svg {
+	width: 100%;
+	height: 100%;
+	max-width: 20px;
+	max-height: 20px;
+	filter: grayscale(100%) brightness(0.8);
+	transition: filter 200ms;
+}
+
+.social-icon:hover .github-icon {
+	color: #ffffff;
+}
+
+.social-icon:hover .github-icon svg {
+	filter: grayscale(0%) brightness(1);
+}
+
+.social-icons-mobile {
+	padding: 0.5rem 0;
 }
 
 .toggle-nav {

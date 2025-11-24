@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import logo from "../assets/logos/splurtpaw2_alt3.png";
+import logo from "../assets/logos/splurtlogo.png";
+import DiscordIcon from "../assets/svg/discord-icon-svgrepo-com.svg";
 import "../styles/hero-header.css";
 ---
 
@@ -13,8 +14,25 @@ import "../styles/hero-header.css";
 			width={550}
 			height={273}
 		/>
-		<div class="text-center mt-8 mx-4">
-			<a href="/how-to-play" class="cta">Play Now</a>
+		<div
+			class="text-center mt-8 mx-4 flex flex-col sm:flex-row gap-4 justify-center items-center"
+		>
+			<a href="/how-to-play" class="cta cta--highlighted">Play Now</a>
+			<a
+				href="https://discord.gg/splurt"
+				class="cta cta--discord"
+				target="_blank"
+				rel="noopener external"
+			>
+				Discord
+				<DiscordIcon
+					class="discord-icon"
+					width={20}
+					height={20}
+					fill="currentColor"
+					aria-hidden="true"
+				/>
+			</a>
 		</div>
 	</div>
 	<!-- Video background placeholder - will be replaced when video is available -->

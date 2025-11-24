@@ -49,9 +49,53 @@
 	display: inline-flex;
 	align-items: center;
 	text-decoration: none;
+	cursor: pointer;
 
 	&:hover {
 		background-color: #ff40a0;
+	}
+}
+
+.cta--highlighted {
+	color: white;
+	background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
+	border: 2px solid rgba(255, 100, 200, 0.5);
+	padding: 0.75rem 1.5rem;
+	border-radius: 0.5rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	transition: all 0.3s ease;
+	display: inline-flex;
+	align-items: center;
+	text-decoration: none;
+	cursor: pointer;
+	box-shadow:
+		0 4px 25px rgba(255, 80, 180, 0.4),
+		0 -4px 25px rgba(255, 80, 180, 0.3),
+		0 0 20px rgba(255, 100, 200, 0.3),
+		inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+
+	&:hover {
+		background: linear-gradient(135deg, #ff30a0, #ff60c0, #ff30a0);
+		color: white;
+		transform: translateY(-3px);
+		box-shadow:
+			0 6px 35px rgba(255, 80, 180, 0.6),
+			0 -6px 35px rgba(255, 80, 180, 0.5),
+			0 0 30px rgba(255, 100, 200, 0.8),
+			inset 0 1px 0 rgba(255, 255, 255, 0.2);
+		border-color: rgba(255, 150, 220, 0.8);
+		text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+	}
+
+	&:active {
+		transform: translateY(-1px);
+		box-shadow:
+			0 3px 20px rgba(255, 79, 240, 0.4),
+			0 -3px 20px rgba(255, 79, 240, 0.3),
+			inset 0 1px 0 rgba(255, 255, 255, 0.1);
 	}
 }
 

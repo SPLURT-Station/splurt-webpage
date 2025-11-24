@@ -4,6 +4,7 @@ import solidJs from "@astrojs/solid-js";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import favicons from "astro-favicons";
+import solidSvg from "vite-plugin-solid-svg";
 
 // https://astro.build/config
 export default defineConfig({
@@ -25,6 +26,11 @@ export default defineConfig({
 	],
 
 	vite: {
-		plugins: [tailwindcss()],
+		plugins: [
+			tailwindcss(),
+			solidSvg({
+				defaultAsComponent: false,
+			}),
+		],
 	},
 });
