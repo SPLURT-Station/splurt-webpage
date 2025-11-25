@@ -1,4 +1,4 @@
-import { createSignal, Show } from "solid-js";
+import { createSignal, onMount, Show } from "solid-js";
 import "../styles/navigation.css";
 import DiscordIconSvg from "../assets/svg/discord-icon-svgrepo-com.svg?component-solid";
 import GithubIconSvg from "../assets/svg/github-svgrepo-com.svg?component-solid";
@@ -9,9 +9,22 @@ type Props = {
 
 export default function Navigation(props: Props) {
 	const [navOpen, setNavOpen] = createSignal(false);
+	const [currentPath, setCurrentPath] = createSignal("");
+
+	onMount(() => {
+		setCurrentPath(window.location.pathname);
+	});
 
 	const toggleNav = () => {
 		setNavOpen(!navOpen());
+	};
+
+	const isActive = (path: string) => {
+		const current = currentPath();
+		if (path === "/") {
+			return current === "/" || current === "";
+		}
+		return current.startsWith(path);
 	};
 
 	return (
@@ -32,13 +45,21 @@ export default function Navigation(props: Props) {
 				</a>
 				<div class="nav-links hidden grow sm:flex">
 					<div class="page-links flex">
-						<a class="page-link" href="/">
+						<a class="page-link" classList={{ active: isActive("/") }} href="/">
 							About
 						</a>
-						<a class="page-link" href="/how-to-play">
+						<a
+							class="page-link"
+							classList={{ active: isActive("/how-to-play") }}
+							href="/how-to-play"
+						>
 							How To Play
 						</a>
-						<a class="page-link" href="/media">
+						<a
+							class="page-link"
+							classList={{ active: isActive("/media") }}
+							href="/media"
+						>
 							Media
 						</a>
 						<a
@@ -115,13 +136,25 @@ export default function Navigation(props: Props) {
 			<Show when={navOpen()}>
 				<div class="sm:hidden">
 					<div class="page-links flex flex-col p-4">
-						<a class="page-link py-4" href="/">
+						<a
+							class="page-link py-4"
+							classList={{ active: isActive("/") }}
+							href="/"
+						>
 							About
 						</a>
-						<a class="page-link py-4" href="/how-to-play">
+						<a
+							class="page-link py-4"
+							classList={{ active: isActive("/how-to-play") }}
+							href="/how-to-play"
+						>
 							How To Play
 						</a>
-						<a class="page-link py-4" href="/media">
+						<a
+							class="page-link py-4"
+							classList={{ active: isActive("/media") }}
+							href="/media"
+						>
 							Media
 						</a>
 						<a

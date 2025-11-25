@@ -64,16 +64,20 @@
 			margin-bottom: -2px;
 		}
 
-		&.router-link-active:after,
-		&.router-link-exact-active:after {
+		&.active:after {
 			height: 2px;
 		}
 
-		&:hover,
-		&:active {
+		&:hover:not(.active),
+		&:active:not(.active) {
 			&:after {
 				height: calc(100% + 2px);
 			}
+		}
+
+		&.active:hover:after,
+		&.active:active:after {
+			height: calc(100% + 2px);
 		}
 	}
 }

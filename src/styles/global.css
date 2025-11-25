@@ -75,34 +75,88 @@ a {
 	/* Background pattern can be added here */
 }
 
+/* Utility classes */
+.space-glow {
+	box-shadow: 0 0 20px 2px var(--color-secondary);
+}
+
+.primary-gradient {
+	background: linear-gradient(
+		135deg,
+		var(--color-primary) 0%,
+		rgb(200 60 150) 100%
+	);
+}
+
 .card {
-	background-color: rgba(52, 56, 65, 0.5);
+	background-color: rgba(52, 56, 65, 0.75);
 	backdrop-filter: blur(4px);
 	border-radius: 0.5rem;
 	padding: 1.5rem;
 	box-shadow:
 		0 10px 15px -3px rgba(0, 0, 0, 0.1),
-		0 4px 6px -2px rgba(0, 0, 0, 0.05);
+		0 4px 6px -2px rgba(0, 0, 0, 0.05),
+		0 0 20px 2px var(--color-secondary);
 	border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .content-heading {
 	font-size: 1.5rem;
-	font-weight: 700;
+	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
 	margin-bottom: 1rem;
+	padding: 0.5rem;
+	border-radius: 0.125rem;
 }
 
 @media (min-width: 1024px) {
 	.content-heading {
 		font-size: 1.875rem;
 		margin-bottom: 1.25rem;
+		padding: 0.5rem 0.75rem;
 	}
 }
 
 .content-heading--primary {
+	position: relative;
 	color: white;
+	background: linear-gradient(
+		135deg,
+		var(--color-primary) 0%,
+		rgb(200 60 150) 100%
+	);
+}
+
+.card .content-heading--primary::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 2px;
+	background: var(--color-primary);
+}
+
+.card .content-heading--primary::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 20vw;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(
+		135deg,
+		transparent 0%,
+		transparent 25%,
+		rgba(255, 255, 255, 0.2) 35%,
+		rgba(255, 255, 255, 0.5) 50%,
+		rgba(255, 255, 255, 0.2) 65%,
+		transparent 75%,
+		transparent 100%
+	);
+	border-radius: 0.125rem;
+	pointer-events: none;
 }
 
 .content-heading--primary-dark {
