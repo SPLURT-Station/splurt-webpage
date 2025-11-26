@@ -4,6 +4,7 @@ import banner from "../assets/backgrounds/banner.png";
 import preview from "../assets/logos/splurtpaw2_alt3.png";
 import Layout from "../layouts/main-layout.astro";
 import "../styles/how-to-play.css";
+import MaterialSymbolsFileCopyOutlineRounded from "~icons/material-symbols/file-copy-outline-rounded";
 
 // Optimize the banner image for background use
 const optimizedBanner = await getImage({
@@ -140,8 +141,16 @@ const optimizedBanner = await getImage({
 								Click the button below to open the game directly, or enter this
 								address in BYOND:
 							</p>
-							<code class="server-address">
+							<code class="server-address" id="server-address">
 								byond://play.splurt.space:42069
+								<button
+									class="copy-button"
+									aria-label="Copy server address"
+									type="button"
+									data-copy-text="byond://play.splurt.space:42069"
+								>
+									<MaterialSymbolsFileCopyOutlineRounded/>
+								</button>
 							</code>
 							<a
 								href="byond://play.splurt.space:42069"
@@ -182,4 +191,27 @@ const optimizedBanner = await getImage({
 			</div>
 		</div>
 	</div>
+	<script>
+		document.addEventListener("DOMContentLoaded", () => {
+			const copyButton = document.querySelector(".copy-button");
+			if (copyButton) {
+				copyButton.addEventListener("click", async () => {
+					const textToCopy = copyButton.getAttribute("data-copy-text");
+					if (!textToCopy) {
+						return;
+					}
+
+					try {
+						await navigator.clipboard.writeText(textToCopy);
+						copyButton.classList.add("copied");
+						setTimeout(() => {
+							copyButton.classList.remove("copied");
+						}, 2000);
+					} catch (err) {
+						console.error("Failed to copy: ", err);
+					}
+				});
+			}
+		});
+	</script>
 </Layout>
