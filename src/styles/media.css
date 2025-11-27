@@ -2,14 +2,20 @@
 	position: relative;
 	overflow: hidden;
 	border-radius: 0.125rem;
-	border: 1px solid rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 100, 200, 0.3);
 	transition:
 		transform 0.2s ease,
 		box-shadow 0.2s ease;
+	box-shadow:
+		0 4px 15px rgba(0, 0, 0, 0.2),
+		0 0 15px rgba(255, 80, 180, 0.1);
 
 	&:hover {
 		transform: translateY(-2px);
-		box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+		box-shadow:
+			0 8px 25px rgba(0, 0, 0, 0.4),
+			0 0 25px rgba(255, 80, 180, 0.3);
+		border-color: rgba(255, 150, 220, 0.5);
 	}
 
 	img {
@@ -19,8 +25,8 @@
 		min-height: 200px;
 		background: linear-gradient(
 			135deg,
-			rgba(255, 80, 180, 0.1),
-			rgba(255, 150, 220, 0.1)
+			rgba(255, 80, 180, 0.15),
+			rgba(255, 150, 220, 0.15)
 		);
 	}
 }

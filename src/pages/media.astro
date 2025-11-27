@@ -1,18 +1,7 @@
 ---
-import { getImage } from "astro:assets";
-import banner from "../assets/backgrounds/banner.png";
 import MediaTabs from "../components/media-tabs";
 import Layout from "../layouts/main-layout.astro";
 import "../styles/media.css";
-
-// Optimize the banner image for background use
-const optimizedBanner = await getImage({
-	src: banner,
-	width: 1920,
-	height: 1080,
-	format: "webp",
-	quality: 80,
-});
 
 // These would be replaced with actual image paths when available
 // For now, using placeholder structure
@@ -41,15 +30,6 @@ const inGameScreenshots = [
 	title="Media - S.P.L.U.R.T. Station"
 	description="View splashscreens and in-game screenshots from S.P.L.U.R.T. Station."
 >
-	<div
-		class="fixed inset-0 -z-10"
-		style={`background-image: url(${optimizedBanner.src}); background-size: cover; background-position: center; background-repeat: no-repeat;`}
-		aria-hidden="true"
-	></div>
-	<div
-		class="fixed inset-0 -z-10 bg-black/60 backdrop-blur-sm"
-		aria-hidden="true"
-	></div>
 	<div class="container mx-auto px-4 py-12 lg:py-16 xl:py-24 relative z-10">
 		<div class="card">
 			<h2 class="content-heading content-heading--primary-dark mb-6">

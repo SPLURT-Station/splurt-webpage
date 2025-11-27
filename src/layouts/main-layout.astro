@@ -1,11 +1,53 @@
 ---
 import { getImage } from "astro:assets";
+import banner from "../assets/backgrounds/banner.png";
 import logo from "../assets/logos/splurtpaw2_alt3.png";
 import thumbnail from "../assets/thumbnail.png";
 import AgeGate from "../components/age-gate";
 import Footer from "../components/footer.astro";
 import Navigation from "../components/navigation";
+import { generateStarShadowsWithOpacity } from "../utils/stars";
 import "../styles/global.css";
+
+// Optimize the banner image for background use
+const optimizedBanner = await getImage({
+	src: banner,
+	width: 1920,
+	height: 1080,
+	format: "webp",
+	quality: 80,
+});
+
+// Generate random star shadows at build time (similar to SCSS function)
+// Using the same counts as the original: 700 small, 200 medium, 100 big
+// More cross stars in brighter layers for better visibility
+const shadowsSmall = generateStarShadowsWithOpacity(
+	700,
+	2000,
+	{
+		min: 0.7,
+		max: 0.9,
+	},
+	0.25 // 25% cross stars in small layer
+);
+const shadowsMedium = generateStarShadowsWithOpacity(
+	200,
+	2000,
+	{
+		min: 0.5,
+		max: 0.75,
+	},
+	0.35 // 35% cross stars in medium layer
+);
+const shadowsBig = generateStarShadowsWithOpacity(
+	100,
+	2000,
+	{
+		min: 0.4,
+		max: 0.6,
+	},
+	0.3 // 30% cross stars in big layer
+);
 
 type Props = {
 	title?: string;
@@ -123,6 +165,20 @@ const twitterImageUrl = new URL(twitterImage, Astro.site || Astro.url.origin)
 		<meta name="msapplication-navbutton-color" content="#ff50b0">
 	</head>
 	<body class="flex flex-col min-h-screen">
+		<div id="stars" style={`box-shadow: ${shadowsSmall};`}></div>
+		<div id="stars2" style={`box-shadow: ${shadowsMedium};`}></div>
+		<div id="stars3" style={`box-shadow: ${shadowsBig};`}></div>
+		<!-- Background image and overlay -->
+		<div
+			class="fixed inset-0 -z-10"
+			style={`background-image: url(${optimizedBanner.src}); background-size: cover; background-position: center; background-repeat: no-repeat;`}
+			aria-hidden="true"
+		></div>
+		<div
+			class="fixed inset-0 -z-10 backdrop-blur-[1px]"
+			style="background-image: linear-gradient(135deg, rgba(5, 0, 15, 0.95) 0%, rgba(25, 5, 30, 0.92) 30%, rgba(60, 15, 40, 0.88) 70%, rgba(120, 30, 80, 0.85) 100%);"
+			aria-hidden="true"
+		></div>
 		<AgeGate client:load logoUrl={optimizedLogo.src}/>
 		<Navigation client:load logoUrl={optimizedLogo.src}/>
 		<main class="flex-1 pt-14">

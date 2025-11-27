@@ -10,7 +10,12 @@
 		bottom: 0;
 		width: 7px;
 		margin-left: -3px;
-		background: #565c6c;
+		background: linear-gradient(
+			180deg,
+			rgba(255, 80, 180, 0.6),
+			rgba(255, 150, 220, 0.4)
+		);
+		box-shadow: 0 0 10px rgba(255, 100, 200, 0.3);
 	}
 
 	&--no-line:before {
@@ -27,7 +32,12 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: #565c6c;
+		background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
+		color: white;
+		box-shadow:
+			0 4px 12px rgba(255, 80, 180, 0.4),
+			0 0 10px rgba(255, 100, 200, 0.3);
+		border: 2px solid rgba(255, 255, 255, 0.3);
 
 		@media (min-width: 640px) {
 			width: 5rem;
@@ -100,11 +110,14 @@
 }
 
 .method-card {
-	background-color: rgba(52, 56, 65, 0.5);
+	background-color: rgba(15, 5, 20, 0.6);
 	border-radius: 0.5rem;
 	padding: 1.5rem;
 	margin-bottom: 1rem;
-	border: 1px solid rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 100, 200, 0.2);
+	box-shadow:
+		0 4px 15px rgba(0, 0, 0, 0.2),
+		0 0 20px rgba(255, 80, 180, 0.15);
 
 	strong {
 		margin-bottom: 0.5rem;
@@ -120,7 +133,7 @@
 }
 
 .server-address {
-	background-color: rgba(14, 17, 24, 0.7);
+	background-color: rgba(15, 5, 20, 0.7);
 	padding: 0.5rem 1rem;
 	border-radius: 0.25rem;
 	display: flex;
@@ -132,7 +145,10 @@
 		ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
 		monospace;
 	font-size: 0.875rem;
-	border: 1px solid rgba(255, 80, 176, 0.3);
+	border: 1px solid rgba(255, 100, 200, 0.4);
+	box-shadow:
+		0 0 10px rgba(255, 80, 180, 0.2),
+		inset 0 0 10px rgba(255, 100, 200, 0.1);
 }
 
 .copy-button {
