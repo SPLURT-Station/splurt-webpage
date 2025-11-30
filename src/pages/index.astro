@@ -1,12 +1,11 @@
 ---
 import { getImage, Image } from "astro:assets";
-import preview1 from "../assets/logos/splurtpaw2_alt3.png";
-import preview2 from "../assets/logos/splurtpaw2_alt3.png";
-import HeroHeader from "../components/hero-header.astro";
+import preview1 from "/src/assets/logos/splurtpaw2_alt3.png";
+import preview2 from "/src/assets/logos/splurtpaw2_alt3.png";
+import HeroHeader from "../components/hero-header/hero-header.astro";
 import Layout from "../layouts/main-layout.astro";
-import "../styles/home.css";
-import "../styles/global.css";
-import TypewriterText from "../components/typewriter-text";
+import "./home.css";
+import TypewriterText from "../components/typewriter-text/typewriter-text.tsx";
 ---
 
 <Layout
@@ -20,20 +19,20 @@ import TypewriterText from "../components/typewriter-text";
 			<div class="max-w-7xl mx-auto px-4 relative z-10">
 				<div class="card mb-8 lg:mb-12">
 					<h2
-						class="mb-4 lg:mb-5 content-heading content-heading--primary font-['Grand9K_Pixel']"
+						class="mb-4 lg:mb-5 content-heading content-heading--primary font-pixel"
 					>
 						Lewd adventures await
 					</h2>
 
 					<TypewriterText client:visible speed={20} delay={300}>
-						<p class="mb-4 lg:mb-6 font-[SpessFont]">
+						<p class="mb-4 lg:mb-6 font-spess">
 							In the not too distant future, crewmembers aboard space stations
 							owned by corporations work tirelessly to keep the lights on. But
 							on S.P.L.U.R.T. Station, life is about more than just survival -
 							it's about connection, adventure, and embracing your desires in a
 							safe and welcoming community.
 						</p>
-						<p class="font-[SpessFont]">
+						<p class="font-spess">
 							Tell your own story in the world of S.P.L.U.R.T. Station, a NSFW
 							furry roleplaying server for Space Station 13. Join a community of
 							like-minded individuals where creativity, lewdness, and fun come
@@ -45,7 +44,7 @@ import TypewriterText from "../components/typewriter-text";
 				<div class="flex flex-col lg:flex-row lg:mb-8">
 					<div class="flex flex-col mb-8 lg:mr-8 lg:mb-0">
 						<h2
-							class="mb-4 lg:mb-8 content-heading content-heading--primary font-['Grand9K_Pixel']"
+							class="mb-4 lg:mb-8 content-heading content-heading--primary font-pixel"
 						>
 							Gameplay &amp; features
 						</h2>

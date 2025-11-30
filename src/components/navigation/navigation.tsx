@@ -1,5 +1,5 @@
 import { createSignal, onMount, Show } from "solid-js";
-import "../styles/navigation.css";
+import "./navigation.css";
 
 // Iconify icons as inline SVG components
 function DiscordIcon(props: {
@@ -71,7 +71,7 @@ export default function Navigation(props: Props) {
 	};
 
 	return (
-		<nav class="site-nav fixed top-0 right-0 left-0 z-40 bg-background font-['Grand9K_Pixel']">
+		<nav class="site-nav fixed top-0 right-0 left-0 z-40 bg-background font-pixel">
 			<div class="mx-auto flex h-14 max-w-7xl px-2">
 				<a
 					aria-label="Home"
@@ -88,25 +88,29 @@ export default function Navigation(props: Props) {
 				</a>
 				<div class="nav-links hidden grow sm:flex">
 					<div class="page-links flex">
-						<a class="page-link" classList={{ active: isActive("/") }} href="/">
+						<a
+							class="page-link flex items-center px-4 font-semibold text-white uppercase tracking-normal"
+							classList={{ active: isActive("/") }}
+							href="/"
+						>
 							About
 						</a>
 						<a
-							class="page-link"
+							class="page-link flex items-center px-4 font-semibold text-white uppercase tracking-normal"
 							classList={{ active: isActive("/how-to-play") }}
 							href="/how-to-play"
 						>
 							How To Play
 						</a>
 						<a
-							class="page-link"
+							class="page-link flex items-center px-4 font-semibold text-white uppercase tracking-normal"
 							classList={{ active: isActive("/media") }}
 							href="/media"
 						>
 							Media
 						</a>
 						<a
-							class="page-link"
+							class="page-link flex items-center px-4 font-semibold text-white uppercase tracking-normal"
 							href="https://wiki.splurt.space"
 							rel="noopener external"
 							target="_blank"
@@ -114,7 +118,7 @@ export default function Navigation(props: Props) {
 							Wiki
 						</a>
 						<a
-							class="page-link"
+							class="page-link flex items-center px-4 font-semibold text-white uppercase tracking-normal"
 							href="https://wiki.splurt.space/Rules"
 							rel="noopener external"
 							target="_blank"
@@ -122,13 +126,16 @@ export default function Navigation(props: Props) {
 							Rules
 						</a>
 					</div>
-					<div class="nav-right-section ml-auto flex items-center">
+					<div class="nav-right-section ml-auto flex items-center gap-3">
 						<div class="nav-separator" />
-						<a class="play-now-button" href="/how-to-play">
+						<a
+							class="cta--highlighted cursor-pointer rounded px-4 py-2 font-semibold uppercase tracking-normal transition-all"
+							href="/how-to-play"
+						>
 							Play Now
 						</a>
 						<div class="nav-separator" />
-						<div class="social-icons flex items-center gap-3">
+						<div class="social-icons flex items-center gap-3 px-2">
 							<a
 								aria-label="Discord"
 								class="social-icon"
@@ -216,7 +223,7 @@ export default function Navigation(props: Props) {
 						>
 							Rules
 						</a>
-						<a class="play-now-button mt-2" href="/how-to-play">
+						<a class="cta--highlighted mt-2" href="/how-to-play">
 							Play Now
 						</a>
 						<div class="social-icons-mobile mt-2 flex items-center gap-3">

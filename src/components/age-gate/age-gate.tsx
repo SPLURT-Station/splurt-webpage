@@ -2,8 +2,8 @@ import { createSignal, onMount, Show } from "solid-js";
 import {
 	getAgeConfirmationStatus,
 	setAgeConfirmationStatus,
-} from "../utils/age-gate";
-import "../styles/age-gate.css";
+} from "../../utils/age-gate";
+import "./age-gate.css";
 
 type Props = {
 	logoUrl?: string;
@@ -33,11 +33,11 @@ export default function AgeGate(props: Props) {
 					aria-describedby="age-gate-description"
 					aria-labelledby="age-gate-title"
 					aria-modal="true"
-					class="age-gate-modal"
+					class="age-gate-modal relative w-[min(92vw,640px)] overflow-hidden"
 					role="dialog"
 				>
-					<div class="age-gate-header">
-						<div class="age-gate-logo-wrap">
+					<div class="age-gate-header mb-3 flex items-center gap-3">
+						<div class="age-gate-logo-wrap relative inline-flex h-[72px] w-[72px] items-center justify-center">
 							<img
 								alt="Splurt Logo"
 								class="age-gate-logo"
@@ -50,16 +50,16 @@ export default function AgeGate(props: Props) {
 								18+
 							</span>
 						</div>
-						<h2 class="age-gate-title" id="age-gate-title">
+						<h2 class="age-gate-title m-0" id="age-gate-title">
 							Adults Only
 						</h2>
 					</div>
-					<p class="age-gate-text" id="age-gate-description">
+					<p class="age-gate-text m-0 mb-5" id="age-gate-description">
 						This website contains content intended for adults. By clicking
 						<strong>Continue</strong>, you confirm that you are at least 18
 						years of age.
 					</p>
-					<div class="age-gate-actions">
+					<div class="age-gate-actions flex justify-end">
 						<button
 							class="age-continue-button"
 							id="age-continue"

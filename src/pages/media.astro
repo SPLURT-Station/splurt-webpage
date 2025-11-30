@@ -1,7 +1,7 @@
 ---
-import MediaTabs from "../components/media-tabs";
+import MediaTabs from "../components/media-tabs/media-tabs.tsx";
 import Layout from "../layouts/main-layout.astro";
-import "../styles/media.css";
+import "./media.css";
 
 // These would be replaced with actual image paths when available
 // For now, using placeholder structure
@@ -32,9 +32,7 @@ const inGameScreenshots = [
 >
 	<div class="container mx-auto px-4 py-12 lg:py-16 xl:py-24 relative z-10">
 		<div class="card">
-			<h2
-				class="content-heading content-heading--primary-dark mb-6 font-[Grand9k_Pixel]"
-			>
+			<h2 class="content-heading content-heading--primary-dark mb-6 font-pixel">
 				Media Gallery
 			</h2>
 			<MediaTabs

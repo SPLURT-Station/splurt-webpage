@@ -1,13 +1,13 @@
 ---
 import { getImage } from "astro:assets";
-import banner from "../assets/backgrounds/banner.png";
-import logo from "../assets/logos/splurtpaw2_alt3.png";
-import thumbnail from "../assets/thumbnail.png";
-import AgeGate from "../components/age-gate";
-import Footer from "../components/footer.astro";
-import Navigation from "../components/navigation";
+import banner from "/src/assets/backgrounds/banner.png";
+import logo from "/src/assets/logos/splurtpaw2_alt3.png";
+import thumbnail from "/src/assets/thumbnail.png";
+import AgeGate from "../components/age-gate/age-gate.tsx";
+import Footer from "../components/footer/footer.astro";
+import Navigation from "../components/navigation/navigation.tsx";
 import { generateStarShadowsWithOpacity } from "../utils/stars";
-import "../styles/global.css";
+import "/src/styles/index.css";
 import Unfonts from "unplugin-fonts/astro";
 
 // Optimize the banner image for background use

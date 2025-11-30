@@ -1,0 +1,36 @@
+/* Variables - Mixed/computed values using theme tokens */
+/* These combine @theme variables and :root tokens to create reusable CSS values */
+/* Used ONLY in CSS files, not via Tailwind utilities */
+
+:root {
+	/* Gradients - Complex computed values, CSS-only */
+	--gradient-primary: linear-gradient(
+		135deg,
+		var(--color-primary) 0%,
+		rgb(200 60 150) 100%
+	);
+	--gradient-primary-animated: linear-gradient(
+		135deg,
+		var(--color-primary),
+		var(--color-primary-light),
+		var(--color-primary)
+	);
+	--gradient-primary-dark: linear-gradient(
+		135deg,
+		var(--color-primary-dark),
+		var(--color-primary-light),
+		var(--color-primary-dark)
+	);
+	--gradient-background-overlay: linear-gradient(
+		135deg,
+		rgba(5, 0, 15, 0.95) 0%,
+		rgba(25, 5, 30, 0.92) 30%,
+		rgba(60, 15, 40, 0.88) 70%,
+		rgba(120, 30, 80, 0.85) 100%
+	);
+	--gradient-border-primary: linear-gradient(
+		135deg,
+		rgba(255, 80, 180, 0.6),
+		rgba(255, 150, 220, 0.4)
+	);
+}

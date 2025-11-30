@@ -1,3 +1,6 @@
+/* Navigation Component Styles */
+/* Complex styles that can't be easily replaced with Tailwind utilities */
+
 .site-nav {
 	box-shadow: 0 1px 1px 1px rgb(255 255 255 / 10%);
 }
@@ -26,7 +29,7 @@
 		width: 0;
 		height: 0;
 		border-radius: 50%;
-		background: color-mix(in srgb, #ff50b0 80%, transparent);
+		background: color-mix(in srgb, var(--color-primary) 80%, transparent);
 		transition: all 300ms ease-in-out;
 	}
 
@@ -42,13 +45,6 @@
 .nav-links {
 	.page-links > a,
 	.page-links .page-link {
-		display: flex;
-		align-items: center;
-		padding: 0 1rem;
-		font-weight: 600;
-		color: white;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
 		position: relative;
 
 		&:after {
@@ -59,7 +55,7 @@
 			bottom: 0;
 			height: 0;
 			background-color: rgba(255, 80, 176, 0.8);
-			transition: all 200ms ease-in-out;
+			transition: all var(--transition-fast);
 			z-index: -1;
 			margin-bottom: -2px;
 		}
@@ -82,67 +78,19 @@
 	}
 }
 
-.nav-right-section {
-	gap: 0.75rem;
-}
-
 .nav-separator {
 	width: 1px;
 	height: 1.5rem;
-	background-color: rgba(255, 255, 255, 0.1);
+	background-color: var(--color-border-white);
 }
 
-.play-now-button {
-	background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
-	color: white;
-	border: 2px solid rgba(255, 100, 200, 0.5);
-	padding: 0.5rem 1rem;
-	border-radius: 0.25rem;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	cursor: pointer;
-	transition: all 0.3s ease;
-	box-shadow:
-		0 8px 25px rgba(255, 80, 180, 0.4),
-		0 0 20px rgba(255, 100, 200, 0.3),
-		inset 0 1px 0 rgba(255, 255, 255, 0.1);
-	text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-
-	&:hover {
-		background: linear-gradient(135deg, #ff30a0, #ff60c0, #ff30a0);
-		color: white;
-		transform: translateY(-3px);
-		box-shadow:
-			0 12px 35px rgba(255, 80, 180, 0.6),
-			0 0 30px rgba(255, 100, 200, 0.8),
-			inset 0 1px 0 rgba(255, 255, 255, 0.2);
-		border-color: rgba(255, 150, 220, 0.8);
-		text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-	}
-
-	&:active {
-		transform: translateY(-1px);
-		box-shadow:
-			0 6px 20px rgba(255, 79, 240, 0.4),
-			inset 0 1px 0 rgba(255, 255, 255, 0.1);
-	}
-}
-
-.social-icons {
-	padding: 0 0.5rem;
-}
+/* Play Now Button - Now uses centralized .cta--highlighted from utilities */
+/* Use .cta--highlighted with Tailwind classes for size/shape variations */
 
 .social-icon {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 2rem;
-	height: 2rem;
-	border-radius: 0.25rem;
 	transition:
-		background-color 200ms,
-		opacity 200ms;
+		background-color var(--transition-fast),
+		opacity var(--transition-fast);
 
 	&:hover {
 		background-color: rgba(255, 255, 255, 0.1);
@@ -152,7 +100,7 @@
 
 .discord-icon {
 	color: #9ca3af;
-	transition: color 200ms;
+	transition: color var(--transition-fast);
 	overflow: hidden;
 }
 
@@ -162,7 +110,7 @@
 	max-width: 20px;
 	max-height: 20px;
 	filter: grayscale(100%) brightness(0.8);
-	transition: filter 200ms;
+	transition: filter var(--transition-fast);
 }
 
 .social-icon:hover .discord-icon {
@@ -175,7 +123,7 @@
 
 .github-icon {
 	color: #9ca3af;
-	transition: color 200ms;
+	transition: color var(--transition-fast);
 	overflow: hidden;
 }
 
@@ -185,7 +133,7 @@
 	max-width: 20px;
 	max-height: 20px;
 	filter: grayscale(100%) brightness(0.8);
-	transition: filter 200ms;
+	transition: filter var(--transition-fast);
 }
 
 .social-icon:hover .github-icon {
@@ -194,10 +142,6 @@
 
 .social-icon:hover .github-icon svg {
 	filter: grayscale(0%) brightness(1);
-}
-
-.social-icons-mobile {
-	padding: 0.5rem 0;
 }
 
 .toggle-nav {
@@ -209,7 +153,7 @@
 		width: 20px;
 		height: 2px;
 		margin: auto;
-		background: white;
+		background: var(--color-text-primary);
 		position: absolute;
 		top: 0;
 		bottom: 0;

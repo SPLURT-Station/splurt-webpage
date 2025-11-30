@@ -1,0 +1,14 @@
+/* Anchor (link) element styles */
+/* Generic styles for <a> tags without classes */
+
+@layer base {
+	a {
+		color: color-mix(in srgb, var(--color-primary) 95%, white);
+		transition: color var(--transition-fast);
+	}
+
+	a:hover,
+	a:active {
+		color: var(--color-primary);
+	}
+}

@@ -1,0 +1,52 @@
+/* Hero Header Component Styles */
+/* Complex styles that can't be easily replaced with Tailwind utilities */
+
+.intro {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	border-bottom: 1px solid rgba(213, 213, 213, 0.1);
+	background-color: rgba(52, 56, 65, 0.3);
+	background-image: url("/src/assets/backgrounds/banner.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	height: calc(100vh - var(--nav-height));
+	min-height: 40rem;
+
+	&:after {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 20;
+		height: 2px;
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	video {
+		display: none;
+		filter: brightness(0.75) saturate(0.75);
+		image-rendering: pixelated;
+	}
+
+	@media (min-width: 640px) {
+		background-image: none;
+		video {
+			display: block;
+		}
+	}
+}
+
+.logo {
+	background: rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 40px 30px rgba(0, 0, 0, 0.2);
+	border-radius: 10px;
+}
+
+/* CTA Button Styles - Now centralized in src/styles/utilities/index.css */
+/* Use .cta, .cta--highlighted, and .cta--discord from utilities */
+/* Apply Tailwind classes for size/shape variations (px-*, py-*, rounded-*, etc.) */

@@ -1,0 +1,14 @@
+/* Main Styles Entry Point - ITCSS Architecture */
+/* Imports in order: Tailwind -> Global -> Elements */
+/* Components import their own CSS files (principle of locality) */
+
+@import "tailwindcss";
+
+/* Global styles (tokens, variables, defaults) */
+@import "./global/index.css";
+
+/* Element styles (raw HTML elements) */
+@import "./elements/index.css";
+
+/* Utilities (reusable utility classes) */
+@import "./utilities/index.css";

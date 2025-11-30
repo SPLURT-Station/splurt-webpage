@@ -1,4 +1,6 @@
-/* Age Gate Overlay */
+/* Age Gate Component Styles */
+/* Complex styles that can't be easily replaced with Tailwind utilities */
+
 .age-gate-overlay {
 	position: fixed;
 	inset: 0;
@@ -7,17 +9,10 @@
 	justify-content: center;
 	z-index: 9999;
 	backdrop-filter: blur(2px);
-	font-family:
-		"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
-	color: #ffffff;
+	font-family: var(--font-sans);
+	color: var(--color-text-primary);
 	background-image:
-		linear-gradient(
-			135deg,
-			rgba(5, 0, 15, 0.95) 0%,
-			rgba(25, 5, 30, 0.92) 30%,
-			rgba(60, 15, 40, 0.88) 70%,
-			rgba(120, 30, 80, 0.85) 100%
-		),
+		var(--gradient-background-overlay),
 		radial-gradient(
 			2px 2px at 23px 47px,
 			rgba(255, 100, 200, 1),
@@ -60,14 +55,14 @@
 
 .age-gate-modal {
 	width: min(92vw, 640px);
-	background: rgba(15, 5, 20, 0.7);
-	border: 1px solid rgba(255, 100, 200, 0.3);
+	background: var(--color-bg-card);
+	border: 1px solid var(--color-border-primary-light);
 	border-radius: 16px;
-	padding: 1.5rem;
+	padding: var(--spacing-lg);
 	box-shadow:
 		0 20px 60px rgba(0, 0, 0, 0.6),
-		0 0 30px rgba(255, 80, 180, 0.3),
-		inset 0 0 60px rgba(255, 80, 180, 0.05);
+		var(--glow-primary-strong),
+		var(--glow-primary-inset);
 	position: relative;
 	overflow: hidden;
 }
@@ -78,11 +73,7 @@
 	inset: -2px;
 	border-radius: 18px;
 	padding: 2px;
-	background: linear-gradient(
-		135deg,
-		rgba(255, 80, 180, 0.6),
-		rgba(255, 150, 220, 0.4)
-	);
+	background: var(--gradient-border-primary);
 	-webkit-mask:
 		linear-gradient(#000 0 0) content-box,
 		linear-gradient(#000 0 0);
@@ -122,21 +113,21 @@
 	width: 26px;
 	height: 26px;
 	border-radius: 50%;
-	background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
-	color: white;
-	font-weight: 800;
+	background: var(--gradient-primary);
+	color: var(--color-text-primary);
+	font-weight: var(--font-weight-extrabold);
 	font-size: 10px;
-	letter-spacing: 0.02em;
+	letter-spacing: var(--letter-spacing-tight);
 	border: 2px solid rgba(255, 255, 255, 0.85);
 	box-shadow:
 		0 4px 12px rgba(255, 80, 180, 0.45),
-		0 0 10px rgba(255, 100, 200, 0.6);
+		var(--glow-primary);
 }
 
 .age-gate-title {
 	margin: 0;
 	font-size: 1.9rem;
-	font-weight: 800;
+	font-weight: var(--font-weight-extrabold);
 	letter-spacing: -0.01em;
 	background-image: linear-gradient(
 		90deg,
@@ -170,8 +161,8 @@
 
 .age-gate-text {
 	margin: 0 0 1.25rem 0;
-	color: rgba(255, 255, 255, 0.9);
-	line-height: 1.6;
+	color: var(--color-text-secondary);
+	line-height: var(--line-height-relaxed);
 }
 
 .age-gate-actions {
@@ -180,28 +171,27 @@
 }
 
 .age-continue-button {
-	background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
-	color: white;
-	border: 2px solid rgba(255, 100, 200, 0.5);
-	padding: 0.85rem 1.5rem;
-	font-size: 1rem;
-	font-weight: 700;
+	background: var(--gradient-primary-animated);
+	color: var(--color-text-primary);
+	border: 2px solid var(--color-border-primary-strong);
+	padding: 0.85rem var(--spacing-lg);
+	font-size: var(--font-size-base);
+	font-weight: var(--font-weight-bold);
 	border-radius: 12px;
 	cursor: pointer;
 	transition: all 0.25s ease;
 	box-shadow:
 		0 8px 25px rgba(255, 80, 180, 0.3),
-		0 0 20px rgba(255, 100, 200, 0.25),
-		inset 0 1px 0 rgba(255, 255, 255, 0.08);
+		var(--glow-primary);
 	text-transform: uppercase;
-	letter-spacing: 0.06em;
+	letter-spacing: var(--letter-spacing-wide);
 }
 
 .age-continue-button:hover {
 	transform: translateY(-2px);
 	box-shadow:
 		0 12px 35px rgba(255, 80, 180, 0.45),
-		0 0 28px rgba(255, 100, 200, 0.6);
+		var(--glow-primary-strong);
 }
 
 .age-continue-button:active {

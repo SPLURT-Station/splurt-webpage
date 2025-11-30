@@ -1,0 +1,27 @@
+/* Home Page Component Styles */
+/* Page-specific styles that can't be easily replaced with Tailwind utilities */
+
+.features {
+	li {
+		position: relative;
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: 10px;
+			left: -16px;
+			width: 8px;
+			height: 8px;
+			background: var(--color-primary);
+		}
+	}
+}
+
+.game-shot-card {
+	background-color: var(--color-bg-card-light);
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--color-border-primary);
+	box-shadow:
+		0 4px 15px rgba(0, 0, 0, 0.2),
+		var(--glow-primary);
+}

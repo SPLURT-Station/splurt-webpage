@@ -1,8 +1,8 @@
 ---
 import { Image } from "astro:assets";
 import DiscordIcon from "~icons/ic/baseline-discord";
-import logo from "../assets/logos/splurtlogo.png";
-import "../styles/hero-header.css";
+import logo from "/src/assets/logos/splurtlogo.png";
+import "./hero-header.css";
 ---
 
 <header class="intro">
@@ -16,12 +16,17 @@ import "../styles/hero-header.css";
 			loading="eager"
 		/>
 		<div
-			class="text-center mt-8 mx-4 flex flex-col sm:flex-row gap-4 justify-center items-center font-['SpessFont']"
+			class="text-center mt-8 mx-4 flex flex-col sm:flex-row gap-4 justify-center items-center font-spess"
 		>
-			<a href="/how-to-play" class="cta cta--highlighted">Play Now</a>
+			<a
+				href="/how-to-play"
+				class="cta--highlighted text-xl px-12 py-4 rounded-full text-white font-semibold uppercase tracking-normal transition-all inline-block no-underline cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
+			>
+				Play Now
+			</a>
 			<a
 				href="https://discord.gg/splurt"
-				class="cta cta--discord"
+				class="cta--discord text-xl px-12 py-4 rounded-full text-white font-semibold uppercase tracking-normal transition-all inline-flex items-center gap-2 no-underline cursor-pointer hover:-translate-y-0.5 active:translate-y-0"
 				target="_blank"
 				rel="noopener external"
 			>
