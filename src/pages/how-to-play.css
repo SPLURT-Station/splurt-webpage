@@ -1,6 +1,61 @@
 /* How to Play Page Component Styles */
 /* Complex styles that can't be easily replaced with Tailwind utilities */
 
+.welcome-content {
+	position: relative;
+}
+
+/* S.P.L.U.R.T. Station Title Styling - 3D Pink Effect */
+.splurt-title {
+	position: relative;
+	display: inline-block;
+	color: var(--color-primary-light);
+	text-shadow:
+		var(--splurt-text-shadow-gradient),
+		0 2px 0px var(--color-primary-dark),
+		var(--splurt-text-shadow-3d-title),
+		var(--splurt-text-shadow-glow-title);
+	filter: drop-shadow(0 0 8px rgba(255, 80, 180, 0.5));
+}
+
+@media (min-width: 1024px) {
+	.splurt-title {
+		text-shadow:
+			var(--splurt-text-shadow-gradient),
+			0 2px 0px var(--color-primary-dark),
+			var(--splurt-text-shadow-3d-title-lg),
+			var(--splurt-text-shadow-glow-title-lg);
+		filter: drop-shadow(0 0 12px rgba(255, 80, 180, 0.6));
+	}
+}
+
+.welcome-content::before {
+	content: none;
+}
+
+@media (min-width: 640px) {
+	.welcome-content {
+		padding-left: 2.5rem;
+	}
+
+	.welcome-content::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: var(--spacing-md);
+		width: 2px;
+		background: var(--color-primary);
+		box-shadow: var(--glow-primary);
+	}
+}
+
+@media (min-width: 1024px) {
+	.welcome-content {
+		padding-left: 3rem;
+	}
+}
+
 .how-to-step {
 	position: relative;
 	flex-shrink: 0;

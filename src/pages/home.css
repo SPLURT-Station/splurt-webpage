@@ -25,3 +25,15 @@
 		0 4px 15px rgba(0, 0, 0, 0.2),
 		var(--glow-primary);
 }
+
+/* S.P.L.U.R.T. Station inline text styling - Pink 3D effect */
+.card .splurt-text {
+	position: relative;
+	display: inline-block;
+	color: var(--color-primary-light);
+	font-weight: var(--font-weight-semibold);
+	text-shadow:
+		var(--splurt-text-shadow-gradient), var(--splurt-text-shadow-3d-inline),
+		var(--splurt-text-shadow-glow-inline);
+	filter: drop-shadow(0 0 4px rgba(255, 80, 180, 0.4));
+}

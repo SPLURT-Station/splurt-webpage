@@ -6,6 +6,7 @@ import thumbnail from "/src/assets/thumbnail.png";
 import AgeGate from "../components/age-gate/age-gate.tsx";
 import Footer from "../components/footer/footer.astro";
 import Navigation from "../components/navigation/navigation.tsx";
+import PageHeader from "../components/page-header/page-header.astro";
 import { generateStarShadowsWithOpacity } from "../utils/stars";
 import "/src/styles/index.css";
 import Unfonts from "unplugin-fonts/astro";
@@ -57,6 +58,7 @@ type Props = {
 	url?: string;
 	type?: string;
 	imageStrategy?: "auto" | "thumbnail" | "logo" | "both";
+	pageTitle?: string;
 };
 
 const {
@@ -66,6 +68,7 @@ const {
 	url = Astro.url.href,
 	type = "website",
 	imageStrategy = "auto",
+	pageTitle,
 } = Astro.props;
 
 // Get optimized thumbnail image
@@ -183,7 +186,8 @@ const twitterImageUrl = new URL(twitterImage, Astro.site || Astro.url.origin)
 		></div>
 		<AgeGate client:load logoUrl={optimizedLogo.src}/>
 		<Navigation client:load logoUrl={optimizedLogo.src}/>
-		<main class="flex-1 pt-14">
+		{pageTitle && <PageHeader title={pageTitle} />}
+		<main class="relative z-10">
 			<slot/>
 		</main>
 		<Footer/>

@@ -1,0 +1,76 @@
+/* Page Header Component Styles */
+/* Styled to match reference website but using our design system */
+
+.page-header {
+	position: relative;
+	padding-top: var(--nav-height);
+	background: linear-gradient(
+		135deg,
+		color-mix(in srgb, var(--color-secondary) 90%, transparent) 0%,
+		color-mix(in srgb, var(--color-background) 50%, transparent) 100%
+	);
+	background-clip: border-box;
+	background-origin: border-box;
+	overflow: hidden;
+	z-index: 30;
+	width: 100%;
+	display: flow-root;
+	box-sizing: border-box;
+	min-height: fit-content;
+}
+
+.page-header::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 1px;
+	background: linear-gradient(90deg, var(--color-tertiary) 0%, transparent 70%);
+	opacity: 0.2;
+	z-index: 1;
+}
+
+.page-header h1 {
+	position: relative;
+	max-width: 80rem;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: var(--spacing-lg);
+	margin-bottom: var(--spacing-lg);
+	padding-left: var(--spacing-2xl);
+	padding-right: var(--spacing-2xl);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text-primary);
+	font-size: var(--font-size-4xl);
+	text-transform: uppercase;
+	letter-spacing: var(--letter-spacing-wide);
+	font-family: var(--font-pixel);
+	display: block;
+}
+
+.page-header h1::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: -3px;
+	left: var(--spacing-md);
+	width: 2px;
+	background: var(--color-primary);
+	box-shadow: var(--glow-primary);
+}
+
+@media (min-width: 640px) {
+	.page-header h1 {
+		padding-left: 2.5rem;
+		padding-right: 2.5rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	.page-header h1 {
+		margin-top: var(--spacing-2xl);
+		margin-bottom: var(--spacing-2xl);
+		padding-left: 3rem;
+	}
+}

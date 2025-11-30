@@ -5,13 +5,15 @@ import Layout from "../layouts/main-layout.astro";
 import "./how-to-play.css";
 import MaterialSymbolsFileCopyOutlineRounded from "~icons/material-symbols/file-copy-outline-rounded";
 import PixelarticonsCheck from "~icons/pixelarticons/check";
+import PixelarticonsExternalLink from "~icons/pixelarticons/external-link";
 ---
 
 <Layout
 	title="How To Play - S.P.L.U.R.T. Station"
 	description="Learn how to join and play on S.P.L.U.R.T. Station, a NSFW furry roleplaying server for Space Station 13."
+	pageTitle="How To Play"
 >
-	<div class="container mx-auto px-4 py-12 lg:py-16 xl:py-24 relative z-10">
+	<div class="container mx-auto px-4 py-12 relative z-10">
 		<div class="flex items-center gap-8 lg:gap-14 mb-8">
 			<Image
 				class="hidden md:block game-shot-card max-w-[420px]"
@@ -21,11 +23,12 @@ import PixelarticonsCheck from "~icons/pixelarticons/check";
 				alt="Preview"
 			/>
 
-			<div class="grow">
+			<div class="grow welcome-content">
 				<h2
 					class="mb-4 lg:mb-8 font-semibold uppercase tracking-wide text-3xl font-pixel"
 				>
-					Welcome to <span class="font-bold">S.P.L.U.R.T. Station</span>
+					Welcome to
+					<span class="font-bold splurt-title">S.P.L.U.R.T. Station</span>
 				</h2>
 				<p class="text-xl leading-8 font-spess">
 					Getting started is quick, easy, and completely free! Just follow these
@@ -56,18 +59,10 @@ import PixelarticonsCheck from "~icons/pixelarticons/check";
 						rel="external"
 					>
 						Download BYOND
-						<svg
-							class="inline-block ml-2 w-4 h-4"
-							fill="currentColor"
-							viewBox="0 0 20 20"
+						<PixelarticonsExternalLink
+							class="inline-block ml-2 w-6 h-6"
 							aria-hidden="true"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-								clip-rule="evenodd"
-							/>
-						</svg>
+						/>
 					</a>
 				</div>
 			</div>
@@ -91,18 +86,10 @@ import PixelarticonsCheck from "~icons/pixelarticons/check";
 						rel="external"
 					>
 						Register Account
-						<svg
-							class="inline-block ml-2 w-4 h-4"
-							fill="currentColor"
-							viewBox="0 0 20 20"
+						<PixelarticonsExternalLink
+							class="inline-block ml-2 w-6 h-6"
 							aria-hidden="true"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-								clip-rule="evenodd"
-							/>
-						</svg>
+						/>
 					</a>
 				</div>
 			</div>
@@ -159,18 +146,10 @@ import PixelarticonsCheck from "~icons/pixelarticons/check";
 								rel="external"
 							>
 								View Rules
-								<svg
-									class="inline-block ml-2 w-4 h-4"
-									fill="currentColor"
-									viewBox="0 0 20 20"
+								<PixelarticonsExternalLink
+									class="inline-block ml-2 w-6 h-6"
 									aria-hidden="true"
-								>
-									<path
-										fill-rule="evenodd"
-										d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-										clip-rule="evenodd"
-									/>
-								</svg>
+								/>
 							</a>
 						</div>
 					</div>
