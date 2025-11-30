@@ -4,6 +4,7 @@ import preview from "../assets/logos/splurtpaw2_alt3.png";
 import Layout from "../layouts/main-layout.astro";
 import "../styles/how-to-play.css";
 import MaterialSymbolsFileCopyOutlineRounded from "~icons/material-symbols/file-copy-outline-rounded";
+import PixelarticonsCheck from "~icons/pixelarticons/check";
 ---
 
 <Layout
@@ -21,10 +22,12 @@ import MaterialSymbolsFileCopyOutlineRounded from "~icons/material-symbols/file-
 			/>
 
 			<div class="grow">
-				<h2 class="mb-4 lg:mb-8 font-semibold uppercase tracking-wide text-3xl">
-					Welcome to S.P.L.U.R.T. Station
+				<h2
+					class="mb-4 lg:mb-8 font-semibold uppercase tracking-wide text-3xl font-['Grand9k_Pixel']"
+				>
+					Welcome to <span class="font-bold">S.P.L.U.R.T. Station</span>
 				</h2>
-				<p class="text-xl leading-8">
+				<p class="text-xl leading-8 font-[SpessFont]">
 					Getting started is quick, easy, and completely free! Just follow these
 					simple steps below and you'll be playing on our NSFW furry roleplaying
 					server in no time.
@@ -38,7 +41,9 @@ import MaterialSymbolsFileCopyOutlineRounded from "~icons/material-symbols/file-
 					<span>1</span>
 				</div>
 				<div class="grow pb-6 md:pb-10 pt-2">
-					<h3 class="content-heading content-heading--secondary mb-4">
+					<h3
+						class="content-heading content-heading--secondary mb-4 font-[VCR_OSD_MONO]"
+					>
 						Download
 					</h3>
 					<p class="mb-4">
@@ -74,7 +79,9 @@ import MaterialSymbolsFileCopyOutlineRounded from "~icons/material-symbols/file-
 					<span>2</span>
 				</div>
 				<div class="grow pb-6 md:pb-10 pt-2">
-					<h3 class="content-heading content-heading--secondary mb-4">
+					<h3
+						class="content-heading content-heading--secondary mb-4 font-[VCR_OSD_MONO]"
+					>
 						Register
 					</h3>
 					<p class="mb-4">
@@ -109,7 +116,11 @@ import MaterialSymbolsFileCopyOutlineRounded from "~icons/material-symbols/file-
 					<span>3</span>
 				</div>
 				<div class="grow pt-2">
-					<h3 class="content-heading content-heading--secondary mb-4">Play!</h3>
+					<h3
+						class="content-heading content-heading--secondary mb-4 font-[VCR_OSD_MONO]"
+					>
+						Play!
+					</h3>
 					<p class="mb-4">
 						Now you're ready to join S.P.L.U.R.T. Station! Once you have BYOND
 						installed and your account registered, you can connect to our server
@@ -130,7 +141,8 @@ import MaterialSymbolsFileCopyOutlineRounded from "~icons/material-symbols/file-
 									type="button"
 									data-copy-text="byond://play.splurt.space:42069"
 								>
-									<MaterialSymbolsFileCopyOutlineRounded/>
+									<MaterialSymbolsFileCopyOutlineRounded class="copy-icon"/>
+									<PixelarticonsCheck class="check-icon"/>
 								</button>
 							</code>
 							<a

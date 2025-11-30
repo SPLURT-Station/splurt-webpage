@@ -8,6 +8,7 @@ import Footer from "../components/footer.astro";
 import Navigation from "../components/navigation";
 import { generateStarShadowsWithOpacity } from "../utils/stars";
 import "../styles/global.css";
+import Unfonts from "unplugin-fonts/astro";
 
 // Optimize the banner image for background use
 const optimizedBanner = await getImage({
@@ -120,6 +121,7 @@ const twitterImageUrl = new URL(twitterImage, Astro.site || Astro.url.origin)
 <!doctype html>
 <html lang="en">
 	<head>
+		<Unfonts/>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width">
 		<!-- <link rel="icon" type="image/png" href="/splurtpaw2_alt3.png" /> -->

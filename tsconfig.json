@@ -6,6 +6,10 @@
     "strictNullChecks": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "types": ["vite-plugin-solid-svg/types", "unplugin-icons/types/astro"]
+    "types": [
+      "vite-plugin-solid-svg/types",
+      "unplugin-icons/types/astro",
+      "unplugin-fonts/client"
+    ]
   }
 }

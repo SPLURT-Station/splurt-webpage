@@ -31,6 +31,7 @@
     "happy-dom": "^20.0.10",
     "husky": "^9.1.7",
     "ultracite": "6.3.4",
+    "unplugin-fonts": "^1.4.0",
     "unplugin-icons": "^22.5.0",
     "vite-plugin-solid-svg": "^0.8.1"
   }

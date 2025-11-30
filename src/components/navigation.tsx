@@ -71,7 +71,7 @@ export default function Navigation(props: Props) {
 	};
 
 	return (
-		<nav class="site-nav fixed top-0 right-0 left-0 z-40 bg-background">
+		<nav class="site-nav fixed top-0 right-0 left-0 z-40 bg-background font-['Grand9K_Pixel']">
 			<div class="mx-auto flex h-14 max-w-7xl px-2">
 				<a
 					aria-label="Home"
