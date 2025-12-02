@@ -9,7 +9,7 @@ import Navigation from "../components/navigation/navigation.tsx";
 import PageHeader from "../components/page-header/page-header.astro";
 import { generateStarShadowsWithOpacity } from "../utils/stars";
 import "/src/styles/index.css";
-import Unfonts from "unplugin-fonts/astro";
+import { links } from "unplugin-fonts/head";
 
 // Optimize the banner image for background use
 const optimizedBanner = await getImage({
@@ -121,10 +121,13 @@ const twitterImageUrl = new URL(twitterImage, Astro.site || Astro.url.origin)
 	.href;
 ---
 
-<!doctype html>
 <html lang="en">
 	<head>
-		<Unfonts/>
+		<!-- Unplugin Fonts, for some reason the astro component errors -->
+		{links.map((link) => {
+			const attrs = link?.attrs || {};
+			return <link {...attrs} data-unfont />;
+		})}
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width">
 		<!-- <link rel="icon" type="image/png" href="/splurtpaw2_alt3.png" /> -->

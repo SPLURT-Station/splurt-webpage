@@ -121,6 +121,7 @@ import PixelarticonsExternalLink from "~icons/pixelarticons/external-link";
 									aria-label="Copy server address"
 									type="button"
 									data-copy-text="byond://play.splurt.space:42069"
+									onclick="copyToClipboard(this)"
 								>
 									<MaterialSymbolsFileCopyOutlineRounded class="copy-icon"/>
 									<PixelarticonsCheck class="check-icon"/>
@@ -157,27 +158,22 @@ import PixelarticonsExternalLink from "~icons/pixelarticons/external-link";
 			</div>
 		</div>
 	</div>
-	<script>
-		document.addEventListener("DOMContentLoaded", () => {
-			const copyButton = document.querySelector(".copy-button");
-			if (copyButton) {
-				copyButton.addEventListener("click", async () => {
-					const textToCopy = copyButton.getAttribute("data-copy-text");
-					if (!textToCopy) {
-						return;
-					}
-
-					try {
-						await navigator.clipboard.writeText(textToCopy);
-						copyButton.classList.add("copied");
-						setTimeout(() => {
-							copyButton.classList.remove("copied");
-						}, 2000);
-					} catch (err) {
-						console.error("Failed to copy: ", err);
-					}
-				});
+	<script is:inline>
+		async function copyToClipboard(button) {
+			const textToCopy = button.getAttribute("data-copy-text");
+			if (!textToCopy) {
+				return;
 			}
-		});
+
+			try {
+				await navigator.clipboard.writeText(textToCopy);
+				button.classList.add("copied");
+				setTimeout(() => {
+					button.classList.remove("copied");
+				}, 2000);
+			} catch (err) {
+				console.error("Failed to copy: ", err);
+			}
+		}
 	</script>
 </Layout>

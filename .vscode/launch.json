@@ -6,6 +6,19 @@
       "name": "Development server",
       "request": "launch",
       "type": "node-terminal"
+    },
+    {
+      "type": "msedge",
+      "request": "launch",
+      "name": "Launch Edge against localhost",
+      "url": "http://localhost:4321",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "vite:///src/*": "${webRoot}/*"
+      }
+      // "skipFiles": [
+      //   "**/node_modules/**"
+      // ]
     }
   ]
 }

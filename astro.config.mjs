@@ -10,10 +10,6 @@ import solidSvg from "vite-plugin-solid-svg";
 
 // https://astro.build/config
 export default defineConfig({
-	server: {
-		port: 3000,
-	},
-
 	integrations: [
 		favicons({
 			input: {
@@ -26,6 +22,16 @@ export default defineConfig({
 		}),
 		solidJs(),
 		UnfontsAstro({
+			google: {
+				preconnect: false,
+				families: [
+					{
+						name: "Inter",
+						styles: "ital,opsz,wght@0,14..32,100..900;1,14..32,100..900",
+						defer: true,
+					},
+				],
+			},
 			custom: {
 				families: [
 					{ name: "SpessFont", src: "/public/fonts/SpessFont.ttf" },

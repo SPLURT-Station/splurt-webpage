@@ -1,6 +1,7 @@
 ---
 import { getImage, Image } from "astro:assets";
 import DiscordIcon from "~icons/ic/baseline-discord";
+import ArrowDownIcon from "~icons/mdi/arrow-down";
 import bannerPoster from "/src/assets/backgrounds/banner.png";
 import heroVideo from "/src/assets/hero-temp.mp4";
 import logo from "/src/assets/logos/splurtlogo.png";
@@ -62,6 +63,20 @@ const optimizedBannerPoster = await getImage({
 	>
 		<source src={heroVideo} type="video/mp4">
 	</video>
+	<button
+		id="learn-more-btn"
+		class="learn-more-btn absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 px-6 py-3 rounded-full text-white font-semibold uppercase tracking-normal transition-all cursor-pointer hover:-translate-y-1 active:translate-y-0"
+		aria-label="Learn more"
+		onclick="(function() { const header = document.querySelector('.intro'); if (header) { const headerBottom = header.getBoundingClientRect().bottom + window.pageYOffset; window.scrollTo({ top: headerBottom, behavior: 'smooth' }); } })()"
+	>
+		Learn more
+		<ArrowDownIcon
+			class="arrow-icon"
+			width={20}
+			height={20}
+			aria-hidden="true"
+		/>
+	</button>
 </header>
 
 <script>
