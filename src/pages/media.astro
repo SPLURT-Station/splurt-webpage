@@ -3,27 +3,8 @@ import MediaTabs from "../components/media-tabs/media-tabs.tsx";
 import Layout from "../layouts/main-layout.astro";
 import "./media.css";
 
-// These would be replaced with actual image paths when available
-// For now, using placeholder structure
-const splashScreens = [
-	{ id: 1, alt: "Splashscreen 1" },
-	{ id: 2, alt: "Splashscreen 2" },
-	{ id: 3, alt: "Splashscreen 3" },
-	{ id: 4, alt: "Splashscreen 4" },
-	{ id: 5, alt: "Splashscreen 5" },
-	{ id: 6, alt: "Splashscreen 6" },
-];
-
-const inGameScreenshots = [
-	{ id: 1, alt: "In-game screenshot 1" },
-	{ id: 2, alt: "In-game screenshot 2" },
-	{ id: 3, alt: "In-game screenshot 3" },
-	{ id: 4, alt: "In-game screenshot 4" },
-	{ id: 5, alt: "In-game screenshot 5" },
-	{ id: 6, alt: "In-game screenshot 6" },
-	{ id: 7, alt: "In-game screenshot 7" },
-	{ id: 8, alt: "In-game screenshot 8" },
-];
+// Page is pre-rendered at build time
+// Media data is fetched client-side in the SolidJS component
 ---
 
 <Layout
@@ -33,11 +14,7 @@ const inGameScreenshots = [
 >
 	<div class="container mx-auto px-4 py-12 lg:py-16 xl:py-24 relative z-10">
 		<div class="card">
-			<MediaTabs
-				client:load
-				splashScreens={splashScreens}
-				inGameScreenshots={inGameScreenshots}
-			/>
+			<MediaTabs client:only="solidjs"/>
 		</div>
 	</div>
 </Layout>

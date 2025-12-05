@@ -1,11 +1,13 @@
 ---
-import { getImage, Image } from "astro:assets";
+import { Image } from "astro:assets";
 import preview from "/src/assets/logos/splurtpaw2_alt3.png";
+import { server as mediaActions } from "../actions";
 import Layout from "../layouts/main-layout.astro";
 import "./how-to-play.css";
 import MaterialSymbolsFileCopyOutlineRounded from "~icons/material-symbols/file-copy-outline-rounded";
 import PixelarticonsCheck from "~icons/pixelarticons/check";
 import PixelarticonsExternalLink from "~icons/pixelarticons/external-link";
+import menuScreen from "/src/assets/images/menu.png";
 ---
 
 <Layout
@@ -16,11 +18,13 @@ import PixelarticonsExternalLink from "~icons/pixelarticons/external-link";
 	<div class="container mx-auto px-4 py-12 relative z-10">
 		<div class="flex items-center gap-8 lg:gap-14 mb-8">
 			<Image
-				class="hidden md:block game-shot-card max-w-[420px]"
-				src={preview}
-				width={1000}
-				height={711}
-				alt="Preview"
+				class="hidden md:block max-w-[420px]"
+				src={menuScreen}
+				alt="Menu Screen"
+				width={420}
+				quality={80}
+				format="webp"
+				loading="eager"
 			/>
 
 			<div class="grow welcome-content">

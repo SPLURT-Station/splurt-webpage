@@ -1,19 +1,110 @@
-import { createSignal, For, Show } from "solid-js";
-
-type MediaItem = {
-	id: number;
-	alt: string;
-};
+import { actions } from "astro:actions";
+import {
+	type Component,
+	createMemo,
+	createResource,
+	createSignal,
+	For,
+	Match,
+	Show,
+	Suspense,
+	Switch,
+} from "solid-js";
+import type { MediaItem } from "../../utils/media-fetcher";
+import ZoomableImage from "../zoomable-image/zoomable-image";
 
 type Props = {
-	splashScreens: MediaItem[];
-	inGameScreenshots: MediaItem[];
+	splashScreens?: MediaItem[];
+	inGameScreenshots?: MediaItem[];
 };
 
+type TabType = "splash" | "screenshots";
+
+/**
+ * Media gallery grid component
+ */
+const MediaGrid: Component<{
+	items: MediaItem[];
+	emptyMessage: string;
+}> = (props) => (
+	<Show
+		fallback={
+			<div class="py-12 text-center text-white/60">{props.emptyMessage}</div>
+		}
+		when={props.items.length > 0}
+	>
+		<div class="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+			<For each={props.items}>
+				{(item) => (
+					<div class="media-item flex items-center justify-center">
+						<ZoomableImage
+							alt={item.alt || "Gallery image"}
+							fullResolutionUrl={item.originalUrl}
+							height={400}
+							src={item.url}
+							width={600}
+						/>
+					</div>
+				)}
+			</For>
+		</div>
+	</Show>
+);
+
+/**
+ * Fetch media data using Astro Actions with image optimization
+ */
+async function fetchMediaData(): Promise<{
+	splashScreens: MediaItem[];
+	screenshots: MediaItem[];
+}> {
+	const result = await actions.fetchMedia({
+		optimize: true,
+		optimizeOptions: {
+			width: 600,
+			quality: 80,
+			format: "webp",
+		},
+	});
+
+	if (result.error) {
+		throw new Error(result.error.message || "Failed to fetch media");
+	}
+
+	if (!result.data) {
+		throw new Error("No data returned from action");
+	}
+
+	return {
+		splashScreens: result.data.splashScreens ?? [],
+		screenshots: result.data.screenshots ?? [],
+	};
+}
+
 export default function MediaTabs(props: Props) {
-	const [activeTab, setActiveTab] = createSignal<"splash" | "screenshots">(
-		"splash"
-	);
+	const [activeTab, setActiveTab] = createSignal<TabType>("splash");
+
+	const [mediaData, { refetch }] = createResource(() => fetchMediaData());
+
+	// Memoized media items - only return data if resource is loaded
+	const splashScreens = createMemo(() => {
+		if (props.splashScreens) {
+			return props.splashScreens;
+		}
+		if (mediaData.loading || !mediaData()) {
+			return [];
+		}
+		return mediaData()?.splashScreens ?? [];
+	});
+	const inGameScreenshots = createMemo(() => {
+		if (props.inGameScreenshots) {
+			return props.inGameScreenshots;
+		}
+		if (mediaData.loading || !mediaData()) {
+			return [];
+		}
+		return mediaData()?.screenshots ?? [];
+	});
 
 	return (
 		<div class="w-full">
@@ -57,72 +148,70 @@ export default function MediaTabs(props: Props) {
 				</button>
 			</div>
 
-			{/* Tab Panels */}
-			<div
-				aria-labelledby="splash-tab"
-				classList={{ hidden: activeTab() !== "splash" }}
-				id="splash-panel"
-				role="tabpanel"
+			<Suspense
+				fallback={
+					<div class="py-12 text-center text-white/60">
+						<div class="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+						<p class="mt-2">Loading media...</p>
+					</div>
+				}
 			>
-				<Show when={activeTab() === "splash"}>
-					<div class="grid gap-4 lg:grid-cols-2">
-						<For each={props.splashScreens}>
-							{(item: MediaItem) => (
-								<div class="media-item">
-									<img
-										alt={item.alt}
-										class="lazyload w-full rounded-sm bg-background bg-opacity-50"
-										height={400}
-										loading="lazy"
-										onerror={(
-											e: Event & { currentTarget: HTMLImageElement }
-										) => {
-											const target = e.currentTarget;
-											target.src = "/img/media/splash/placeholder.jpg";
-											target.onerror = null;
-										}}
-										src={`/img/media/splash/${item.id}.jpg`}
-										width={600}
+				<Show
+					fallback={
+						<div class="py-12 text-center text-white/60">
+							<p class="mb-2 text-red-400">Failed to load media</p>
+							<p class="text-sm text-white/40">
+								{mediaData.error?.message || "Unknown error"}
+							</p>
+							<button
+								class="mt-4 rounded bg-primary px-4 py-2 font-medium text-sm text-white hover:bg-primary/80"
+								onClick={refetch}
+								type="button"
+							>
+								Retry
+							</button>
+						</div>
+					}
+					when={!mediaData.error}
+				>
+					<Show
+						fallback={
+							<div class="py-12 text-center text-white/60">
+								<div class="mb-4 inline-block h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+								<p class="mt-2">Loading media...</p>
+							</div>
+						}
+						when={mediaData() !== undefined}
+					>
+						<Switch>
+							<Match when={activeTab() === "splash"}>
+								<div
+									aria-labelledby="splash-tab"
+									id="splash-panel"
+									role="tabpanel"
+								>
+									<MediaGrid
+										emptyMessage="No splashscreens available"
+										items={splashScreens()}
 									/>
 								</div>
-							)}
-						</For>
-					</div>
-				</Show>
-			</div>
-
-			<div
-				aria-labelledby="screenshots-tab"
-				classList={{ hidden: activeTab() !== "screenshots" }}
-				id="screenshots-panel"
-				role="tabpanel"
-			>
-				<Show when={activeTab() === "screenshots"}>
-					<div class="grid gap-4 lg:grid-cols-2">
-						<For each={props.inGameScreenshots}>
-							{(item: MediaItem) => (
-								<div class="media-item">
-									<img
-										alt={item.alt}
-										class="lazyload w-full rounded-sm bg-background bg-opacity-50"
-										height={400}
-										loading="lazy"
-										onerror={(
-											e: Event & { currentTarget: HTMLImageElement }
-										) => {
-											const target = e.currentTarget;
-											target.src = "/img/media/screenshots/placeholder.jpg";
-											target.onerror = null;
-										}}
-										src={`/img/media/screenshots/${item.id}.jpg`}
-										width={600}
+							</Match>
+							<Match when={activeTab() === "screenshots"}>
+								<div
+									aria-labelledby="screenshots-tab"
+									id="screenshots-panel"
+									role="tabpanel"
+								>
+									<MediaGrid
+										emptyMessage="No screenshots available"
+										items={inGameScreenshots()}
 									/>
 								</div>
-							)}
-						</For>
-					</div>
+							</Match>
+						</Switch>
+					</Show>
 				</Show>
-			</div>
+			</Suspense>
 		</div>
 	);
 }

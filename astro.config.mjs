@@ -1,6 +1,7 @@
 // @ts-check
 
 import solidJs from "@astrojs/solid-js";
+import nurodevbun from "@nurodev/astro-bun";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import favicons from "astro-favicons";
@@ -10,6 +11,15 @@ import solidSvg from "vite-plugin-solid-svg";
 
 // https://astro.build/config
 export default defineConfig({
+	adapter: nurodevbun(),
+	output: "static",
+	image: {
+		// Allow remote image optimization from any HTTPS source
+		// For production, consider restricting to specific domains
+		remotePatterns: [{ protocol: "https" }],
+		// Optional: specify domains explicitly for better security
+		// domains: ["splurt.space", "example.com"],
+	},
 	integrations: [
 		favicons({
 			input: {

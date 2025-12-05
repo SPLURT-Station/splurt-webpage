@@ -1,11 +1,29 @@
 ---
 import { getImage, Image } from "astro:assets";
-import preview1 from "/src/assets/logos/splurtpaw2_alt3.png";
-import preview2 from "/src/assets/logos/splurtpaw2_alt3.png";
+import mobInteraction from "/src/assets/images/mob_interaction.png";
+import ychCharacterCreator from "/src/assets/images/ych_charactercreator.png";
 import HeroHeader from "../components/hero-header/hero-header.astro";
 import Layout from "../layouts/main-layout.astro";
 import "./home.css";
 import TypewriterText from "../components/typewriter-text/typewriter-text.tsx";
+import ZoomableImage from "../components/zoomable-image/zoomable-image.tsx";
+
+// Get optimized image URLs for zoomable images
+const optimizedMobInteraction = await getImage({
+	src: mobInteraction,
+	width: 1000,
+	height: 710,
+	quality: 80,
+	format: "webp",
+});
+
+const optimizedYCH = await getImage({
+	src: ychCharacterCreator,
+	width: 1000,
+	height: 710,
+	quality: 80,
+	format: "webp",
+});
 ---
 
 <Layout
@@ -92,22 +110,28 @@ import TypewriterText from "../components/typewriter-text/typewriter-text.tsx";
 					<div
 						class="flex gap-6 justify-center flex-wrap lg:justify-start lg:flex-col lg:gap-8 lg:shrink-0 lg:w-4/12"
 					>
-						<Image
-							class="game-shot-card rounded-sm w-full"
-							src={preview1}
-							width={1000}
-							height={710}
-							alt="Preview 1"
-							loading="lazy"
-						/>
-						<Image
-							class="game-shot-card rounded-sm w-full"
-							src={preview2}
-							width={1000}
-							height={714}
-							alt="Preview 2"
-							loading="lazy"
-						/>
+						<div class="game-shot-card rounded-sm w-full">
+							<ZoomableImage
+								client:load
+								alt="Mob interaction gameplay screenshot"
+								class="w-full"
+								fullResolutionUrl={mobInteraction.src}
+								height={710}
+								src={optimizedMobInteraction.src}
+								width={1000}
+							/>
+						</div>
+						<div class="game-shot-card rounded-sm w-full">
+							<ZoomableImage
+								client:load
+								alt="YCH Character Creator screenshot"
+								class="w-full"
+								fullResolutionUrl={ychCharacterCreator.src}
+								height={710}
+								src={optimizedYCH.src}
+								width={1000}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
