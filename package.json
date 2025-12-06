@@ -12,7 +12,8 @@
     "test": "bun test",
     "test:watch": "bun test --watch",
     "test:coverage": "bun test --coverage",
-    "prepare": "husky"
+    "prepare": "husky",
+    "enrich-image": "bun src/utils/enrich-image.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.6",
@@ -21,6 +22,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "astro": "^5.16.1",
     "astro-favicons": "^3.1.5",
+    "exifreader": "^4.33.1",
     "solid-js": "^1.9.10",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3"

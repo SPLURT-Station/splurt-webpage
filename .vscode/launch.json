@@ -15,10 +15,8 @@
       "webRoot": "${workspaceFolder}/src",
       "sourceMapPathOverrides": {
         "vite:///src/*": "${webRoot}/*"
-      }
-      // "skipFiles": [
-      //   "**/node_modules/**"
-      // ]
+      },
+      "skipFiles": ["**/node_modules/**"]
     }
   ]
 }

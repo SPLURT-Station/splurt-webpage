@@ -13,6 +13,7 @@ import {
 	loadCachedImages,
 	saveCachedImages,
 } from "../utils/image-cache";
+import { fetchImageMetadata } from "../utils/image-metadata";
 import { getMediaConfig } from "../utils/media-config";
 import type { MediaItem } from "../utils/media-fetcher";
 import { fetchMediaItems } from "../utils/media-fetcher";
@@ -304,6 +305,27 @@ export const server = {
 					message:
 						error instanceof Error ? error.message : "Failed to optimize image",
 				});
+			}
+		},
+	}),
+
+	/**
+	 * Fetch image metadata on-demand
+	 * Used for lazy loading metadata when user opens zoom modal
+	 */
+	fetchImageMetadata: defineAction({
+		accept: "json",
+		input: z.object({
+			imageUrl: z.string(),
+		}),
+		handler: async (input) => {
+			try {
+				const metadata = await fetchImageMetadata(input.imageUrl);
+				return { metadata: metadata || null };
+			} catch (error) {
+				console.error("Error fetching image metadata:", error);
+				// Return null on error instead of throwing - metadata is optional
+				return { metadata: null };
 			}
 		},
 	}),

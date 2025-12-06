@@ -41,6 +41,7 @@ const MediaGrid: Component<{
 							alt={item.alt || "Gallery image"}
 							fullResolutionUrl={item.originalUrl}
 							height={400}
+							metadata={item.metadata}
 							src={item.url}
 							width={600}
 						/>

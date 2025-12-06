@@ -23,6 +23,8 @@ export type {
 	MediaSourceType,
 } from "./media-config";
 
+import type { ImageMetadataInfo } from "./image-metadata";
+
 export type MediaItem = {
 	url: string;
 	originalUrl?: string; // Original URL before optimization
@@ -30,6 +32,7 @@ export type MediaItem = {
 	alt: string;
 	size?: number;
 	lastModified?: string;
+	metadata?: ImageMetadataInfo; // Optional image metadata
 };
 
 /**
@@ -354,6 +357,9 @@ export async function fetchImagesFromFolder(
 	}
 }
 
+// Metadata is now loaded lazily via Astro actions when user opens zoom modal
+// This significantly improves initial page load performance
+
 /**
  * Fetch media items from a source configuration
  */
@@ -361,25 +367,33 @@ async function fetchFromSource(
 	source: MediaSourceConfig,
 	maxImages?: number
 ): Promise<MediaItem[]> {
+	let items: MediaItem[];
+
 	if (source.sourceType === "url") {
 		if (!source.baseUrl) {
 			throw new Error("baseUrl is required when sourceType is 'url'");
 		}
-		return await fetchImagesFromUrl(source.baseUrl, source.patterns, maxImages);
-	}
-
-	if (source.sourceType === "folder") {
+		items = await fetchImagesFromUrl(
+			source.baseUrl,
+			source.patterns,
+			maxImages
+		);
+	} else if (source.sourceType === "folder") {
 		if (!source.localFolder) {
 			throw new Error("localFolder is required when sourceType is 'folder'");
 		}
-		return await fetchImagesFromFolder(
+		items = await fetchImagesFromFolder(
 			source.localFolder,
 			source.patterns,
 			maxImages
 		);
+	} else {
+		throw new Error(`Unknown source type: ${source.sourceType}`);
 	}
 
-	throw new Error(`Unknown source type: ${source.sourceType}`);
+	// Metadata is now loaded lazily when needed (when user opens zoom modal)
+	// This significantly improves initial page load performance
+	return items;
 }
 
 /**
