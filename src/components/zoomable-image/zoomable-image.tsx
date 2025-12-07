@@ -18,6 +18,82 @@ import {
 } from "../../utils/image-metadata";
 
 /**
+ * Metadata panel component
+ */
+const MetadataPanel: Component<{
+	metadata: ImageMetadataInfo | null | undefined;
+	imageUrl: string;
+	authorRef: (el: HTMLDivElement) => void;
+}> = (props) => {
+	const title = () => {
+		if (props.metadata?.title) {
+			return props.metadata.title;
+		}
+		const filename = getFilenameFromUrl(props.imageUrl);
+		return getFilenameWithoutExtension(filename);
+	};
+
+	const hasContent = () => {
+		if (!props.metadata) {
+			return false;
+		}
+		return hasMetadataContent(props.metadata) || !!props.metadata.title;
+	};
+
+	return (
+		<Show when={hasContent()}>
+			<div class="flex w-full shrink-0 flex-col gap-4 overflow-y-auto p-6 text-white lg:h-full lg:w-auto lg:min-w-[20rem] lg:max-w-md">
+				<h3 class="font-pixel text-primary text-xl">{title()}</h3>
+				{props.metadata?.description && (
+					<div class="flex flex-col gap-2">
+						<h4 class="font-medium font-pixellari text-sm text-white/80">
+							Description
+						</h4>
+						<p class="font-sans text-sm text-white/70">
+							{props.metadata.description}
+						</p>
+					</div>
+				)}
+				{props.metadata?.author && (
+					<div class="flex flex-col gap-2">
+						<h4 class="font-medium font-pixellari text-sm text-white/80">
+							Artist
+						</h4>
+						<div
+							class="font-sans text-primary text-sm hover:text-primary/80"
+							ref={props.authorRef}
+						/>
+					</div>
+				)}
+				{props.metadata?.sources && props.metadata.sources.length > 0 && (
+					<div class="flex flex-col gap-2">
+						<h4 class="font-medium font-pixellari text-sm text-white/80">
+							Sources
+						</h4>
+						<ul class="flex flex-col gap-2">
+							<For each={props.metadata.sources}>
+								{(source) => (
+									<li>
+										<a
+											class="font-sans text-primary text-sm underline hover:text-primary/80"
+											href={source}
+											rel="noopener noreferrer"
+											target="_blank"
+										>
+											{source}
+										</a>
+									</li>
+								)}
+							</For>
+						</ul>
+					</div>
+				)}
+			</div>
+		</Show>
+	);
+};
+
+/**
  * Zoom/Modal component for full-size image viewing
  * Fetches metadata lazily when modal opens
  */
@@ -38,51 +114,16 @@ const ImageModal: Component<{
 		() => (props.isOpen() && !props.initialMetadata ? props.imageUrl : null),
 		async (url) => {
 			if (!url) {
-				return props.initialMetadata || null;
+				return null;
 			}
 			try {
 				const result = await actions.fetchImageMetadata({ imageUrl: url });
-				if (result.error) {
-					return null;
-				}
-				return result.data?.metadata ?? null;
+				return result.error ? null : (result.data?.metadata ?? null);
 			} catch {
 				return null;
 			}
 		}
 	);
-
-	// Use fetched metadata or fallback to initial metadata
-	// If resource is loading and we have initial metadata, use it
-	// Otherwise wait for resource to resolve
-	const currentMetadata = () => {
-		// If we have initial metadata, use it immediately (don't wait for resource)
-		if (props.initialMetadata) {
-			return props.initialMetadata;
-		}
-		// If resource is still loading, return null (will show loading state)
-		if (metadata.loading) {
-			return null;
-		}
-		// Resource has resolved, return the result (may be null)
-		return metadata() ?? null;
-	};
-
-	// Get title - use metadata title or fallback to filename
-	const title = () => {
-		const meta = currentMetadata();
-		if (meta?.title) {
-			return meta.title;
-		}
-		const filename = getFilenameFromUrl(props.imageUrl);
-		return getFilenameWithoutExtension(filename);
-	};
-
-	// Check if we should show metadata panel
-	const showMetadata = () => {
-		const meta = currentMetadata();
-		return hasMetadataContent(meta || null) || meta?.title;
-	};
 
 	const handleKeyPress = (e: KeyboardEvent) => {
 		if (e.key === "Escape" && props.isOpen()) {
@@ -116,7 +157,7 @@ const ImageModal: Component<{
 
 	// Set author HTML when metadata changes
 	createEffect(() => {
-		const meta = currentMetadata();
+		const meta = props.initialMetadata ?? metadata();
 		if (authorRef && meta?.author) {
 			authorRef.innerHTML = meta.author;
 		}
@@ -159,12 +200,12 @@ const ImageModal: Component<{
 					role="dialog"
 					style="background-color: rgba(0, 0, 0, 0.5);"
 				>
-					<div class="group relative flex max-h-[90vh] max-w-[95vw] flex-col items-center justify-center gap-4 lg:flex-row">
+					<div
+						class="group relative flex max-h-[90vh] max-w-[95vw] flex-col items-center justify-center overflow-hidden rounded-sm border border-primary bg-background/95 p-2 lg:flex-row lg:items-stretch"
+						style="box-shadow: var(--glow-primary);"
+					>
 						{/* Image container */}
-						<div
-							class="relative flex max-h-[90vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-sm border border-primary bg-transparent p-2"
-							style="box-shadow: var(--glow-primary);"
-						>
+						<div class="relative flex flex-1 items-center justify-center overflow-hidden lg:h-full lg:max-h-full lg:min-w-0">
 							<Show
 								fallback={
 									<div class="rounded-sm bg-background/50 p-8 text-center text-white/60">
@@ -173,10 +214,10 @@ const ImageModal: Component<{
 								}
 								when={!imageError()}
 							>
-								<div class="relative h-full w-full">
+								<div class="relative flex h-full items-center justify-center">
 									<img
 										alt={props.alt || "Zoomed image"}
-										class="max-h-[calc(90vh-1rem)] max-w-[calc(90vw-1rem)] rounded-sm object-contain"
+										class="max-h-full max-w-full rounded-sm object-contain"
 										height={800}
 										onerror={handleImageError}
 										onload={handleImageLoad}
@@ -215,81 +256,32 @@ const ImageModal: Component<{
 							</Show>
 						</div>
 
-						{/* Metadata panel - shows beside image if metadata exists */}
-						<Suspense
-							fallback={
-								<div class="flex max-h-[90vh] w-full max-w-md flex-col gap-4 overflow-y-auto rounded-sm border border-primary bg-background/95 p-6 text-white lg:w-80">
-									<div class="h-6 w-32 animate-pulse rounded bg-white/10" />
-								</div>
-							}
-						>
-							<Show when={showMetadata()}>
-								<div
-									class="flex max-h-[90vh] w-full max-w-md flex-col gap-4 overflow-y-auto rounded-sm border border-primary bg-background/95 p-6 text-white lg:w-80"
-									style="box-shadow: var(--glow-primary);"
-								>
-									{/* Title - always shown */}
-									<h3 class="font-pixel text-primary text-xl">{title()}</h3>
-
-									{/* Description */}
-									<Show when={currentMetadata()?.description}>
-										<div class="flex flex-col gap-2">
-											<h4 class="font-medium font-pixellari text-sm text-white/80">
-												Description
-											</h4>
-											<p class="font-sans text-sm text-white/70">
-												{currentMetadata()?.description}
-											</p>
-										</div>
-									</Show>
-
-									{/* Author */}
-									<Show when={currentMetadata()?.author}>
-										<div class="flex flex-col gap-2">
-											<h4 class="font-medium font-pixellari text-sm text-white/80">
-												Artist
-											</h4>
-											<div
-												class="font-sans text-primary text-sm hover:text-primary/80"
-												ref={(el) => {
-													authorRef = el;
-												}}
-											/>
-										</div>
-									</Show>
-
-									{/* Sources */}
-									<Show
-										when={
-											currentMetadata()?.sources &&
-											(currentMetadata()?.sources?.length ?? 0) > 0
-										}
-									>
-										<div class="flex flex-col gap-2">
-											<h4 class="font-medium font-pixellari text-sm text-white/80">
-												Sources
-											</h4>
-											<ul class="flex flex-col gap-2">
-												<For each={currentMetadata()?.sources ?? []}>
-													{(source) => (
-														<li>
-															<a
-																class="font-sans text-primary text-sm underline hover:text-primary/80"
-																href={source}
-																rel="noopener noreferrer"
-																target="_blank"
-															>
-																{source}
-															</a>
-														</li>
-													)}
-												</For>
-											</ul>
-										</div>
-									</Show>
-								</div>
-							</Show>
-						</Suspense>
+						{/* Metadata panel - inside image frame */}
+						{props.initialMetadata ? (
+							<MetadataPanel
+								authorRef={(el) => {
+									authorRef = el;
+								}}
+								imageUrl={props.imageUrl}
+								metadata={props.initialMetadata}
+							/>
+						) : (
+							<Suspense
+								fallback={
+									<div class="flex w-full shrink-0 flex-col gap-4 overflow-y-auto p-6 text-white lg:h-full lg:w-auto lg:min-w-[20rem] lg:max-w-md">
+										<div class="h-6 w-32 animate-pulse rounded bg-white/10" />
+									</div>
+								}
+							>
+								<MetadataPanel
+									authorRef={(el) => {
+										authorRef = el;
+									}}
+									imageUrl={props.imageUrl}
+									metadata={metadata()}
+								/>
+							</Suspense>
+						)}
 					</div>
 				</div>
 			</Portal>

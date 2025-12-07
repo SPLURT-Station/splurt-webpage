@@ -161,6 +161,7 @@ export async function fetchImageMetadata(
 			// Try to read from local filesystem (faster than downloading)
 			const { fileURLToPath } = await import("node:url");
 			const { dirname, join } = await import("node:path");
+			const { existsSync } = await import("node:fs");
 
 			// Get project root
 			const currentFile = fileURLToPath(import.meta.url);
@@ -168,17 +169,29 @@ export async function fetchImageMetadata(
 			const srcDir = dirname(utilsDir);
 			const projectRoot = dirname(srcDir);
 
-			// Construct file path (remove leading / and join with project root)
-			const filePath = join(
-				projectRoot,
-				"public",
-				imageUrl.replace(LEADING_SLASH_REGEX, "")
-			);
+			// Remove leading slash from URL
+			const urlPath = imageUrl.replace(LEADING_SLASH_REGEX, "");
 
-			try {
-				return await readImageMetadataFromFile(filePath);
-			} catch {
-				// If local file read fails, fall through to fetch
+			// Try two locations:
+			// 1. public/urlPath (for files in public folder)
+			// 2. urlPath (for files in project root, like screenshots/)
+			const publicPath = join(projectRoot, "public", urlPath);
+			const rootPath = join(projectRoot, urlPath);
+
+			// Check which path exists and use that
+			let filePath: string | null = null;
+			if (existsSync(publicPath)) {
+				filePath = publicPath;
+			} else if (existsSync(rootPath)) {
+				filePath = rootPath;
+			}
+
+			if (filePath) {
+				try {
+					return await readImageMetadataFromFile(filePath);
+				} catch {
+					// If local file read fails, fall through to fetch
+				}
 			}
 		}
 
