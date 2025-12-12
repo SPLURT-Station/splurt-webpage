@@ -7,6 +7,9 @@ import ExifReader from "exifreader";
 
 // Top-level regex for path cleaning
 const LEADING_SLASH_REGEX = /^\//;
+const QUERY_PARAMS_REGEX = /[?#].*$/;
+const AT_FS_PREFIX_REGEX = /^.*?@fs[\\/]/;
+const WINDOWS_ABSOLUTE_PATH_REGEX = /^[A-Za-z]:[\\/]/;
 
 export type ImageMetadataInfo = {
 	/** Title of the image (required, falls back to filename) */
@@ -144,6 +147,93 @@ export async function readImageMetadataFromFile(
 }
 
 /**
+ * Normalize image URL to extract the actual file path
+ * Handles:
+ * - Query parameters (strips them)
+ * - @fs prefix (extracts path after @fs)
+ * - Windows paths (handles backslashes)
+ * - Relative paths starting with /
+ */
+function normalizeImagePath(imageUrl: string): string {
+	// Strip query parameters and hash
+	let path = imageUrl.replace(QUERY_PARAMS_REGEX, "");
+
+	// Handle @fs prefix (Vite/Astro file system access)
+	// Format: /@fs/F:/path/to/file or /@fs/F:\path\to\file
+	if (path.includes("@fs")) {
+		const match = path.match(AT_FS_PREFIX_REGEX);
+		if (match) {
+			// Extract everything after @fs/
+			path = path.replace(AT_FS_PREFIX_REGEX, "");
+		}
+	}
+
+	// Normalize path separators (handle both / and \)
+	path = path.replace(/\\/g, "/");
+
+	// Remove leading slash if present (for relative paths)
+	path = path.replace(LEADING_SLASH_REGEX, "");
+
+	return path;
+}
+
+/**
+ * Check if a path is an absolute Windows path (e.g., F:\path or F:/path)
+ */
+function isWindowsAbsolutePath(path: string): boolean {
+	// Match Windows drive letter pattern: C:, D:, F:, etc.
+	return WINDOWS_ABSOLUTE_PATH_REGEX.test(path);
+}
+
+/**
+ * Try to read metadata from a local file path
+ * Returns the file path if it exists, null otherwise
+ */
+async function tryLocalFilePaths(
+	normalizedPath: string
+): Promise<string | null> {
+	const { fileURLToPath } = await import("node:url");
+	const { dirname, join, normalize } = await import("node:path");
+	const { existsSync } = await import("node:fs");
+
+	// If it's an absolute Windows path, use it directly
+	if (isWindowsAbsolutePath(normalizedPath)) {
+		const filePath = normalize(normalizedPath);
+		if (existsSync(filePath)) {
+			return filePath;
+		}
+		return null;
+	}
+
+	// Get project root
+	const currentFile = fileURLToPath(import.meta.url);
+	const utilsDir = dirname(currentFile);
+	const srcDir = dirname(utilsDir);
+	const projectRoot = dirname(srcDir);
+
+	// Try multiple locations:
+	// 1. Direct path from project root (for src/assets/images/...)
+	// 2. public/urlPath (for files in public folder)
+	// 3. urlPath (for files in project root, like screenshots/)
+	const directPath = join(projectRoot, normalizedPath);
+	const publicPath = join(projectRoot, "public", normalizedPath);
+	const rootPath = join(projectRoot, normalizedPath);
+
+	// Check which path exists and use that
+	if (existsSync(directPath)) {
+		return directPath;
+	}
+	if (existsSync(publicPath)) {
+		return publicPath;
+	}
+	if (existsSync(rootPath)) {
+		return rootPath;
+	}
+
+	return null;
+}
+
+/**
  * Fetch image metadata from embedded EXIF UserComment field
  * Optimized for local files - reads directly from filesystem when possible
  */
@@ -156,36 +246,12 @@ export async function fetchImageMetadata(
 	}
 
 	try {
-		// Check if it's a local file path (starts with / and not http)
-		if (imageUrl.startsWith("/") && !imageUrl.startsWith("http")) {
-			// Try to read from local filesystem (faster than downloading)
-			const { fileURLToPath } = await import("node:url");
-			const { dirname, join } = await import("node:path");
-			const { existsSync } = await import("node:fs");
+		// Normalize the URL to extract the actual file path
+		const normalizedPath = normalizeImagePath(imageUrl);
 
-			// Get project root
-			const currentFile = fileURLToPath(import.meta.url);
-			const utilsDir = dirname(currentFile);
-			const srcDir = dirname(utilsDir);
-			const projectRoot = dirname(srcDir);
-
-			// Remove leading slash from URL
-			const urlPath = imageUrl.replace(LEADING_SLASH_REGEX, "");
-
-			// Try two locations:
-			// 1. public/urlPath (for files in public folder)
-			// 2. urlPath (for files in project root, like screenshots/)
-			const publicPath = join(projectRoot, "public", urlPath);
-			const rootPath = join(projectRoot, urlPath);
-
-			// Check which path exists and use that
-			let filePath: string | null = null;
-			if (existsSync(publicPath)) {
-				filePath = publicPath;
-			} else if (existsSync(rootPath)) {
-				filePath = rootPath;
-			}
-
+		// Check if it's a local file path (not http/https)
+		if (!imageUrl.startsWith("http")) {
+			const filePath = await tryLocalFilePaths(normalizedPath);
 			if (filePath) {
 				try {
 					return await readImageMetadataFromFile(filePath);
@@ -196,6 +262,7 @@ export async function fetchImageMetadata(
 		}
 
 		// For remote URLs or if local read failed, fetch the image
+		// Use the original URL (with query params) for fetching
 		const response = await fetch(imageUrl);
 		if (!response.ok) {
 			return null;

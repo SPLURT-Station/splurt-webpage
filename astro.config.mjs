@@ -5,6 +5,7 @@ import nurodevbun from "@nurodev/astro-bun";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import favicons from "astro-favicons";
+import vtbot from "astro-vtbot";
 import UnfontsAstro from "unplugin-fonts/astro";
 import Icons from "unplugin-icons/vite";
 import solidSvg from "vite-plugin-solid-svg";
@@ -52,6 +53,7 @@ export default defineConfig({
 				],
 			},
 		}),
+		vtbot(),
 	],
 
 	vite: {

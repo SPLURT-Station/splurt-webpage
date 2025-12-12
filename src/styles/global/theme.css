@@ -11,6 +11,7 @@
 	--font-pixel: "Grand9K Pixel", sans-serif;
 	--font-vcr: "VCR OSD MONO", "Open Sans", sans-serif;
 	--font-pixellari: "Pixellari", sans-serif;
+	--font-tinyunicode: "TinyUnicode", sans-serif;
 
 	/* Colors - creates bg-*, text-*, border-* utilities */
 	--color-primary: #ff50b0;

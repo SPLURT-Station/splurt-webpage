@@ -1,14 +1,18 @@
 ---
 import { getImage } from "astro:assets";
+import Linter from "astro-vtbot/components/Linter.astro";
 import banner from "/src/assets/backgrounds/banner.png";
 import logo from "/src/assets/logos/splurtpaw2_alt3.png";
 import thumbnail from "/src/assets/thumbnail.png";
 import AgeGate from "../components/age-gate/age-gate.tsx";
 import Footer from "../components/footer/footer.astro";
+import MusicPlayer from "../components/music-player/music-player.tsx";
 import Navigation from "../components/navigation/navigation.tsx";
 import PageHeader from "../components/page-header/page-header.astro";
 import { generateStarShadowsWithOpacity } from "../utils/stars";
 import "/src/styles/index.css";
+import { ClientRouter } from "astro:transitions";
+import ReplacementSwap from "astro-vtbot/components/ReplacementSwap.astro";
 import { links } from "unplugin-fonts/head";
 
 // Optimize the banner image for background use
@@ -171,6 +175,9 @@ const twitterImageUrl = new URL(twitterImage, Astro.site || Astro.url.origin)
 		<meta property="og:image:type" content="image/webp">
 		<meta name="twitter:image:src" content={twitterImageUrl}>
 		<meta name="msapplication-navbutton-color" content="#ff50b0">
+		<ClientRouter/>
+		<ReplacementSwap/>
+		<Linter/>
 	</head>
 	<body class="flex flex-col min-h-screen">
 		<div id="stars" style={`box-shadow: ${shadowsSmall};`}></div>
@@ -188,9 +195,14 @@ const twitterImageUrl = new URL(twitterImage, Astro.site || Astro.url.origin)
 			aria-hidden="true"
 		></div>
 		<AgeGate client:load logoUrl={optimizedLogo.src}/>
-		<Navigation client:load logoUrl={optimizedLogo.src}/>
-		{pageTitle && <PageHeader title={pageTitle} />}
-		<main class="relative z-10">
+		<section data-vtbot-replace="navigation">
+			<Navigation client:load logoUrl={optimizedLogo.src}/>
+		</section>
+		<MusicPlayer client:load/>
+		<section data-vtbot-replace="header">
+			{pageTitle && <PageHeader title={pageTitle} />}
+		</section>
+		<main class="relative z-10" data-vtbot-replace="main">
 			<slot/>
 		</main>
 		<Footer/>
