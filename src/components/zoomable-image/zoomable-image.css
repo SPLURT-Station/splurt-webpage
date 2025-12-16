@@ -1,0 +1,18 @@
+/* Zoomable image modal styles */
+.zoomable-image-modal-img {
+	/* Account for container padding (p-2 = 0.5rem each side)
+	   Vertical: 0.5rem top + 0.5rem bottom = 1rem total
+	   Horizontal: 0.5rem left + 0.5rem right = 1rem total */
+	max-height: calc(90vh - 1rem);
+	max-width: calc(90vw - 1rem);
+}
+
+/* On desktop (lg+), when metadata panel is visible, also subtract panel min-width */
+@media (min-width: 1024px) {
+	.zoomable-image-modal-img-with-panel {
+		/* 90vw - container horizontal padding (1rem) - panel min-width (20rem) */
+		max-width: calc(90vw - 20rem - 1rem);
+		/* Height stays the same - still need to account for vertical padding */
+		max-height: calc(90vh - 1rem);
+	}
+}

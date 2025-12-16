@@ -7,7 +7,6 @@ import {
 	For,
 	onCleanup,
 	Show,
-	Suspense,
 } from "solid-js";
 import { Portal } from "solid-js/web";
 import type { ImageMetadataInfo } from "../../utils/image-metadata";
@@ -16,6 +15,7 @@ import {
 	getFilenameWithoutExtension,
 	hasMetadataContent,
 } from "../../utils/image-metadata";
+import "./zoomable-image.css";
 
 /**
  * Metadata panel component
@@ -104,7 +104,7 @@ const ImageModal: Component<{
 	onClose: () => void;
 	initialMetadata?: ImageMetadataInfo;
 }> = (props) => {
-	const [loading, setLoading] = createSignal(true);
+	const [imageLoaded, setImageLoaded] = createSignal(false);
 	const [imageError, setImageError] = createSignal(false);
 	let modalRef: HTMLDivElement | undefined;
 	let authorRef: HTMLDivElement | undefined;
@@ -125,6 +125,19 @@ const ImageModal: Component<{
 		}
 	);
 
+	// Check if metadata is loaded (either provided initially or fetched)
+	const isMetadataLoaded = () => {
+		if (props.initialMetadata) {
+			return true; // Already provided, consider it loaded
+		}
+		// Check if resource has finished loading (whether it returned data or null)
+		return metadata.state === "ready" || metadata.state === "errored";
+	};
+
+	// Check if both image and metadata are loaded
+	const isContentReady = () =>
+		imageLoaded() && isMetadataLoaded() && !imageError();
+
 	const handleKeyPress = (e: KeyboardEvent) => {
 		if (e.key === "Escape" && props.isOpen()) {
 			props.onClose();
@@ -138,19 +151,50 @@ const ImageModal: Component<{
 	};
 
 	const handleImageLoad = () => {
-		setLoading(false);
+		setImageLoaded(true);
 		setImageError(false);
 	};
 
 	const handleImageError = () => {
-		setLoading(false);
+		setImageLoaded(false);
 		setImageError(true);
 	};
 
-	// Reset loading state when image URL changes
+	// Check if image is already loaded (for cached images)
+	const checkImageLoaded = (img: HTMLImageElement | undefined) => {
+		if (img?.complete && img.naturalHeight !== 0) {
+			setImageLoaded(true);
+			setImageError(false);
+		}
+	};
+
+	// Safely get metadata (only when ready)
+	const getMetadata = () => {
+		if (props.initialMetadata) {
+			return props.initialMetadata;
+		}
+		if (metadata.state === "ready") {
+			return metadata();
+		}
+		return null;
+	};
+
+	// Check if metadata panel should be visible
+	const hasMetadata = () => {
+		const meta = getMetadata();
+		if (!meta) {
+			return false;
+		}
+		return hasMetadataContent(meta) || !!meta.title;
+	};
+
+	// Reset loading state when image URL changes (track imageUrl specifically)
+	let previousImageUrl: string | undefined;
 	createEffect(() => {
-		if (props.isOpen() && props.imageUrl) {
-			setLoading(true);
+		const currentUrl = props.imageUrl;
+		if (props.isOpen() && currentUrl && currentUrl !== previousImageUrl) {
+			previousImageUrl = currentUrl;
+			setImageLoaded(false);
 			setImageError(false);
 		}
 	});
@@ -201,11 +245,14 @@ const ImageModal: Component<{
 					style="background-color: rgba(0, 0, 0, 0.5);"
 				>
 					<div
-						class="group relative flex max-h-[90vh] max-w-[95vw] flex-col items-center justify-center overflow-hidden rounded-sm border border-primary bg-background/95 p-2 lg:flex-row lg:items-stretch"
+						class="group relative flex max-h-[90vh] max-w-[90vw] flex-col items-center justify-center overflow-hidden rounded-sm border border-primary bg-background/95 p-2 lg:flex-row lg:items-stretch"
 						style="box-shadow: var(--glow-primary);"
 					>
-						{/* Image container */}
-						<div class="relative flex flex-1 items-center justify-center overflow-hidden lg:h-full lg:max-h-full lg:min-w-0">
+						{/* Image container - always rendered so image can load, but hidden until ready */}
+						<div
+							class="relative flex flex-1 items-center justify-center overflow-hidden lg:h-full lg:max-h-full lg:min-w-0"
+							style={`visibility: ${isContentReady() ? "visible" : "hidden"};`}
+						>
 							<Show
 								fallback={
 									<div class="rounded-sm bg-background/50 p-8 text-center text-white/60">
@@ -214,22 +261,21 @@ const ImageModal: Component<{
 								}
 								when={!imageError()}
 							>
-								<div class="relative flex h-full items-center justify-center">
+								<div class="relative flex h-full w-full items-center justify-center">
 									<img
 										alt={props.alt || "Zoomed image"}
-										class="max-h-full max-w-full rounded-sm object-contain"
+										class={`zoomable-image-modal-img h-auto w-auto rounded-sm object-contain ${hasMetadata() ? "zoomable-image-modal-img-with-panel" : ""}`}
 										height={800}
 										onerror={handleImageError}
 										onload={handleImageLoad}
+										ref={(el) => {
+											// Check if image is already loaded (for cached images that load before onload fires)
+											checkImageLoaded(el);
+										}}
 										src={props.imageUrl}
-										style="display: block; height: auto; width: auto;"
+										style="display: block;"
 										width={1200}
 									/>
-									<Show when={loading()}>
-										<div class="absolute inset-0 flex items-center justify-center rounded-sm bg-background/50">
-											<div class="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-										</div>
-									</Show>
 								</div>
 
 								<button
@@ -256,32 +302,33 @@ const ImageModal: Component<{
 							</Show>
 						</div>
 
-						{/* Metadata panel - inside image frame */}
-						{props.initialMetadata ? (
-							<MetadataPanel
-								authorRef={(el) => {
-									authorRef = el;
-								}}
-								imageUrl={props.imageUrl}
-								metadata={props.initialMetadata}
-							/>
-						) : (
-							<Suspense
-								fallback={
-									<div class="flex w-full shrink-0 flex-col gap-4 overflow-y-auto p-6 text-white lg:h-full lg:w-auto lg:min-w-[20rem] lg:max-w-md">
-										<div class="h-6 w-32 animate-pulse rounded bg-white/10" />
-									</div>
-								}
-							>
+						{/* Metadata panel - inside image frame, only rendered when ready */}
+						<Show when={isContentReady()}>
+							{props.initialMetadata ? (
 								<MetadataPanel
 									authorRef={(el) => {
 										authorRef = el;
 									}}
 									imageUrl={props.imageUrl}
-									metadata={metadata()}
+									metadata={props.initialMetadata}
 								/>
-							</Suspense>
-						)}
+							) : (
+								<MetadataPanel
+									authorRef={(el) => {
+										authorRef = el;
+									}}
+									imageUrl={props.imageUrl}
+									metadata={getMetadata() ?? undefined}
+								/>
+							)}
+						</Show>
+
+						{/* Loading overlay - shown while either image or metadata is loading */}
+						<Show when={!isContentReady()}>
+							<div class="absolute inset-0 z-50 flex items-center justify-center rounded-sm bg-background/95">
+								<div class="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+							</div>
+						</Show>
 					</div>
 				</div>
 			</Portal>

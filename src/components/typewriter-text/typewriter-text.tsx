@@ -1,4 +1,5 @@
 import { createEffect, createSignal, type JSX, onMount } from "solid-js";
+import { Portal } from "solid-js/web";
 import "./typewriter-text.css";
 
 type TypewriterTextProps = {
@@ -72,6 +73,9 @@ export default function TypewriterText(props: TypewriterTextProps) {
 	>();
 	const [cursorElement, setCursorElement] = createSignal<
 		HTMLSpanElement | undefined
+	>();
+	const [portalTarget, setPortalTarget] = createSignal<
+		HTMLElement | undefined
 	>();
 	let containerRef: HTMLDivElement | undefined;
 	let contentRef: HTMLDivElement | undefined;
@@ -294,6 +298,15 @@ export default function TypewriterText(props: TypewriterTextProps) {
 			return;
 		}
 
+		// Find the parent panel (card element) for portal target
+		let parent = container.parentElement;
+		while (parent && !parent.classList.contains("card")) {
+			parent = parent.parentElement;
+		}
+		if (parent) {
+			setPortalTarget(parent as HTMLElement);
+		}
+
 		// Check if animation has been shown
 		const played = checkHasPlayed();
 
@@ -322,32 +335,41 @@ export default function TypewriterText(props: TypewriterTextProps) {
 	});
 
 	return (
-		<div
-			class="typewriter-container relative"
-			ref={(el) => {
-				containerRef = el;
-			}}
-		>
+		<>
 			<div
+				class="typewriter-container relative"
 				ref={(el) => {
-					contentRef = el;
+					containerRef = el;
 				}}
 			>
-				{props.children}
+				<div
+					ref={(el) => {
+						contentRef = el;
+					}}
+				>
+					{props.children}
+				</div>
 			</div>
-			<button
-				aria-label="Replay typewriter animation"
-				class={`absolute right-2 bottom-2 rounded p-2 text-gray-400 transition-all duration-500 ${
-					isAnimationComplete()
-						? "opacity-50 hover:text-gray-300 hover:opacity-100"
-						: "pointer-events-none opacity-0"
-				}`}
-				onClick={handleReplay}
-				title="Replay typewriter animation"
-				type="button"
-			>
-				<RefreshIcon class="h-5 w-5" height={20} width={20} />
-			</button>
-		</div>
+			{(() => {
+				const target = portalTarget();
+				return target ? (
+					<Portal mount={target}>
+						<button
+							aria-label="Replay typewriter animation"
+							class={`absolute right-2 bottom-2 rounded p-2 text-gray-400 transition-all duration-500 ${
+								isAnimationComplete()
+									? "opacity-50 hover:text-gray-300 hover:opacity-100"
+									: "pointer-events-none opacity-0"
+							}`}
+							onClick={handleReplay}
+							title="Replay typewriter animation"
+							type="button"
+						>
+							<RefreshIcon class="h-5 w-5" height={20} width={20} />
+						</button>
+					</Portal>
+				) : null;
+			})()}
+		</>
 	);
 }
