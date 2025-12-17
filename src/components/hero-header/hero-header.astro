@@ -3,7 +3,7 @@ import { getImage, Image } from "astro:assets";
 import DiscordIcon from "~icons/ic/baseline-discord";
 import ArrowDownIcon from "~icons/mdi/arrow-down";
 import bannerPoster from "/src/assets/backgrounds/banner.png";
-import heroVideo from "/src/assets/hero-temp.mp4";
+import bannerVideo from "/src/assets/banner-video.mp4";
 import logo from "/src/assets/logos/splurtlogo.png";
 import "./hero-header.css";
 
@@ -60,7 +60,7 @@ const optimizedBannerPoster = await getImage({
 		poster={optimizedBannerPoster.src}
 		class="absolute inset-0 z-10 w-auto min-w-full min-h-full max-w-none"
 	>
-		<source src={heroVideo} type="video/mp4">
+		<source src={bannerVideo} type="video/mp4">
 	</video>
 	<button
 		id="learn-more-btn"
