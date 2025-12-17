@@ -30,6 +30,11 @@
 		box-shadow: var(--shadow-card);
 		border: 1px solid var(--color-border-primary);
 		position: relative;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		overflow-wrap: break-word;
+		word-wrap: break-word;
 	}
 
 	.card::before {
@@ -77,16 +82,7 @@
 	}
 
 	.card .content-heading--primary::before {
-		content: "";
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		width: 2px;
-		background: var(--color-primary);
-		border-top-left-radius: var(--radius-sm);
-		border-bottom-left-radius: var(--radius-sm);
-		z-index: 2;
+		display: none;
 	}
 
 	.card .content-heading--primary::after {

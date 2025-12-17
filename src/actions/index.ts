@@ -17,6 +17,13 @@ import { fetchImageMetadata } from "../utils/image-metadata";
 import { getMediaConfig } from "../utils/media-config";
 import type { MediaItem } from "../utils/media-fetcher";
 import { fetchMediaItems } from "../utils/media-fetcher";
+import {
+	ensureMetadataHash,
+	hasCachedMetadata,
+	invalidateMetadataCache,
+	loadCachedMetadata,
+	saveCachedMetadata,
+} from "../utils/metadata-cache";
 
 /**
  * Get image dimensions, inferring from remote if needed
@@ -242,6 +249,12 @@ export const server = {
 				// Always fetch fresh data to check for changes
 				const data = await fetchMediaItems(config);
 
+				// Invalidate metadata cache if images have changed
+				// This ensures metadata cache stays in sync with image changes
+				await invalidateMetadataCache(data.splashScreens, data.screenshots);
+				// Ensure metadata hash is stored (for first-time setup)
+				await ensureMetadataHash(data.splashScreens, data.screenshots);
+
 				// If optimization is not requested, return unoptimized images
 				if (!input.optimize) {
 					return {
@@ -312,6 +325,7 @@ export const server = {
 	/**
 	 * Fetch image metadata on-demand
 	 * Used for lazy loading metadata when user opens zoom modal
+	 * Uses caching to avoid re-processing images
 	 */
 	fetchImageMetadata: defineAction({
 		accept: "json",
@@ -320,7 +334,35 @@ export const server = {
 		}),
 		handler: async (input) => {
 			try {
+				// Get current media items to validate cache
+				// This is needed to check if cache is still valid
+				const config = getMediaConfig();
+				const data = await fetchMediaItems(config);
+
+				// Check if cached metadata exists and is valid
+				const hasCache = await hasCachedMetadata(
+					input.imageUrl,
+					data.splashScreens,
+					data.screenshots
+				);
+
+				if (hasCache) {
+					const cachedMetadata = await loadCachedMetadata(input.imageUrl);
+					// cachedMetadata can be:
+					// - undefined: not cached (shouldn't happen if hasCache is true, but handle it)
+					// - null: cached as "no metadata found"
+					// - ImageMetadataInfo: cached metadata
+					if (cachedMetadata !== undefined) {
+						return { metadata: cachedMetadata };
+					}
+				}
+
+				// Cache miss or invalid - fetch metadata from image
 				const metadata = await fetchImageMetadata(input.imageUrl);
+
+				// Save to cache for future use (even if null - to avoid re-processing)
+				await saveCachedMetadata(input.imageUrl, metadata);
+
 				return { metadata: metadata || null };
 			} catch (error) {
 				console.error("Error fetching image metadata:", error);

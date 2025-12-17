@@ -49,7 +49,7 @@ const MetadataPanel: Component<{
 						<h4 class="font-medium font-pixellari text-sm text-white/80">
 							Description
 						</h4>
-						<p class="font-sans text-sm text-white/70">
+						<p class="font-spess text-sm text-white/70">
 							{props.metadata.description}
 						</p>
 					</div>

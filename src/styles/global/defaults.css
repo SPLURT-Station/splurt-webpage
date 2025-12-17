@@ -32,7 +32,9 @@ body {
 }
 
 html {
-	font-family: var(--font-sans);
+	font-family: var(--font-spess);
+	/* Reserve space for scrollbar to prevent layout shifts when content loads */
+	scrollbar-gutter: stable;
 }
 
 body {
@@ -41,6 +43,30 @@ body {
 	position: relative;
 	overflow-x: hidden;
 }
+
+/* Prevent content overflow on mobile - only apply to media elements */
+img,
+video,
+iframe,
+embed,
+object {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Ensure text wraps properly on mobile - but not too aggressively */
+p,
+span {
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+/* Ensure code elements wrap on mobile when needed, but preserve layout */
+code {
+	max-width: 100%;
+}
+
+/* Don't apply max-width to buttons as it can break layouts */
 
 /* Parallax Star Field Effect - Global animation styles */
 /* Stars are generated dynamically via JavaScript in main-layout.astro */

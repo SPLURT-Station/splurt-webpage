@@ -118,7 +118,7 @@ export default function MediaTabs(props: Props) {
 				<button
 					aria-controls="splash-panel"
 					aria-selected={activeTab() === "splash"}
-					class="relative border-b-2 px-6 py-3 font-medium font-pixellari text-[21px] transition-colors duration-200"
+					class="relative border-b-2 px-6 py-3 font-medium font-pixellari text-[min(21px,4.5vw)] transition-colors duration-200"
 					classList={{
 						"text-primary border-primary": activeTab() === "splash",
 						"text-white/60 border-transparent hover:text-white/80":
@@ -134,7 +134,7 @@ export default function MediaTabs(props: Props) {
 				<button
 					aria-controls="screenshots-panel"
 					aria-selected={activeTab() === "screenshots"}
-					class="relative border-b-2 px-6 py-3 font-medium font-pixellari text-[21px] transition-colors duration-200"
+					class="relative border-b-2 px-6 py-3 font-medium font-pixellari text-[min(21px,4.5vw)] transition-colors duration-200"
 					classList={{
 						"text-primary border-primary": activeTab() === "screenshots",
 						"text-white/60 border-transparent hover:text-white/80":

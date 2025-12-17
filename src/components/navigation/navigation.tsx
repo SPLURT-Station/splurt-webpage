@@ -1,4 +1,4 @@
-import { createSignal, onMount, Show } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import "./navigation.css";
 
 // Iconify icons as inline SVG components
@@ -46,6 +46,28 @@ function GithubIcon(props: {
 	);
 }
 
+function PatreonIcon(props: {
+	class?: string;
+	width?: number;
+	height?: number;
+	fill?: string;
+}) {
+	return (
+		<svg
+			aria-hidden="true"
+			class={props.class}
+			fill={props.fill || "currentColor"}
+			height={props.height || 24}
+			viewBox="0 0 512 512"
+			width={props.width || 24}
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<title>Patreon</title>
+			<path d="M489.7 153.8c-.1-65.4-51-119-110.7-138.3C304.8-8.5 207-5 136.1 28.4C50.3 68.9 23.3 157.7 22.3 246.2C21.5 319 28.7 510.6 136.9 512c80.3 1 92.3-102.5 129.5-152.3c26.4-35.5 60.5-45.5 102.4-55.9c72-17.8 121.1-74.7 121-150z" />
+		</svg>
+	);
+}
+
 type Props = {
 	logoUrl?: string;
 };
@@ -62,6 +84,10 @@ export default function Navigation(props: Props) {
 		setNavOpen(!navOpen());
 	};
 
+	const closeNav = () => {
+		setNavOpen(false);
+	};
+
 	const isActive = (path: string) => {
 		const current = currentPath();
 		if (path === "/") {
@@ -71,7 +97,10 @@ export default function Navigation(props: Props) {
 	};
 
 	return (
-		<nav class="site-nav fixed top-0 right-0 left-0 z-40 bg-background font-pixel">
+		<nav
+			class="site-nav fixed top-0 right-0 left-0 z-40 bg-background font-pixel"
+			classList={{ "nav-menu-open": navOpen() }}
+		>
 			<div class="mx-auto flex h-14 max-w-7xl px-2">
 				<a
 					aria-label="Home"
@@ -166,6 +195,21 @@ export default function Navigation(props: Props) {
 									width={20}
 								/>
 							</a>
+							<a
+								aria-label="Patreon"
+								class="social-icon"
+								href="https://patreon.com/SPLURTstation13?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink"
+								rel="noopener external"
+								target="_blank"
+							>
+								<PatreonIcon
+									aria-hidden="true"
+									class="patreon-icon"
+									fill="currentColor"
+									height={20}
+									width={20}
+								/>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -183,84 +227,118 @@ export default function Navigation(props: Props) {
 					</button>
 				</div>
 			</div>
-			<Show when={navOpen()}>
-				<div class="sm:hidden">
-					<div class="page-links flex flex-col p-4">
+			<div
+				aria-label="Navigation menu"
+				aria-modal="true"
+				class="mobile-menu sm:hidden"
+				classList={{ "mobile-menu-open": navOpen() }}
+				role="dialog"
+			>
+				<button
+					aria-label="Close menu"
+					class="mobile-menu-backdrop"
+					onClick={closeNav}
+					onKeyDown={(e) => {
+						if (e.key === "Escape") {
+							closeNav();
+						}
+					}}
+					type="button"
+				/>
+				<div class="mobile-menu-content">
+					<div class="mobile-page-links">
 						<a
-							class="page-link py-4"
+							class="mobile-page-link"
 							classList={{ active: isActive("/") }}
 							href="/"
+							onClick={closeNav}
 						>
 							About
 						</a>
 						<a
-							class="page-link py-4"
+							class="mobile-page-link"
 							classList={{ active: isActive("/how-to-play") }}
 							href="/how-to-play"
+							onClick={closeNav}
 						>
 							How To Play
 						</a>
 						<a
-							class="page-link py-4"
+							class="mobile-page-link"
 							classList={{ active: isActive("/media") }}
 							href="/media"
+							onClick={closeNav}
 						>
 							Media
 						</a>
 						<a
-							class="page-link py-4"
+							class="mobile-page-link"
 							href="https://wiki.splurt.space"
+							onClick={closeNav}
 							rel="noopener external"
 							target="_blank"
 						>
 							Wiki
 						</a>
 						<a
-							class="page-link py-4"
+							class="mobile-page-link"
 							href="https://wiki.splurt.space/Rules"
+							onClick={closeNav}
 							rel="noopener external"
 							target="_blank"
 						>
 							Rules
 						</a>
-						<a class="cta--highlighted mt-2" href="/how-to-play">
-							Play Now
+					</div>
+					<div class="mobile-social-icons">
+						<a
+							aria-label="Discord"
+							class="mobile-social-icon"
+							href="https://discord.gg/splurt"
+							rel="noopener external"
+							target="_blank"
+						>
+							<DiscordIcon
+								aria-hidden="true"
+								class="discord-icon"
+								fill="currentColor"
+								height={24}
+								width={24}
+							/>
 						</a>
-						<div class="social-icons-mobile mt-2 flex items-center gap-3">
-							<a
-								aria-label="Discord"
-								class="social-icon"
-								href="https://discord.gg/splurt"
-								rel="noopener external"
-								target="_blank"
-							>
-								<DiscordIcon
-									aria-hidden="true"
-									class="discord-icon"
-									fill="currentColor"
-									height={20}
-									width={20}
-								/>
-							</a>
-							<a
-								aria-label="GitHub"
-								class="social-icon"
-								href="https://github.com/splurt-station"
-								rel="noopener external"
-								target="_blank"
-							>
-								<GithubIcon
-									aria-hidden="true"
-									class="github-icon"
-									fill="currentColor"
-									height={20}
-									width={20}
-								/>
-							</a>
-						</div>
+						<a
+							aria-label="GitHub"
+							class="mobile-social-icon"
+							href="https://github.com/splurt-station"
+							rel="noopener external"
+							target="_blank"
+						>
+							<GithubIcon
+								aria-hidden="true"
+								class="github-icon"
+								fill="currentColor"
+								height={24}
+								width={24}
+							/>
+						</a>
+						<a
+							aria-label="Patreon"
+							class="mobile-social-icon"
+							href="https://patreon.com/SPLURTstation13?utm_medium=unknown&utm_source=join_link&utm_campaign=creatorshare_creator&utm_content=copyLink"
+							rel="noopener external"
+							target="_blank"
+						>
+							<PatreonIcon
+								aria-hidden="true"
+								class="patreon-icon"
+								fill="currentColor"
+								height={24}
+								width={24}
+							/>
+						</a>
 					</div>
 				</div>
-			</Show>
+			</div>
 		</nav>
 	);
 }
