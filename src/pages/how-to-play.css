@@ -72,7 +72,7 @@
 		box-shadow: var(--glow-primary);
 	}
 
-	&--no-line:before {
+	&:is(.how-to-step--no-line):before {
 		content: none;
 	}
 

@@ -1,5 +1,6 @@
 // @ts-check
 
+import sitemap from "@astrojs/sitemap";
 import solidJs from "@astrojs/solid-js";
 import nurodevbun from "@nurodev/astro-bun";
 import tailwindcss from "@tailwindcss/vite";
@@ -12,6 +13,7 @@ import solidSvg from "vite-plugin-solid-svg";
 
 // https://astro.build/config
 export default defineConfig({
+	site: "https://splurt.space",
 	adapter: nurodevbun(),
 	output: "static",
 	image: {
@@ -54,6 +56,7 @@ export default defineConfig({
 			},
 		}),
 		vtbot(),
+		sitemap(),
 	],
 
 	vite: {
