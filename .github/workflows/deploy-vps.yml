@@ -55,6 +55,48 @@ jobs:
           export PATH="$BUN_INSTALL/bin:$PATH"
           bun upgrade
 
+      - name: Create .env file from GitHub secrets
+        env:
+          # Pass GitHub secrets as environment variables to the script
+          # Add all secrets from .env.example here
+          PUBLIC_MEDIA_SPLASH_SOURCE_TYPE: ${{ secrets.PUBLIC_MEDIA_SPLASH_SOURCE_TYPE }}
+          PUBLIC_MEDIA_SPLASH_BASE_URL: ${{ secrets.PUBLIC_MEDIA_SPLASH_BASE_URL }}
+          PUBLIC_MEDIA_SPLASH_PATTERNS: ${{ secrets.PUBLIC_MEDIA_SPLASH_PATTERNS }}
+          PUBLIC_MEDIA_SCREENSHOT_SOURCE_TYPE: ${{ secrets.PUBLIC_MEDIA_SCREENSHOT_SOURCE_TYPE }}
+          PUBLIC_MEDIA_SCREENSHOT_BASE_URL: ${{ secrets.PUBLIC_MEDIA_SCREENSHOT_BASE_URL }}
+          PUBLIC_MEDIA_SCREENSHOT_PATTERNS: ${{ secrets.PUBLIC_MEDIA_SCREENSHOT_PATTERNS }}
+          PUBLIC_MEDIA_MAX_IMAGES_PER_CATEGORY: ${{ secrets.PUBLIC_MEDIA_MAX_IMAGES_PER_CATEGORY }}
+          MEDIA_CACHE_DURATION: ${{ secrets.MEDIA_CACHE_DURATION }}
+          PUBLIC_YOUTUBE_PLAYLIST_ID: ${{ secrets.PUBLIC_YOUTUBE_PLAYLIST_ID }}
+          PUBLIC_YOUTUBE_PLAYLIST_URL: ${{ secrets.PUBLIC_YOUTUBE_PLAYLIST_URL }}
+          PUBLIC_YOUTUBE_API_KEY: ${{ secrets.PUBLIC_YOUTUBE_API_KEY }}
+          PUBLIC_YOUTUBE_DEFAULT_SONG_INDEX: ${{ secrets.PUBLIC_YOUTUBE_DEFAULT_SONG_INDEX }}
+        run: |
+          export HOME="${HOME:-$(eval echo ~$(whoami))}"
+          export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+          export PATH="$BUN_INSTALL/bin:$PATH"
+
+          # Make the script executable
+          chmod +x .github/scripts/create-env.sh
+
+          # Run the script to create .env file
+          .github/scripts/create-env.sh
+
+          # Verify .env file was created
+          if [ ! -f ".env" ]; then
+            echo "❌ Error: .env file was not created"
+            exit 1
+          fi
+
+          echo "✅ .env file created successfully"
+          echo ""
+          echo "📝 Environment variables set (values hidden for security):"
+          grep -v "^#" .env | grep -v "^$" | cut -d'=' -f1 | while read -r var; do
+            if [ -n "$var" ]; then
+              echo "  ✓ $var"
+            fi
+          done
+
       - name: Install dependencies
         run: |
           export HOME="${HOME:-$(eval echo ~$(whoami))}"
