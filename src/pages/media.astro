@@ -1,7 +1,7 @@
 ---
 import MediaTabs from "../components/media-tabs/media-tabs.tsx";
 import Layout from "../layouts/main-layout.astro";
-import "./media.css";
+import "./_media.css";
 
 // Page is pre-rendered at build time
 // Media data is fetched client-side in the SolidJS component
@@ -13,8 +13,8 @@ import "./media.css";
 	pageTitle="Media"
 >
 	<div class="container mx-auto px-4 py-12 lg:py-16 xl:py-24 relative z-10">
-		<div class="card">
+		<section class="card">
 			<MediaTabs client:only="solidjs"/>
-		</div>
+		</section>
 	</div>
 </Layout>
