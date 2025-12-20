@@ -1,7 +1,7 @@
 ---
 import { getImage, Image } from "astro:assets";
-import mobInteraction from "/src/assets/images/mob_interaction.jpg";
-import ychCharacterCreator from "/src/assets/images/ych_charactercreator.jpg";
+import mobInteraction from "/public/images/mob_interaction.jpg";
+import ychCharacterCreator from "/public/images/ych_charactercreator.jpg";
 import HeroHeader from "../components/hero-header/hero-header.astro";
 import Layout from "../layouts/main-layout.astro";
 import "./home.css";
@@ -151,7 +151,7 @@ const optimizedYCH = await getImage({
 								client:load
 								alt="Mob interaction gameplay screenshot"
 								class="w-full"
-								fullResolutionUrl={mobInteraction.src}
+								fullResolutionUrl={"/images/mob_interaction.jpg"}
 								height={710}
 								src={optimizedMobInteraction.src}
 								width={1000}
@@ -162,7 +162,7 @@ const optimizedYCH = await getImage({
 								client:load
 								alt="YCH Character Creator screenshot"
 								class="w-full"
-								fullResolutionUrl={ychCharacterCreator.src}
+								fullResolutionUrl={"/images/ych_charactercreator.jpg"}
 								height={710}
 								src={optimizedYCH.src}
 								width={1000}

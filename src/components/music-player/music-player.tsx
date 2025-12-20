@@ -1,8 +1,8 @@
 import { createSignal, onCleanup, onMount, Show } from "solid-js";
 import YouTubePlayer from "youtube-player";
 import type YouTubePlayerType from "youtube-player/dist/types";
-import soundOffIcon from "/src/assets/sound_off.png";
-import soundOnIcon from "/src/assets/sound_on.png";
+import soundOffIcon from "/src/assets/images/sound_off.png";
+import soundOnIcon from "/src/assets/images/sound_on.png";
 import "./music-player.css";
 
 const STORAGE_KEY_MUTED = "music-player-muted";

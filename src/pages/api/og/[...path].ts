@@ -24,7 +24,7 @@ export const { getStaticPaths, GET } = OGImageRoute({
 		title: page.title,
 		description: page.description,
 		bgImage: {
-			path: "./src/assets/thumbnail.png",
+			path: "./src/assets/backgrounds/thumbnail.png",
 			fit: "cover",
 			position: "center",
 		},

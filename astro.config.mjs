@@ -48,7 +48,7 @@ export default defineConfig({
 			custom: {
 				families: [
 					{ name: "SpessFont", src: "/public/fonts/SpessFont.ttf" },
-					{ name: "Grand9K Pixel", src: "/public/fonts/Grand9K Pixel.ttf" },
+					{ name: "Grand9K Pixel", src: "/public/fonts/Grand9K_Pixel.ttf" },
 					{ name: "Pixellari", src: "/public/fonts/Pixellari.ttf" },
 					{ name: "VCR OSD Mono", src: "/public/fonts/VCR_OSD_MONO_1.001.ttf" },
 					{ name: "TinyUnicode", src: "/public/fonts/TinyUnicode.ttf" },

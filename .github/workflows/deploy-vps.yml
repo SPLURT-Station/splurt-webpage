@@ -50,15 +50,90 @@ jobs:
       - name: Upgrade Bun
         run: |
           echo "Upgrading Bun to latest version..."
+          export HOME="${HOME:-$(eval echo ~$(whoami))}"
+          export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+          export PATH="$BUN_INSTALL/bin:$PATH"
           bun upgrade
 
       - name: Install dependencies
-        run: bun install
+        run: |
+          export HOME="${HOME:-$(eval echo ~$(whoami))}"
+          export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+          export PATH="$BUN_INSTALL/bin:$PATH"
+          bun install
 
       - name: Build application
-        run: bun run build
+        run: |
+          export HOME="${HOME:-$(eval echo ~$(whoami))}"
+          export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+          export PATH="$BUN_INSTALL/bin:$PATH"
+          bun run build
+
+      - name: Verify build output
+        run: |
+          if [ ! -d "dist/client" ]; then
+            echo "❌ Build failed: dist/client directory not found"
+            exit 1
+          fi
+          if [ ! -d "dist/server" ]; then
+            echo "❌ Build failed: dist/server directory not found (server entrypoint required)"
+            exit 1
+          fi
+          if [ ! -f "dist/server/entry.mjs" ]; then
+            echo "❌ Build failed: dist/server/entry.mjs not found (PM2 requires this entrypoint)"
+            exit 1
+          fi
+          echo "✅ Build successful:"
+          echo "  - Static files: dist/client/"
+          echo "  - Server entrypoint: dist/server/entry.mjs"
+          ls -la dist/server/entry.mjs
+
+      - name: Check PM2 installation
+        id: check-pm2
+        run: |
+          if command -v pm2 &> /dev/null; then
+            echo "pm2-installed=true" >> $GITHUB_OUTPUT
+            echo "✅ PM2 is already installed"
+          else
+            echo "pm2-installed=false" >> $GITHUB_OUTPUT
+            echo "PM2 is not installed"
+          fi
+
+      - name: Install PM2
+        if: steps.check-pm2.outputs.pm2-installed == 'false'
+        run: |
+          echo "Installing PM2..."
+          export HOME="${HOME:-$(eval echo ~$(whoami))}"
+          export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+          export PATH="$BUN_INSTALL/bin:$PATH"
+          bun install -g pm2
+          pm2 --version
+
+      - name: Create logs directory
+        run: |
+          mkdir -p logs
+          echo "✅ Logs directory created"
+
+      - name: Stop existing PM2 process
+        run: |
+          export HOME="${HOME:-$(eval echo ~$(whoami))}"
+          export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+          export PATH="$BUN_INSTALL/bin:$PATH"
+          pm2 delete splurt-webpage || true
+          pm2 stop splurt-webpage || true
+          echo "✅ Stopped existing PM2 process (if any)"
+
+      - name: Start application with PM2
+        run: |
+          export HOME="${HOME:-$(eval echo ~$(whoami))}"
+          export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+          export PATH="$BUN_INSTALL/bin:$PATH"
+          pm2 start ecosystem.config.cjs
+          pm2 save
+          pm2 startup || echo "⚠️ PM2 startup command failed (may need manual setup)"
 
       - name: Deployment complete
         run: |
-          echo "✅ Build completed successfully!"
+          echo "✅ Build and deployment completed successfully!"
+          echo "Application is running with PM2"
           echo "Application built and ready at: $(pwd)/dist"
