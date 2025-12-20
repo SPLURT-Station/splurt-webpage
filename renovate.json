@@ -1,0 +1,47 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    ":automergeMinor",
+    ":automergePatch",
+    "schedule:weekends",
+    "group:allNonMajor"
+  ],
+  "labels": ["dependencies"],
+  "rangeStrategy": "pin",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
+  "packageRules": [
+    {
+      "groupName": "Astro",
+      "matchPackagePatterns": ["^astro", "^@astrojs/"]
+    },
+    {
+      "groupName": "Solid.js",
+      "matchPackagePatterns": ["^solid-js", "^@solidjs/"]
+    },
+    {
+      "groupName": "Tailwind CSS",
+      "matchPackagePatterns": ["tailwind", "postcss", "autoprefixer"]
+    },
+    {
+      "groupName": "Linting & Formatting",
+      "matchPackagePatterns": ["biome", "ultracite", "typescript"]
+    },
+    {
+      "groupName": "Testing",
+      "matchPackagePatterns": ["vitest", "playwright", "@playwright/"]
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "labels": ["dependencies", "major"]
+    }
+  ]
+}
