@@ -2,6 +2,7 @@
 # Script to create .env file from GitHub secrets and .env.example template
 # This script reads .env.example and replaces values with GitHub secrets where available
 # GitHub secrets are passed with SECRET_ prefix to avoid name collisions
+# Also handles commented-out variables - if a secret exists, it will uncomment and set them
 
 set -e
 
@@ -21,13 +22,39 @@ fi
 
 # Read .env.example line by line
 while IFS= read -r line || [ -n "$line" ]; do
-  # Skip empty lines and comments
-  if [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]]; then
+  # Handle empty lines - just copy them
+  if [[ -z "$line" ]]; then
     echo "$line" >> "$ENV_FILE"
     continue
   fi
 
-  # Extract variable name (everything before =, trim whitespace)
+  # Check for commented-out variable assignments (e.g., "# PUBLIC_YOUTUBE_API_KEY=value" or "# PUBLIC_YOUTUBE_API_KEY=")
+  if [[ "$line" =~ ^[[:space:]]*#[[:space:]]*([A-Za-z_][A-Za-z0-9_]*)[[:space:]]*=[[:space:]]*(.*)$ ]]; then
+    var_name="${BASH_REMATCH[1]}"
+    default_value="${BASH_REMATCH[2]}"
+    
+    # Check if there's a GitHub secret for this commented variable
+    secret_env_name="SECRET_${var_name}"
+    secret_value="${!secret_env_name}"
+    
+    if [ -n "$secret_value" ]; then
+      # Secret exists! Uncomment and use the secret value
+      echo "${var_name}=${secret_value}" >> "$ENV_FILE"
+      echo "  ✓ Set ${var_name} from GitHub secret (was commented)"
+    else
+      # No secret, keep it commented
+      echo "$line" >> "$ENV_FILE"
+    fi
+    continue
+  fi
+
+  # Handle regular comments (not variable assignments) - just copy them
+  if [[ "$line" =~ ^[[:space:]]*# ]]; then
+    echo "$line" >> "$ENV_FILE"
+    continue
+  fi
+
+  # Extract variable name from uncommented lines (everything before =, trim whitespace)
   if [[ "$line" =~ ^[[:space:]]*([A-Za-z_][A-Za-z0-9_]*)[[:space:]]*=[[:space:]]*(.*)$ ]]; then
     var_name="${BASH_REMATCH[1]}"
     default_value="${BASH_REMATCH[2]}"
