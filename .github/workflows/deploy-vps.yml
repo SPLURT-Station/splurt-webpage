@@ -169,7 +169,6 @@ jobs:
           echo "✅ Stopped existing PM2 process (if any)"
           pm2 start ecosystem.config.cjs
           pm2 save
-          pm2 startup || echo "⚠️ PM2 startup command failed (may need manual setup)"
 
       - name: Deployment complete
         run: |
