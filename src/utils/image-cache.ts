@@ -4,7 +4,14 @@
  */
 
 import { createHash } from "node:crypto";
-import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
+import {
+	mkdir,
+	readdir,
+	readFile,
+	stat,
+	unlink,
+	writeFile,
+} from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { MediaItem } from "./media-fetcher";
@@ -218,4 +225,59 @@ export function getOptimizationCacheKey(options: {
 	format?: "webp" | "avif" | "png" | "jpg";
 }): string {
 	return generateCacheKey(options);
+}
+
+/**
+ * Clear stale cache files that don't match the current metadata hash
+ * Cache files are named {metadataHash}-{cacheKey}.json, so we can detect
+ * stale files by checking if they start with a different hash prefix
+ */
+async function clearStaleCacheFiles(currentHash: string): Promise<void> {
+	try {
+		const cacheDir = await getCacheDir();
+		const files = await readdir(cacheDir);
+
+		for (const file of files) {
+			// Only process JSON cache files
+			if (!file.endsWith(".json")) {
+				continue;
+			}
+
+			// Check if this file belongs to the current hash
+			// Files are named: {metadataHash}-{cacheKey}.json
+			if (!file.startsWith(`${currentHash}-`)) {
+				// Stale cache file - delete it
+				try {
+					await unlink(join(cacheDir, file));
+				} catch (error) {
+					console.warn(`Failed to delete stale cache file ${file}:`, error);
+				}
+			}
+		}
+	} catch (error) {
+		console.warn("Failed to clear stale cache files:", error);
+	}
+}
+
+/**
+ * Invalidate image cache when images are updated
+ * Clears all cached optimization data that don't match the current metadata hash
+ */
+export async function invalidateImageCache(
+	splashScreens: MediaItem[],
+	screenshots: MediaItem[]
+): Promise<void> {
+	const currentHash = generateMetadataHash(splashScreens, screenshots);
+	await clearStaleCacheFiles(currentHash);
+}
+
+/**
+ * Ensure stale cache files are cleared (called when cache is first created)
+ * This is effectively the same as invalidateImageCache since we use hash-based filenames
+ */
+export async function ensureImageCacheHash(
+	splashScreens: MediaItem[],
+	screenshots: MediaItem[]
+): Promise<void> {
+	await invalidateImageCache(splashScreens, screenshots);
 }

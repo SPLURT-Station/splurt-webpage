@@ -7,9 +7,11 @@ import { ActionError, defineAction } from "astro:actions";
 import { getImage, inferRemoteSize } from "astro:assets";
 import { z } from "astro:schema";
 import {
+	ensureImageCacheHash,
 	generateMetadataHash,
 	getOptimizationCacheKey,
 	hasCachedImages,
+	invalidateImageCache,
 	loadCachedImages,
 	saveCachedImages,
 } from "../utils/image-cache";
@@ -249,11 +251,19 @@ export const server = {
 				// Always fetch fresh data to check for changes
 				const data = await fetchMediaItems(config);
 
-				// Invalidate metadata cache if images have changed
-				// This ensures metadata cache stays in sync with image changes
-				await invalidateMetadataCache(data.splashScreens, data.screenshots);
-				// Ensure metadata hash is stored (for first-time setup)
-				await ensureMetadataHash(data.splashScreens, data.screenshots);
+				// Invalidate caches if images have changed or hash doesn't exist
+				// This ensures caches stay in sync with image changes
+				// and clears orphaned cache files when hash is missing
+				await Promise.all([
+					invalidateMetadataCache(data.splashScreens, data.screenshots),
+					invalidateImageCache(data.splashScreens, data.screenshots),
+				]);
+
+				// Ensure hashes are stored (for first-time setup)
+				await Promise.all([
+					ensureMetadataHash(data.splashScreens, data.screenshots),
+					ensureImageCacheHash(data.splashScreens, data.screenshots),
+				]);
 
 				// If optimization is not requested, return unoptimized images
 				if (!input.optimize) {
@@ -347,7 +357,11 @@ export const server = {
 				);
 
 				if (hasCache) {
-					const cachedMetadata = await loadCachedMetadata(input.imageUrl);
+					const cachedMetadata = await loadCachedMetadata(
+						input.imageUrl,
+						data.splashScreens,
+						data.screenshots
+					);
 					// cachedMetadata can be:
 					// - undefined: not cached (shouldn't happen if hasCache is true, but handle it)
 					// - null: cached as "no metadata found"
@@ -361,7 +375,12 @@ export const server = {
 				const metadata = await fetchImageMetadata(input.imageUrl);
 
 				// Save to cache for future use (even if null - to avoid re-processing)
-				await saveCachedMetadata(input.imageUrl, metadata);
+				await saveCachedMetadata(
+					input.imageUrl,
+					metadata,
+					data.splashScreens,
+					data.screenshots
+				);
 
 				return { metadata: metadata || null };
 			} catch (error) {

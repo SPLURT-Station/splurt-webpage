@@ -33,6 +33,11 @@ describe("Metadata Cache Utilities", () => {
 	});
 
 	describe("saveCachedMetadata and loadCachedMetadata", () => {
+		const emptyMediaItems = {
+			splashScreens: [] as MediaItem[],
+			screenshots: [] as MediaItem[],
+		};
+
 		test("should save and load metadata correctly", async () => {
 			const imageUrl = "https://example.com/image.png";
 			const metadata: ImageMetadataInfo = {
@@ -42,9 +47,18 @@ describe("Metadata Cache Utilities", () => {
 				sources: ["https://example.com/source"],
 			};
 
-			await saveCachedMetadata(imageUrl, metadata);
+			await saveCachedMetadata(
+				imageUrl,
+				metadata,
+				emptyMediaItems.splashScreens,
+				emptyMediaItems.screenshots
+			);
 
-			const loaded = await loadCachedMetadata(imageUrl);
+			const loaded = await loadCachedMetadata(
+				imageUrl,
+				emptyMediaItems.splashScreens,
+				emptyMediaItems.screenshots
+			);
 
 			expect(loaded).toBeDefined();
 			expect(loaded).toEqual(metadata);
@@ -53,16 +67,27 @@ describe("Metadata Cache Utilities", () => {
 		test("should save and load null metadata", async () => {
 			const imageUrl = "https://example.com/no-metadata.png";
 
-			await saveCachedMetadata(imageUrl, null);
+			await saveCachedMetadata(
+				imageUrl,
+				null,
+				emptyMediaItems.splashScreens,
+				emptyMediaItems.screenshots
+			);
 
-			const loaded = await loadCachedMetadata(imageUrl);
+			const loaded = await loadCachedMetadata(
+				imageUrl,
+				emptyMediaItems.splashScreens,
+				emptyMediaItems.screenshots
+			);
 
 			expect(loaded).toBeNull();
 		});
 
 		test("should return undefined for non-cached metadata", async () => {
 			const loaded = await loadCachedMetadata(
-				"https://example.com/not-cached.png"
+				"https://example.com/not-cached.png",
+				emptyMediaItems.splashScreens,
+				emptyMediaItems.screenshots
 			);
 			expect(loaded).toBeUndefined();
 		});
@@ -93,8 +118,6 @@ describe("Metadata Cache Utilities", () => {
 				title: "Cached Image",
 			};
 
-			await saveCachedMetadata(imageUrl, metadata);
-
 			const mediaItems: {
 				splashScreens: MediaItem[];
 				screenshots: MediaItem[];
@@ -109,6 +132,13 @@ describe("Metadata Cache Utilities", () => {
 				mediaItems.screenshots
 			);
 
+			await saveCachedMetadata(
+				imageUrl,
+				metadata,
+				mediaItems.splashScreens,
+				mediaItems.screenshots
+			);
+
 			const result = await hasCachedMetadata(
 				imageUrl,
 				mediaItems.splashScreens,
@@ -116,9 +146,7 @@ describe("Metadata Cache Utilities", () => {
 			);
 
 			// Should return true if cache exists and hash matches
-			// Note: This depends on the hash matching, which may not be true after our save
-			// So we test the basic flow
-			expect(typeof result).toBe("boolean");
+			expect(result).toBe(true);
 		});
 
 		test("should return false when metadata hash doesn't match", async () => {
@@ -127,10 +155,23 @@ describe("Metadata Cache Utilities", () => {
 				title: "Hash Mismatch Image",
 			};
 
-			await saveCachedMetadata(imageUrl, metadata);
+			const originalMediaItems: {
+				splashScreens: MediaItem[];
+				screenshots: MediaItem[];
+			} = {
+				splashScreens: [],
+				screenshots: [],
+			};
+
+			await saveCachedMetadata(
+				imageUrl,
+				metadata,
+				originalMediaItems.splashScreens,
+				originalMediaItems.screenshots
+			);
 
 			// Create different media items (different hash)
-			const mediaItems: {
+			const differentMediaItems: {
 				splashScreens: MediaItem[];
 				screenshots: MediaItem[];
 			} = {
@@ -146,8 +187,8 @@ describe("Metadata Cache Utilities", () => {
 
 			const result = await hasCachedMetadata(
 				imageUrl,
-				mediaItems.splashScreens,
-				mediaItems.screenshots
+				differentMediaItems.splashScreens,
+				differentMediaItems.screenshots
 			);
 
 			// Should return false because hash doesn't match
@@ -157,13 +198,26 @@ describe("Metadata Cache Utilities", () => {
 
 	describe("invalidateMetadataCache", () => {
 		test("should invalidate cache when hash changes", async () => {
-			// Save some metadata
+			// Save some metadata with original items
 			const imageUrl = "https://example.com/to-invalidate.png";
 			const metadata: ImageMetadataInfo = {
 				title: "To Invalidate",
 			};
 
-			await saveCachedMetadata(imageUrl, metadata);
+			const originalMediaItems: {
+				splashScreens: MediaItem[];
+				screenshots: MediaItem[];
+			} = {
+				splashScreens: [],
+				screenshots: [],
+			};
+
+			await saveCachedMetadata(
+				imageUrl,
+				metadata,
+				originalMediaItems.splashScreens,
+				originalMediaItems.screenshots
+			);
 
 			// Create new media items (different hash)
 			const newMediaItems: {
@@ -186,7 +240,7 @@ describe("Metadata Cache Utilities", () => {
 				newMediaItems.screenshots
 			);
 
-			// Cache should be invalidated
+			// Cache should be invalidated (old hash files deleted)
 			const hasCache = await hasCachedMetadata(
 				imageUrl,
 				newMediaItems.splashScreens,
@@ -216,7 +270,12 @@ describe("Metadata Cache Utilities", () => {
 				mediaItems.screenshots
 			);
 
-			await saveCachedMetadata(imageUrl, metadata);
+			await saveCachedMetadata(
+				imageUrl,
+				metadata,
+				mediaItems.splashScreens,
+				mediaItems.screenshots
+			);
 
 			// Invalidate with same items (same hash)
 			await invalidateMetadataCache(
@@ -231,9 +290,7 @@ describe("Metadata Cache Utilities", () => {
 				mediaItems.screenshots
 			);
 
-			// Note: This test may be flaky because we can't easily control the hash
-			// But we're testing the logic flow
-			expect(typeof hasCache).toBe("boolean");
+			expect(hasCache).toBe(true);
 		});
 	});
 

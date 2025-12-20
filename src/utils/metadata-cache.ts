@@ -5,7 +5,14 @@
  */
 
 import { createHash } from "node:crypto";
-import { mkdir, readFile, stat, unlink, writeFile } from "node:fs/promises";
+import {
+	mkdir,
+	readdir,
+	readFile,
+	stat,
+	unlink,
+	writeFile,
+} from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { generateMetadataHash } from "./image-cache";
@@ -41,20 +48,15 @@ async function getCacheDir(): Promise<string> {
 }
 
 /**
- * Get cache file path for a specific image URL hash
+ * Get cache file path for a specific metadata hash and image URL hash
+ * Files are named: {metadataHash}-{imageUrlHash}.json
  */
-async function getMetadataCacheFilePath(imageUrlHash: string): Promise<string> {
+async function getMetadataCacheFilePath(
+	metadataHash: string,
+	imageUrlHash: string
+): Promise<string> {
 	const cacheDir = await getCacheDir();
-	return join(cacheDir, `${imageUrlHash}.json`);
-}
-
-/**
- * Get the metadata hash file path that tracks the current state of images
- * This is used to invalidate metadata cache when images change
- */
-async function getMetadataHashFilePath(): Promise<string> {
-	const cacheDir = await getCacheDir();
-	return join(cacheDir, "metadata-hash.txt");
+	return join(cacheDir, `${metadataHash}-${imageUrlHash}.json`);
 }
 
 /**
@@ -69,32 +71,6 @@ function getCurrentMetadataHash(
 }
 
 /**
- * Get the stored metadata hash from cache
- * Returns null if no hash is stored (cache needs invalidation)
- */
-async function getStoredMetadataHash(): Promise<string | null> {
-	try {
-		const hashPath = await getMetadataHashFilePath();
-		const hash = await readFile(hashPath, "utf-8");
-		return hash.trim();
-	} catch {
-		return null;
-	}
-}
-
-/**
- * Store the current metadata hash
- */
-async function storeMetadataHash(hash: string): Promise<void> {
-	try {
-		const hashPath = await getMetadataHashFilePath();
-		await writeFile(hashPath, hash, "utf-8");
-	} catch (error) {
-		console.warn("Failed to store metadata hash:", error);
-	}
-}
-
-/**
  * Check if cached metadata exists for an image URL
  * Also validates that the cache is still valid (images haven't changed)
  */
@@ -104,18 +80,9 @@ export async function hasCachedMetadata(
 	screenshots: MediaItem[]
 ): Promise<boolean> {
 	try {
-		// Check if metadata hash matches (images haven't changed)
 		const currentHash = getCurrentMetadataHash(splashScreens, screenshots);
-		const storedHash = await getStoredMetadataHash();
-
-		// If hashes don't match, cache is invalid
-		if (storedHash !== currentHash) {
-			return false;
-		}
-
-		// Check if cache file exists for this image
 		const imageUrlHash = generateImageUrlHash(imageUrl);
-		const cachePath = await getMetadataCacheFilePath(imageUrlHash);
+		const cachePath = await getMetadataCacheFilePath(currentHash, imageUrlHash);
 		await stat(cachePath);
 		return true;
 	} catch {
@@ -134,14 +101,17 @@ type CacheEntry = {
 
 /**
  * Load cached metadata for an image URL
- * Returns the cached metadata if it exists (even if null), or null if not cached
+ * Returns the cached metadata if it exists (even if null), or undefined if not cached
  */
 export async function loadCachedMetadata(
-	imageUrl: string
+	imageUrl: string,
+	splashScreens: MediaItem[],
+	screenshots: MediaItem[]
 ): Promise<ImageMetadataInfo | null | undefined> {
 	try {
+		const currentHash = getCurrentMetadataHash(splashScreens, screenshots);
 		const imageUrlHash = generateImageUrlHash(imageUrl);
-		const cachePath = await getMetadataCacheFilePath(imageUrlHash);
+		const cachePath = await getMetadataCacheFilePath(currentHash, imageUrlHash);
 
 		const cacheContent = await readFile(cachePath, "utf-8");
 		const cacheEntry = JSON.parse(cacheContent) as CacheEntry;
@@ -166,11 +136,14 @@ export async function loadCachedMetadata(
  */
 export async function saveCachedMetadata(
 	imageUrl: string,
-	metadata: ImageMetadataInfo | null
+	metadata: ImageMetadataInfo | null,
+	splashScreens: MediaItem[],
+	screenshots: MediaItem[]
 ): Promise<void> {
 	try {
+		const currentHash = getCurrentMetadataHash(splashScreens, screenshots);
 		const imageUrlHash = generateImageUrlHash(imageUrl);
-		const cachePath = await getMetadataCacheFilePath(imageUrlHash);
+		const cachePath = await getMetadataCacheFilePath(currentHash, imageUrlHash);
 
 		// Save metadata to cache file (even if null)
 		// Use a wrapper to distinguish between "not cached" and "cached as null"
@@ -187,66 +160,56 @@ export async function saveCachedMetadata(
 }
 
 /**
- * Invalidate all metadata cache when images are updated
- * This should be called when the metadata hash changes
+ * Clear stale cache files that don't match the current metadata hash
+ * Cache files are named {metadataHash}-{imageUrlHash}.json, so we can detect
+ * stale files by checking if they start with a different hash prefix
+ */
+async function clearStaleCacheFiles(currentHash: string): Promise<void> {
+	try {
+		const cacheDir = await getCacheDir();
+		const files = await readdir(cacheDir);
+
+		for (const file of files) {
+			// Only process JSON cache files
+			if (!file.endsWith(".json")) {
+				continue;
+			}
+
+			// Check if this file belongs to the current hash
+			// Files are named: {metadataHash}-{imageUrlHash}.json
+			if (!file.startsWith(`${currentHash}-`)) {
+				// Stale cache file - delete it
+				try {
+					await unlink(join(cacheDir, file));
+				} catch (error) {
+					console.warn(`Failed to delete stale cache file ${file}:`, error);
+				}
+			}
+		}
+	} catch (error) {
+		console.warn("Failed to clear stale metadata cache files:", error);
+	}
+}
+
+/**
+ * Invalidate metadata cache when images are updated
+ * Clears all cached metadata that doesn't match the current metadata hash
  */
 export async function invalidateMetadataCache(
 	splashScreens: MediaItem[],
 	screenshots: MediaItem[]
 ): Promise<void> {
-	try {
-		const currentHash = getCurrentMetadataHash(splashScreens, screenshots);
-		const storedHash = await getStoredMetadataHash();
-
-		// If hashes match, no invalidation needed
-		if (storedHash === currentHash) {
-			return;
-		}
-
-		// Hashes don't match - clear all cached metadata files
-		const cacheDir = await getCacheDir();
-		const { readdir } = await import("node:fs/promises");
-
-		const files = await readdir(cacheDir);
-		for (const file of files) {
-			// Don't delete the metadata-hash.txt file itself
-			if (file === "metadata-hash.txt") {
-				continue;
-			}
-
-			// Delete all metadata cache files
-			if (file.endsWith(".json")) {
-				try {
-					await unlink(join(cacheDir, file));
-				} catch (error) {
-					console.warn(`Failed to delete cache file ${file}:`, error);
-				}
-			}
-		}
-
-		// Update stored hash to current hash
-		await storeMetadataHash(currentHash);
-	} catch (error) {
-		console.warn("Failed to invalidate metadata cache:", error);
-		// Don't throw - cache invalidation is best-effort
-	}
+	const currentHash = getCurrentMetadataHash(splashScreens, screenshots);
+	await clearStaleCacheFiles(currentHash);
 }
 
 /**
- * Ensure metadata hash is stored (called when cache is first created)
+ * Ensure stale cache files are cleared (called when cache is first created)
+ * This is effectively the same as invalidateMetadataCache since we use hash-based filenames
  */
 export async function ensureMetadataHash(
 	splashScreens: MediaItem[],
 	screenshots: MediaItem[]
 ): Promise<void> {
-	try {
-		const storedHash = await getStoredMetadataHash();
-		if (!storedHash) {
-			// No hash stored yet - store current hash
-			const currentHash = getCurrentMetadataHash(splashScreens, screenshots);
-			await storeMetadataHash(currentHash);
-		}
-	} catch (error) {
-		console.warn("Failed to ensure metadata hash:", error);
-	}
+	await invalidateMetadataCache(splashScreens, screenshots);
 }
