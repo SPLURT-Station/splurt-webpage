@@ -59,21 +59,22 @@ jobs:
           bun upgrade
 
       - name: Create .env file from GitHub secrets
+        shell: bash
         env:
           # Pass GitHub secrets as environment variables to the script
           # Add all secrets from .env.example here
-          PUBLIC_MEDIA_SPLASH_SOURCE_TYPE: ${{ secrets.PUBLIC_MEDIA_SPLASH_SOURCE_TYPE }}
-          PUBLIC_MEDIA_SPLASH_BASE_URL: ${{ secrets.PUBLIC_MEDIA_SPLASH_BASE_URL }}
-          PUBLIC_MEDIA_SPLASH_PATTERNS: ${{ secrets.PUBLIC_MEDIA_SPLASH_PATTERNS }}
-          PUBLIC_MEDIA_SCREENSHOT_SOURCE_TYPE: ${{ secrets.PUBLIC_MEDIA_SCREENSHOT_SOURCE_TYPE }}
-          PUBLIC_MEDIA_SCREENSHOT_BASE_URL: ${{ secrets.PUBLIC_MEDIA_SCREENSHOT_BASE_URL }}
-          PUBLIC_MEDIA_SCREENSHOT_PATTERNS: ${{ secrets.PUBLIC_MEDIA_SCREENSHOT_PATTERNS }}
-          PUBLIC_MEDIA_MAX_IMAGES_PER_CATEGORY: ${{ secrets.PUBLIC_MEDIA_MAX_IMAGES_PER_CATEGORY }}
-          MEDIA_CACHE_DURATION: ${{ secrets.MEDIA_CACHE_DURATION }}
-          PUBLIC_YOUTUBE_PLAYLIST_ID: ${{ secrets.PUBLIC_YOUTUBE_PLAYLIST_ID }}
-          PUBLIC_YOUTUBE_PLAYLIST_URL: ${{ secrets.PUBLIC_YOUTUBE_PLAYLIST_URL }}
-          PUBLIC_YOUTUBE_API_KEY: ${{ secrets.PUBLIC_YOUTUBE_API_KEY }}
-          PUBLIC_YOUTUBE_DEFAULT_SONG_INDEX: ${{ secrets.PUBLIC_YOUTUBE_DEFAULT_SONG_INDEX }}
+          SECRET_PUBLIC_MEDIA_SPLASH_SOURCE_TYPE: ${{ secrets.PUBLIC_MEDIA_SPLASH_SOURCE_TYPE }}
+          SECRET_PUBLIC_MEDIA_SPLASH_BASE_URL: ${{ secrets.PUBLIC_MEDIA_SPLASH_BASE_URL }}
+          SECRET_PUBLIC_MEDIA_SPLASH_PATTERNS: ${{ secrets.PUBLIC_MEDIA_SPLASH_PATTERNS }}
+          SECRET_PUBLIC_MEDIA_SCREENSHOT_SOURCE_TYPE: ${{ secrets.PUBLIC_MEDIA_SCREENSHOT_SOURCE_TYPE }}
+          SECRET_PUBLIC_MEDIA_SCREENSHOT_BASE_URL: ${{ secrets.PUBLIC_MEDIA_SCREENSHOT_BASE_URL }}
+          SECRET_PUBLIC_MEDIA_SCREENSHOT_PATTERNS: ${{ secrets.PUBLIC_MEDIA_SCREENSHOT_PATTERNS }}
+          SECRET_PUBLIC_MEDIA_MAX_IMAGES_PER_CATEGORY: ${{ secrets.PUBLIC_MEDIA_MAX_IMAGES_PER_CATEGORY }}
+          SECRET_MEDIA_CACHE_DURATION: ${{ secrets.MEDIA_CACHE_DURATION }}
+          SECRET_PUBLIC_YOUTUBE_PLAYLIST_ID: ${{ secrets.PUBLIC_YOUTUBE_PLAYLIST_ID }}
+          SECRET_PUBLIC_YOUTUBE_PLAYLIST_URL: ${{ secrets.PUBLIC_YOUTUBE_PLAYLIST_URL }}
+          SECRET_PUBLIC_YOUTUBE_API_KEY: ${{ secrets.PUBLIC_YOUTUBE_API_KEY }}
+          SECRET_PUBLIC_YOUTUBE_DEFAULT_SONG_INDEX: ${{ secrets.PUBLIC_YOUTUBE_DEFAULT_SONG_INDEX }}
         run: |
           export HOME="${HOME:-$(eval echo ~$(whoami))}"
           export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
@@ -82,8 +83,8 @@ jobs:
           # Make the script executable
           chmod +x .github/scripts/create-env.sh
 
-          # Run the script to create .env file
-          .github/scripts/create-env.sh
+          # Source the script (runs in same shell context, preserving env vars)
+          source .github/scripts/create-env.sh
 
           # Verify .env file was created
           if [ ! -f ".env" ]; then

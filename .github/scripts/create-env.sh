@@ -1,6 +1,7 @@
 #!/bin/bash
 # Script to create .env file from GitHub secrets and .env.example template
 # This script reads .env.example and replaces values with GitHub secrets where available
+# GitHub secrets are passed with SECRET_ prefix to avoid name collisions
 
 set -e
 
@@ -32,8 +33,9 @@ while IFS= read -r line || [ -n "$line" ]; do
     default_value="${BASH_REMATCH[2]}"
     
     # Check if there's a GitHub secret for this variable
-    # GitHub secrets are available as environment variables with the same name
-    secret_value="${!var_name}"
+    # Secrets are passed with SECRET_ prefix to avoid collisions and ensure they're set
+    secret_env_name="SECRET_${var_name}"
+    secret_value="${!secret_env_name}"
     
     if [ -n "$secret_value" ]; then
       # Use the secret value
