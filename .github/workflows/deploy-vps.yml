@@ -16,6 +16,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+      
+      - name: Checkout git lfs
+        uses: nschloe/action-cached-lfs-checkout@v1
 
       - name: Check Bun installation
         id: check-bun
