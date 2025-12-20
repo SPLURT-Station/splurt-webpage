@@ -35,13 +35,18 @@ describe("Media Fetcher Utilities", () => {
 				} else if (url instanceof Request) {
 					urlStr = url.url;
 				}
-				if (urlStr.includes("example.com")) {
-					return Promise.resolve(
-						new Response(mockDirectoryListing, {
-							status: 200,
-							headers: { "Content-Type": "text/html" },
-						})
-					);
+				try {
+					const parsedUrl = new URL(urlStr);
+					if (parsedUrl.hostname === "example.com") {
+						return Promise.resolve(
+							new Response(mockDirectoryListing, {
+								status: 200,
+								headers: { "Content-Type": "text/html" },
+							})
+						);
+					}
+				} catch {
+					// If URL parsing fails, fall through to rejection below.
 				}
 				return Promise.reject(new Error("Unexpected URL"));
 			}) as unknown as typeof fetch;
