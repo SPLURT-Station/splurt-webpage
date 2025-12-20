@@ -43,6 +43,8 @@ The website features:
 - 📱 Responsive design with pixel-art aesthetics
 - ⚡ Fast, static-first architecture with SSR capabilities
 
+Inspired by <https://github.com/spacestation13/website>
+
 ## 🛠️ Tech Stack
 
 | Category          | Technology                                                      |
