@@ -1,0 +1,49 @@
+/* Theme Variables - Values used via Tailwind utilities */
+/* @theme variables automatically create Tailwind utility classes */
+/* They are also available as CSS variables for use in CSS files */
+@theme {
+	/* Font Families - creates font-* utilities */
+	--font-sans: "Inter", "Open Sans", sans-serif;
+	--font-mono:
+		ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+		monospace;
+	--font-spess: SpessFont, "Open Sans", sans-serif;
+	--font-pixel: "Grand9K Pixel", sans-serif;
+	--font-vcr: "VCR OSD MONO", "Open Sans", sans-serif;
+	--font-pixellari: "Pixellari", sans-serif;
+	--font-tinyunicode: "TinyUnicode", sans-serif;
+
+	/* Colors - creates bg-*, text-*, border-* utilities */
+	--color-primary: #ff50b0;
+	--color-primary-light: #ff80d0;
+	--color-primary-dark: #ff30a0;
+	--color-primary-darker: #ff40a0;
+	--color-secondary: #343841;
+	--color-tertiary: #d5d5d5;
+	--color-background: #0e1118;
+	--color-bg-card: rgba(15, 5, 20, 0.7);
+	--color-bg-card-light: rgba(15, 5, 20, 0.5);
+	--color-bg-card-lighter: rgba(15, 5, 20, 0.6);
+	--color-border-primary: rgba(255, 100, 200, 0.2);
+	--color-border-primary-light: rgba(255, 100, 200, 0.3);
+	--color-border-primary-medium: rgba(255, 100, 200, 0.4);
+	--color-border-primary-strong: rgba(255, 100, 200, 0.5);
+	--color-border-white: rgba(255, 255, 255, 0.1);
+	--color-text-primary: #ffffff;
+	--color-text-secondary: rgba(255, 255, 255, 0.9);
+	--color-text-muted: rgba(255, 255, 255, 0.7);
+
+	/* Shadows - creates shadow-* utilities */
+	--shadow-card:
+		0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1),
+		0 0 20px rgba(255, 80, 180, 0.3), inset 0 0 60px rgba(255, 80, 180, 0.03);
+	--shadow-button:
+		0 4px 25px rgba(255, 80, 180, 0.4), 0 -4px 25px rgba(255, 80, 180, 0.3), 0 0
+		20px rgba(255, 100, 200, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+	--shadow-button-hover:
+		0 6px 35px rgba(255, 80, 180, 0.6), 0 -6px 35px rgba(255, 80, 180, 0.5), 0 0
+		30px rgba(255, 100, 200, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+	/* Max Width - creates max-w-content utility */
+	--max-width-content: 80rem;
+}

@@ -1,0 +1,37 @@
+---
+import { Image } from "astro:assets";
+import GithubIcon from "~icons/mdi/github";
+import logo from "/src/assets/logos/splurtpaw2_alt3.png";
+---
+
+<footer class="site-footer mt-auto">
+	<div
+		class="max-w-7xl mx-auto px-4 py-6 text-center text-neutral-50 text-sm font-spess"
+	>
+		<Image
+			src={logo}
+			alt="S.P.L.U.R.T. Station Logo"
+			class="w-20 mx-auto mb-4"
+			width={80}
+			height={80}
+		/>
+		<p class="flex items-center justify-center">S.P.L.U.R.T. Station</p>
+		<p class="flex items-center justify-center mt-2">
+			Source available on
+			<a
+				class="inline-flex items-center ml-1 text-primary hover:text-primary-light transition-colors"
+				href="https://github.com/SPLURT-Station/splurt-webpage"
+				rel="noopener external"
+				target="_blank"
+			>
+				<GithubIcon
+					class="w-4 h-4 mx-1"
+					width={16}
+					height={16}
+					aria-hidden="true"
+				/>
+				GitHub
+			</a>
+		</p>
+	</div>
+</footer>

@@ -1,15 +1,176 @@
 ---
-import WorkInProgress from "../components/work-in-progress.astro";
+import { getImage, Image } from "astro:assets";
+import mobInteraction from "/public/images/mob_interaction.jpg";
+import ychCharacterCreator from "/public/images/ych_charactercreator.jpg";
+import HeroHeader from "../components/hero-header/hero-header.astro";
 import Layout from "../layouts/main-layout.astro";
+import "./_home.css";
+import TypewriterText from "../components/typewriter-text/typewriter-text.tsx";
+import ZoomableImage from "../components/zoomable-image/zoomable-image.tsx";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Get optimized image URLs for zoomable images
+const optimizedMobInteraction = await getImage({
+	src: mobInteraction,
+	width: 1000,
+	height: 710,
+	quality: 80,
+	format: "webp",
+});
+
+const optimizedYCH = await getImage({
+	src: ychCharacterCreator,
+	width: 1000,
+	height: 710,
+	quality: 80,
+	format: "webp",
+});
 ---
 
 <Layout
-	title="S.P.L.U.R.T. Station - Work In Progress"
-	description="Website in progress!"
-	type="website"
+	title="S.P.L.U.R.T. Station - Welcome"
+	description="S.P.L.U.R.T. Station - A NSFW furry roleplaying server for Space Station 13. Join our community for exciting lewdness!"
 >
-	<WorkInProgress/>
+	<div class="h-full">
+		<HeroHeader/>
+
+		<main class="content py-12 lg:text-lg lg:py-16 xl:py-24 debris-bg relative">
+			<div class="max-w-7xl mx-auto px-4 relative z-10">
+				<section class="card mb-8 lg:mb-12">
+					<h2
+						class="mb-4 lg:mb-5 content-heading content-heading--primary font-pixel"
+					>
+						Lewd adventures await
+					</h2>
+
+					<TypewriterText client:visible speed={20} delay={300}>
+						<p class="mb-4 lg:mb-6 font-spess">
+							In the not too distant future, crewmembers aboard space stations
+							owned by corporations work tirelessly to keep the lights on.
+							Putting all their efforts into ensuring they can make it to the
+							next shift. But on
+							<span class="splurt-text">S.P.L.U.R.T. Station</span>, life is
+							about more than just survival - it's about <span
+								class="line-through decoration-red-500 decoration-wavy"
+								>connection, adventure, and embracing your desires in a safe and
+								welcoming community.</span
+							> <span class="text-red-500 text-2xl">SEX!!!!!</span>
+						</p>
+						<p class="font-spess">
+							Tell your own story in the world of
+							<span class="splurt-text">S.P.L.U.R.T. Station</span>, be an
+							assistant, engineer, doctor, slut, or captain, but most
+							importantly, be <u>HORNY</u>. Join a community of like-minded
+							individuals where creativity, lewdness, and fun come together in
+							an ever-changing universe of possibilities.
+						</p>
+					</TypewriterText>
+				</section>
+
+				<section class="mb-8 lg:mb-12">
+					<h2
+						class="mb-4 lg:mb-8 content-heading content-heading--primary content-heading--primary-separator font-pixel"
+					>
+						What is S.P.L.U.R.T. Station?
+					</h2>
+
+					<p class="mb-4 lg:mb-6">
+						S.P.L.U.R.T. Station is a multiplayer sandbox game in which you can
+						roleplay as your own character and engage in roleplay with other
+						people's characters. In the year 2565, the megacorporation
+						Nanotrasen employs you as a staff member onboard their latest
+						state-of-the-art research station. Nanotrasen claims to be
+						researching plasma, a mysterious substance, but soon you'll find out
+						this station is about much more than just research~ At the start of
+						each round, players are assigned roles ranging from scientists and
+						doctors to engineers and captains.
+					</p>
+					<p>
+						S.P.L.U.R.T. Station offers the full Space Station 13 experience
+						with an additional focus on lewd and sexual content and
+						interactions. Beyond the standard SS13 gameplay of research, medical
+						simulation, and player-driven stories, we provide a safe, consensual
+						environment for adult furry roleplay where every round tells a
+						unique story.
+					</p>
+				</section>
+
+				<section class="flex flex-col lg:flex-row lg:mb-8">
+					<div class="flex flex-col mb-8 lg:mr-8 lg:mb-0">
+						<h2
+							class="mb-4 lg:mb-8 content-heading content-heading--primary content-heading--primary-separator font-pixel"
+						>
+							Gameplay &amp; features
+						</h2>
+
+						<ul
+							class="flex h-full flex-col justify-between gap-4 ml-6 features"
+						>
+							<li>
+								Play a variety of roles on the station, ranging from simple
+								assistants to experienced engineers, from skilled medical
+								professionals to the captain leading the crew.
+							</li>
+							<li>
+								Create your own character, choose from a large variety of
+								sprites, and customize their appearance and background to your
+								liking.
+							</li>
+							<li>
+								Engage in immersive roleplay with a welcoming furry community
+								that celebrates creativity and expression.
+							</li>
+							<li>
+								Unleash your creativity with a myriad of complex systems,
+								including detailed medical simulation, research mechanics,
+								explicit sexual systems, and interactive environments.
+							</li>
+							<li>
+								Experience 100% player-driven gameplay, where no two rounds will
+								play the same.
+							</li>
+							<li>
+								Discover hidden areas of the station and uncover their secrets
+								with friends.
+							</li>
+							<li>
+								Enjoy NSFW content in a safe, consensual, and respectful
+								environment with clear rules and moderation.
+							</li>
+							<li>
+								Experience random events and challenges that keep gameplay fresh
+								and exciting.
+							</li>
+						</ul>
+					</div>
+
+					<div
+						class="flex gap-6 justify-center flex-wrap lg:justify-start lg:flex-col lg:gap-8 lg:shrink-0 lg:w-4/12"
+					>
+						<div class="game-shot-card rounded-sm w-full">
+							<ZoomableImage
+								client:load
+								alt="Mob interaction gameplay screenshot"
+								class="w-full"
+								fullResolutionUrl={"/images/mob_interaction.jpg"}
+								height={710}
+								src={optimizedMobInteraction.src}
+								width={1000}
+							/>
+						</div>
+						<div class="game-shot-card rounded-sm w-full">
+							<ZoomableImage
+								client:load
+								alt="YCH Character Creator screenshot"
+								class="w-full"
+								fullResolutionUrl={"/images/ych_charactercreator.jpg"}
+								height={710}
+								src={optimizedYCH.src}
+								width={1000}
+							/>
+						</div>
+					</div>
+				</section>
+			</div>
+		</main>
+	</div>
 </Layout>

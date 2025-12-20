@@ -1,0 +1,393 @@
+/* Navigation Component Styles */
+/* Complex styles that can't be easily replaced with Tailwind utilities */
+
+.site-nav {
+	box-shadow: 0 1px 1px 1px rgb(255 255 255 / 10%);
+}
+
+@supports (backdrop-filter: blur(4px)) {
+	.site-nav {
+		background-color: rgba(14, 17, 24, 0.5);
+		backdrop-filter: blur(8px);
+	}
+}
+
+@supports not (backdrop-filter: blur(4px)) {
+	.site-nav {
+		background-color: rgba(14, 17, 24, 0.9);
+	}
+}
+
+/* Navigation bar styling when mobile menu is open */
+.site-nav.nav-menu-open {
+	background-color: rgba(14, 17, 24, 0.98);
+	box-shadow: 0 1px 1px 1px rgba(255, 80, 176, 0.2);
+}
+
+@supports (backdrop-filter: blur(4px)) {
+	.site-nav.nav-menu-open {
+		background-color: rgba(14, 17, 24, 0.95);
+		backdrop-filter: blur(12px);
+	}
+}
+
+@supports not (backdrop-filter: blur(4px)) {
+	.site-nav.nav-menu-open {
+		background-color: rgba(14, 17, 24, 0.98);
+	}
+}
+
+.nav-logo {
+	&:after {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 0;
+		height: 0;
+		border-radius: 50%;
+		background: color-mix(in srgb, var(--color-primary) 80%, transparent);
+		transition: all 300ms ease-in-out;
+	}
+
+	&:hover,
+	&:active {
+		&:after {
+			width: 200%;
+			height: 200%;
+		}
+	}
+}
+
+.nav-links {
+	.page-links > a,
+	.page-links .page-link {
+		position: relative;
+
+		&:after {
+			content: "";
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			height: 0;
+			background-color: rgba(255, 80, 176, 0.8);
+			transition: all var(--transition-fast);
+			z-index: -1;
+			margin-bottom: -2px;
+		}
+
+		&.active:after {
+			height: 2px;
+		}
+
+		&:hover:not(.active),
+		&:active:not(.active) {
+			&:after {
+				height: calc(100% + 2px);
+			}
+		}
+
+		&.active:hover:after,
+		&.active:active:after {
+			height: calc(100% + 2px);
+		}
+	}
+}
+
+.nav-separator {
+	width: 1px;
+	height: 1.5rem;
+	background-color: var(--color-border-white);
+}
+
+/* Play Now Button - Now uses centralized .cta--highlighted from utilities */
+/* Use .cta--highlighted with Tailwind classes for size/shape variations */
+
+.social-icon {
+	transition:
+		background-color var(--transition-fast),
+		opacity var(--transition-fast);
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+		opacity: 0.8;
+	}
+}
+
+.discord-icon {
+	color: #9ca3af;
+	transition: color var(--transition-fast);
+	overflow: hidden;
+}
+
+.discord-icon svg {
+	width: 100%;
+	height: 100%;
+	max-width: 20px;
+	max-height: 20px;
+	filter: grayscale(100%) brightness(0.8);
+	transition: filter var(--transition-fast);
+}
+
+.social-icon:hover .discord-icon {
+	color: #5865f2;
+}
+
+.social-icon:hover .discord-icon svg {
+	filter: grayscale(0%) brightness(1);
+}
+
+.github-icon {
+	color: #9ca3af;
+	transition: color var(--transition-fast);
+	overflow: hidden;
+}
+
+.github-icon svg {
+	width: 100%;
+	height: 100%;
+	max-width: 20px;
+	max-height: 20px;
+	filter: grayscale(100%) brightness(0.8);
+	transition: filter var(--transition-fast);
+}
+
+.social-icon:hover .github-icon {
+	color: #ffffff;
+}
+
+.social-icon:hover .github-icon svg {
+	filter: grayscale(0%) brightness(1);
+}
+
+.patreon-icon {
+	color: #9ca3af;
+	transition: color var(--transition-fast);
+	overflow: hidden;
+}
+
+.patreon-icon svg {
+	width: 100%;
+	height: 100%;
+	max-width: 20px;
+	max-height: 20px;
+	filter: grayscale(100%) brightness(0.8);
+	transition: filter var(--transition-fast);
+}
+
+.social-icon:hover .patreon-icon {
+	color: #ff424d;
+}
+
+.social-icon:hover .patreon-icon svg {
+	filter: grayscale(0%) brightness(1);
+}
+
+.toggle-nav {
+	width: 50px;
+	height: 50px;
+	position: relative;
+
+	span {
+		width: 20px;
+		height: 2px;
+		margin: auto;
+		background: var(--color-text-primary);
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		transition: all 0.4s ease;
+
+		&.top {
+			transform: translateY(-8px);
+		}
+
+		&.bottom {
+			transform: translateY(8px);
+		}
+	}
+
+	&.active {
+		.top {
+			transform: rotate(-45deg);
+		}
+		.mid {
+			transform: translateX(-20px) rotate(360deg);
+			opacity: 0;
+		}
+		.bottom {
+			transform: rotate(45deg);
+		}
+	}
+}
+
+/* Mobile Menu Styles */
+.mobile-menu {
+	position: fixed;
+	top: 56px; /* Height of nav bar */
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: calc(100vh - 56px);
+	background: rgba(14, 17, 24, 0.98);
+	backdrop-filter: blur(12px);
+	z-index: 50;
+	overflow-y: auto;
+	display: none;
+	visibility: hidden;
+	opacity: 0;
+	transition:
+		opacity 0.3s ease-out,
+		visibility 0.3s ease-out;
+}
+
+.mobile-menu.mobile-menu-open {
+	display: block;
+	visibility: visible;
+	opacity: 1;
+	animation: slideDown 0.3s ease-out;
+}
+
+.mobile-menu-backdrop {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	border: none;
+	cursor: default;
+	z-index: 1;
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.mobile-menu-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: calc(100vh - 56px);
+	padding: 2rem 1.5rem;
+	position: relative;
+	z-index: 2;
+}
+
+.mobile-page-links {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-top: 2rem;
+}
+
+.mobile-page-link {
+	display: block;
+	padding: 1rem 1.25rem;
+	font-size: 1.125rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	text-decoration: none;
+	border-radius: 0.5rem;
+	transition: all var(--transition-fast);
+	position: relative;
+	font-family: var(--font-pixel);
+	color: #ff50b0;
+	text-shadow: 0 0 10px rgba(255, 80, 176, 0.5);
+}
+
+.mobile-page-link:hover,
+.mobile-page-link:focus {
+	background: rgba(255, 80, 176, 0.15);
+	color: #ff6bc8;
+	text-shadow: 0 0 15px rgba(255, 80, 176, 0.8);
+	transform: translateX(4px);
+}
+
+.mobile-page-link.active {
+	background: rgba(255, 80, 176, 0.2);
+	color: #ff6bc8;
+	text-shadow: 0 0 15px rgba(255, 80, 176, 0.9);
+	border-left: 3px solid #ff50b0;
+}
+
+.mobile-page-link.active:hover,
+.mobile-page-link.active:focus {
+	background: rgba(255, 80, 176, 0.25);
+}
+
+.mobile-social-icons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1.5rem;
+	padding: 2rem 0 1rem;
+	margin-top: auto;
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-social-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.05);
+	border: 2px solid rgba(255, 255, 255, 0.1);
+	transition: all var(--transition-fast);
+	text-decoration: none;
+}
+
+.mobile-social-icon:hover,
+.mobile-social-icon:focus {
+	background: rgba(255, 255, 255, 0.1);
+	border-color: rgba(255, 80, 176, 0.5);
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(255, 80, 176, 0.3);
+}
+
+.mobile-social-icon svg,
+.mobile-social-icon .discord-icon,
+.mobile-social-icon .github-icon,
+.mobile-social-icon .patreon-icon {
+	color: #9ca3af;
+	transition: all var(--transition-fast);
+	filter: grayscale(100%) brightness(0.8);
+}
+
+.mobile-social-icon:hover svg,
+.mobile-social-icon:focus svg {
+	filter: grayscale(0%) brightness(1);
+}
+
+.mobile-social-icon:hover .discord-icon,
+.mobile-social-icon:focus .discord-icon {
+	color: #5865f2;
+}
+
+.mobile-social-icon:hover .github-icon,
+.mobile-social-icon:focus .github-icon {
+	color: #ffffff;
+}
+
+.mobile-social-icon:hover .patreon-icon,
+.mobile-social-icon:focus .patreon-icon {
+	color: #ff424d;
+}

@@ -1,6 +1,59 @@
 ---
 import { getImage } from "astro:assets";
-import thumbnail from "../assets/thumbnail.png";
+import Linter from "astro-vtbot/components/Linter.astro";
+import banner from "/src/assets/backgrounds/banner.png";
+import logo from "/src/assets/logos/splurtpaw2_alt3.png";
+import AgeGate from "../components/age-gate/age-gate.tsx";
+import Footer from "../components/footer/footer.astro";
+import MusicPlayer from "../components/music-player/music-player.tsx";
+import Navigation from "../components/navigation/navigation.tsx";
+import PageHeader from "../components/page-header/page-header.astro";
+import { generateStarShadowsWithOpacity } from "../utils/stars";
+import "/src/styles/index.css";
+import { ClientRouter } from "astro:transitions";
+import { SEO } from "astro-seo";
+import ReplacementSwap from "astro-vtbot/components/ReplacementSwap.astro";
+import { links } from "unplugin-fonts/head";
+
+// Optimize the banner image for background use
+const optimizedBanner = await getImage({
+	src: banner,
+	width: 1920,
+	height: 1080,
+	format: "webp",
+	quality: 80,
+});
+
+// Generate random star shadows at build time (similar to SCSS function)
+// Using the same counts as the original: 700 small, 200 medium, 100 big
+// More cross stars in brighter layers for better visibility
+const shadowsSmall = generateStarShadowsWithOpacity(
+	700,
+	2000,
+	{
+		min: 0.7,
+		max: 0.9,
+	},
+	0.25 // 25% cross stars in small layer
+);
+const shadowsMedium = generateStarShadowsWithOpacity(
+	200,
+	2000,
+	{
+		min: 0.5,
+		max: 0.75,
+	},
+	0.35 // 35% cross stars in medium layer
+);
+const shadowsBig = generateStarShadowsWithOpacity(
+	100,
+	2000,
+	{
+		min: 0.4,
+		max: 0.6,
+	},
+	0.3 // 30% cross stars in big layer
+);
 
 type Props = {
 	title?: string;
@@ -9,6 +62,7 @@ type Props = {
 	url?: string;
 	type?: string;
 	imageStrategy?: "auto" | "thumbnail" | "logo" | "both";
+	pageTitle?: string;
 };
 
 const {
@@ -18,99 +72,126 @@ const {
 	url = Astro.url.href,
 	type = "website",
 	imageStrategy = "auto",
+	pageTitle,
 } = Astro.props;
 
-// Get optimized thumbnail image
-const optimizedThumbnail = await getImage({
-	src: thumbnail,
+// Get optimized logo for Navigation and AgeGate components
+const optimizedLogo = await getImage({
+	src: logo,
 	format: "webp",
-	width: 1200,
-	height: 630,
+	width: 72,
+	height: 72,
 });
 
-// Smart image selection based on service capabilities
-let ogImage: string, ogWidth: string, ogHeight: string, twitterImage: string;
-
-if (imageStrategy === "auto" || imageStrategy === "both") {
-	// Use thumbnail for Open Graph (Facebook, LinkedIn, Discord, WhatsApp, Telegram)
-	// These services render large images well
-	ogImage = image || optimizedThumbnail.src;
-	ogWidth = "1200";
-	ogHeight = "630";
-
-	// Use logo for Twitter Card as fallback for better compatibility
-	// Twitter actually handles both well, but logo ensures compatibility
-	twitterImage = image || "/splurtpaw2_alt3.png";
-} else if (imageStrategy === "thumbnail") {
-	// Force thumbnail for everything
-	ogImage = image || optimizedThumbnail.src;
-	ogWidth = "1200";
-	ogHeight = "630";
-	twitterImage = image || optimizedThumbnail.src;
-} else {
-	// imageStrategy === 'logo'
-	// Force logo for everything (smaller, square format)
-	ogImage = image || "/splurtpaw2_alt3.png";
-	ogWidth = "512";
-	ogHeight = "512";
-	twitterImage = image || "/splurtpaw2_alt3.png";
-}
-
-// Ensure the image URLs are absolute
-const ogImageUrl = new URL(ogImage, Astro.site || Astro.url.origin).href;
-const twitterImageUrl = new URL(twitterImage, Astro.site || Astro.url.origin)
-	.href;
+// Generate OG image path based on current route
+// Extract pathname from URL and remove leading slash
+const pathname = Astro.url.pathname;
+// Remove leading slash and trailing slash if present, use 'index' for home
+const ogImagePath =
+	pathname === "/" ? "index" : pathname.replace(/^\/|\/$/g, "");
+// Construct OG image URL - all paths go to /api/og/{path}.png
+const ogImagePathUrl = `/api/og/${ogImagePath}.png`;
+const ogImageUrl =
+	image || new URL(ogImagePathUrl, Astro.site || Astro.url.origin).href;
 ---
 
-<!doctype html>
 <html lang="en">
 	<head>
+		<!-- Unplugin Fonts, for some reason the astro component errors -->
+		{links.map((link) => {
+			const attrs = link?.attrs || {};
+			return <link {...attrs} data-unfont />;
+		})}
+
+		<!-- Sitemap link for search engines -->
+		<link rel="sitemap" href="/sitemap-index.xml">
+
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width">
-		<!-- <link rel="icon" type="image/png" href="/splurtpaw2_alt3.png" /> -->
 		<meta name="generator" content={Astro.generator}>
 
-		<!-- Basic Meta Tags -->
-		<title>{title}</title>
-		<meta name="description" content={description}>
-
-		<!-- Open Graph Meta Tags (Facebook, LinkedIn, Discord, WhatsApp, Telegram) -->
-		<meta property="og:title" content={title}>
-		<meta property="og:description" content={description}>
-		<meta property="og:image" content={ogImageUrl}>
-		<meta property="og:image:width" content={ogWidth}>
-		<meta property="og:image:height" content={ogHeight}>
-		<meta property="og:image:alt" content="S.P.L.U.R.T. Station">
-		<meta property="og:url" content={url}>
-		<meta property="og:type" content={type}>
-		<meta property="og:site_name" content="S.P.L.U.R.T. Station">
-		<meta property="og:locale" content="en_US">
-
-		<!-- Twitter Card Meta Tags (Optimized for Twitter's rendering) -->
-		<meta name="twitter:card" content="summary_large_image">
-		<meta name="twitter:title" content={title}>
-		<meta name="twitter:description" content={description}>
-		<meta name="twitter:image" content={twitterImageUrl}>
-		<meta name="twitter:image:alt" content="S.P.L.U.R.T. Station">
-
-		<!-- Additional Meta Tags -->
-		<meta name="robots" content="index, follow">
-		<meta name="author" content="S.P.L.U.R.T. Station">
-		<meta
-			name="keywords"
-			content="Space Station 13, SS13, Gaming, Multiplayer, S.P.L.U.R.T., SPLURT, furry, furry games, furry roleplay, furry rp, furry roleplaying, furry roleplay games, furry roleplaying games, furry roleplaying server, furry roleplaying servers, furry roleplaying servers list, furry roleplaying servers list 2025, furry roleplaying servers list 2026, furry roleplaying servers list 2027, furry roleplaying servers list 2028, furry roleplaying servers list 2029, furry roleplaying servers list 2030, furry fandom"
-		>
-
-		<!-- Discord/Social Media Optimization -->
-		<meta property="og:color" content="#ff50b0">
-
-		<!-- Additional platform-specific optimizations -->
-		<meta property="og:image:type" content="image/webp">
-		<meta name="twitter:image:src" content={twitterImageUrl}>
-		<meta name="msapplication-navbutton-color" content="#ff50b0">
+		<SEO
+			title={title}
+			description={description}
+			canonical={url}
+			openGraph={{
+				basic: {
+					title: title,
+					type: type,
+					image: ogImageUrl,
+					url: url,
+				},
+				optional: {
+					description: description,
+					siteName: "S.P.L.U.R.T. Station",
+					locale: "en_US",
+				},
+				image: {
+					width: 1200,
+					height: 630,
+					alt: "S.P.L.U.R.T. Station",
+					type: "image/png",
+				},
+			}}
+			twitter={{
+				card: "summary_large_image",
+				title: title,
+				description: description,
+				image: ogImageUrl,
+				imageAlt: "S.P.L.U.R.T. Station",
+			}}
+			extend={{
+				meta: [
+					{
+						name: "author",
+						content: "S.P.L.U.R.T. Station",
+					},
+					{
+						name: "keywords",
+						content: "Space Station 13, SS13, Gaming, Multiplayer, S.P.L.U.R.T., SPLURT, furry, furry games, furry roleplay, furry rp, furry roleplaying, furry roleplay games, furry roleplaying games, furry roleplaying server, furry roleplaying servers, furry roleplaying servers list, furry roleplaying servers list 2025, furry roleplaying servers list 2026, furry roleplaying servers list 2027, furry roleplaying servers list 2028, furry roleplaying servers list 2029, furry roleplaying servers list 2030, furry fandom",
+					},
+					{
+						property: "og:color",
+						content: "#ff50b0",
+					},
+					{
+						name: "msapplication-navbutton-color",
+						content: "#ff50b0",
+					},
+				],
+			}}
+		/>
+		<ClientRouter/>
+		<ReplacementSwap/>
+		<Linter/>
 	</head>
-	<body>
-		<slot/>
+	<body class="flex flex-col min-h-screen">
+		<div id="stars" style={`box-shadow: ${shadowsSmall};`}></div>
+		<div id="stars2" style={`box-shadow: ${shadowsMedium};`}></div>
+		<div id="stars3" style={`box-shadow: ${shadowsBig};`}></div>
+		<!-- Background image and overlay -->
+		<div
+			class="fixed inset-0 -z-10"
+			style={`background-image: url(${optimizedBanner.src}); background-size: cover; background-position: center; background-repeat: no-repeat;`}
+			aria-hidden="true"
+		></div>
+		<div
+			class="fixed inset-0 -z-10 backdrop-blur-[1px]"
+			style="background-image: linear-gradient(135deg, rgba(5, 0, 15, 0.95) 0%, rgba(25, 5, 30, 0.92) 30%, rgba(60, 15, 40, 0.88) 70%, rgba(120, 30, 80, 0.85) 100%);"
+			aria-hidden="true"
+		></div>
+		<AgeGate client:load logoUrl={optimizedLogo.src}/>
+		<section data-vtbot-replace="navigation">
+			<Navigation client:load logoUrl={optimizedLogo.src}/>
+		</section>
+		<MusicPlayer client:load/>
+		<section data-vtbot-replace="header">
+			{pageTitle && <PageHeader title={pageTitle} />}
+		</section>
+		<main class="relative z-10" data-vtbot-replace="main">
+			<slot/>
+		</main>
+		<Footer/>
 	</body>
 </html>
 
@@ -120,6 +201,6 @@ const twitterImageUrl = new URL(twitterImage, Astro.site || Astro.url.origin)
 		margin: 0;
 		padding: 0;
 		width: 100%;
-		height: 100%;
+		min-height: 100%;
 	}
 </style>

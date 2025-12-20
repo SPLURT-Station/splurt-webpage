@@ -1,0 +1,240 @@
+/* How to Play Page Component Styles */
+/* Complex styles that can't be easily replaced with Tailwind utilities */
+
+.welcome-content {
+	position: relative;
+}
+
+/* S.P.L.U.R.T. Station Title Styling - 3D Pink Effect */
+.splurt-title {
+	position: relative;
+	display: inline-block;
+	color: var(--color-primary-light);
+	text-shadow:
+		var(--splurt-text-shadow-gradient),
+		0 2px 0px var(--color-primary-dark),
+		var(--splurt-text-shadow-3d-title),
+		var(--splurt-text-shadow-glow-title);
+	filter: drop-shadow(0 0 8px rgba(255, 80, 180, 0.5));
+}
+
+@media (min-width: 1024px) {
+	.splurt-title {
+		text-shadow:
+			var(--splurt-text-shadow-gradient),
+			0 2px 0px var(--color-primary-dark),
+			var(--splurt-text-shadow-3d-title-lg),
+			var(--splurt-text-shadow-glow-title-lg);
+		filter: drop-shadow(0 0 12px rgba(255, 80, 180, 0.6));
+	}
+}
+
+.welcome-content::before {
+	content: none;
+}
+
+@media (min-width: 640px) {
+	.welcome-content {
+		padding-left: 2.5rem;
+	}
+
+	.welcome-content::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: var(--spacing-md);
+		width: 2px;
+		background: var(--color-primary);
+		box-shadow: var(--glow-primary);
+	}
+}
+
+@media (min-width: 1024px) {
+	.welcome-content {
+		padding-left: 3rem;
+	}
+}
+
+.how-to-step {
+	position: relative;
+	flex-shrink: 0;
+
+	&:before {
+		content: "";
+		position: absolute;
+		left: 50%;
+		top: 0;
+		bottom: 0;
+		width: 7px;
+		margin-left: -3px;
+		background: var(--gradient-border-primary);
+		box-shadow: var(--glow-primary);
+	}
+
+	&:is(.how-to-step--no-line):before {
+		content: none;
+	}
+
+	> span {
+		position: relative;
+		border-radius: var(--radius-full);
+		font-size: var(--font-size-3xl);
+		font-weight: var(--font-weight-medium);
+		font-family: var(--font-vcr);
+		width: 4rem;
+		height: 4rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: var(--gradient-primary-animated);
+		color: var(--color-text-primary);
+		box-shadow:
+			0 4px 12px rgba(255, 80, 180, 0.4),
+			var(--glow-primary);
+		border: 2px solid rgba(255, 255, 255, 0.3);
+
+		@media (min-width: 640px) {
+			width: 5rem;
+			height: 5rem;
+			font-size: var(--font-size-4xl);
+		}
+	}
+}
+
+/* CTA Button Styles - Now centralized in src/styles/utilities/index.css */
+/* Use .cta, .cta--highlighted, and .cta--discord from utilities */
+/* Apply Tailwind classes for size/shape variations (px-*, py-*, rounded-*, etc.) */
+
+.method-card {
+	background-color: var(--color-bg-card-lighter);
+	border-radius: var(--radius-lg);
+	padding: var(--spacing-lg);
+	margin-bottom: var(--spacing-md);
+	border: 1px solid var(--color-border-primary);
+	box-shadow:
+		0 4px 15px rgba(0, 0, 0, 0.2),
+		var(--glow-primary);
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	overflow-x: hidden;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+
+	strong {
+		margin-bottom: var(--spacing-sm);
+		display: block;
+		text-transform: uppercase;
+		letter-spacing: var(--letter-spacing-normal);
+		font-size: var(--font-size-xl);
+		font-family: var(--font-spess);
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+	}
+
+	p {
+		margin-bottom: var(--spacing-md);
+		font-family: var(--font-spess);
+		font-size: var(--font-size-base);
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		word-wrap: break-word;
+		overflow-wrap: break-word;
+	}
+}
+
+.server-address {
+	background-color: var(--color-bg-card);
+	padding: var(--spacing-sm) var(--spacing-md);
+	border-radius: var(--radius-md);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--spacing-sm);
+	color: var(--color-primary);
+	font-family: var(--font-mono);
+	font-size: var(--font-size-sm);
+	border: 1px solid var(--color-border-primary-medium);
+	box-shadow:
+		0 0 10px rgba(255, 80, 180, 0.2),
+		inset 0 0 10px rgba(255, 100, 200, 0.1);
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	word-break: break-word;
+	overflow-wrap: break-word;
+	min-width: 0;
+}
+
+.copy-button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--radius-md);
+	color: var(--color-primary);
+	transition: color var(--transition-fast);
+	border-radius: var(--radius-md);
+	flex-shrink: 0;
+	margin-left: auto;
+}
+
+/* Text content should wrap, button should stay visible and not shrink */
+.server-address .copy-button {
+	flex-shrink: 0;
+	margin-left: auto;
+}
+
+.copy-button:hover {
+	color: var(--color-primary-light);
+}
+
+.copy-button:active {
+	transform: scale(0.95);
+}
+
+.copy-button svg {
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+.copy-button .copy-icon {
+	display: block;
+}
+
+.copy-button .check-icon {
+	display: none;
+}
+
+.copy-button.copied .copy-icon {
+	display: none;
+}
+
+.copy-button.copied .check-icon {
+	display: block;
+}
+
+.copy-button.copied {
+	color: #4ade80;
+}
+
+.play-methods {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-md);
+	padding: var(--spacing-md) 0;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+	.play-methods {
+		flex-direction: row;
+	}
+}

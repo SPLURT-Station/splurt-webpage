@@ -1,0 +1,25 @@
+.typewriter-container {
+	position: relative;
+}
+
+.typewriter-content {
+	white-space: pre-wrap;
+}
+
+.typewriter-cursor {
+	display: inline-block;
+	animation: blink 1s infinite;
+	color: #ff50b0;
+	font-weight: bold;
+}
+
+@keyframes blink {
+	0%,
+	50% {
+		opacity: 1;
+	}
+	51%,
+	100% {
+		opacity: 0;
+	}
+}

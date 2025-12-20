@@ -3,7 +3,7 @@ import {
 	AGE_GATE_STORAGE_KEY,
 	getAgeConfirmationStatus,
 	setAgeConfirmationStatus,
-} from "./age-gate";
+} from "../utils/age-gate";
 
 // Mock localStorage for Node.js/Bun environment
 const createMockLocalStorage = () => {

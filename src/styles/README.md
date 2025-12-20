@@ -1,0 +1,147 @@
+# CSS Architecture - ITCSS (Inverted Triangle CSS)
+
+This project follows the ITCSS architecture for organizing styles, combined with Tailwind CSS for utility-first styling.
+
+## Structure Overview
+
+The styles are organized in an inverted triangle hierarchy, from least specific (global) to most specific (components):
+
+```text
+styles/
+├── index.css              # Main entry point - imports in ITCSS order
+├── global/                # Global styles (tokens, variables, defaults)
+│   ├── tokens.css         # Design tokens - immutable values
+│   ├── variables.css      # Mixed variables using tokens
+│   ├── defaults.css       # Base styles (box-sizing, resets, etc.)
+│   └── index.css          # Global entry point
+├── elements/              # Raw HTML element styles
+│   ├── anchor.css         # <a> tag styles
+│   ├── headings.css       # <h1>-<h6> styles
+│   └── index.css          # Elements entry point
+└── utilities/             # Reusable utility classes
+    └── index.css          # Utility classes (card, content-heading, etc.)
+
+components/
+└── [component]/
+    ├── [component].astro/tsx
+    └── [component].css    # Component-specific styles (principle of locality)
+
+pages/
+└── [page]/
+    ├── [page].astro
+    └── [page].css         # Page-specific styles (principle of locality)
+```
+
+## ITCSS Layers
+
+### 1. Global (Least Specific)
+
+- **tokens.css**: Design tokens - immutable values like colors, spacing, typography
+- **variables.css**: Mixed variables that combine tokens
+- **defaults.css**: Base styles that apply globally (box-sizing, resets, star animations)
+
+### 2. Elements
+
+- Raw HTML element styles without classes
+- Use `@layer base` for proper specificity
+- Examples: anchor links, headings
+
+### 3. Utilities
+
+- Reusable utility classes that combine multiple Tailwind utilities
+- Used when the same combination of Tailwind classes is repeated frequently
+- Examples: `.card`, `.content-heading`, `.primary-gradient`
+
+### 4. Components (Most Specific)
+
+- Component-specific styles live next to their components (principle of locality)
+- Each component imports its own CSS file
+- Examples: `navigation.css`, `hero-header.css`, `age-gate.css`
+
+## Tailwind CSS Integration
+
+- **Use Tailwind utilities** for most styling (utility-first approach)
+- **Use CSS classes** only when:
+  - Complex styles that can't be easily expressed with Tailwind
+  - Frequently repeated combinations of Tailwind classes (create utility classes)
+  - Global styles that apply to raw HTML elements
+
+## Design Tokens
+
+Design tokens are organized into two categories:
+
+### @theme Variables (in `index.css`)
+
+Values used via Tailwind utilities. These automatically create utility classes AND are available as CSS variables.
+
+- **Fonts**: `--font-sans`, `--font-spess`, `--font-pixel`, etc. → `font-*` utilities
+- **Colors**: `--color-primary`, `--color-secondary`, etc. → `bg-*`, `text-*`, `border-*` utilities
+- **Shadows**: `--shadow-card`, `--shadow-button`, `--shadow-button-hover` → `shadow-*` utilities
+- **Max Width**: `--max-width-content` → `max-w-content` utility
+
+### :root Variables (in `global/tokens.css` and `global/variables.css`)
+
+Values used ONLY in CSS files, not via Tailwind utilities.
+
+- **Layout**: `--nav-height`, `--content-padding-mobile`, etc.
+- **Gradients**: `--gradient-primary`, `--gradient-background-overlay`, etc.
+- **Glow effects**: `--glow-primary`, `--glow-primary-inset` (used in complex shadows)
+- **Transitions**: `--transition-fast`, `--transition-base`, `--transition-slow`
+- **CSS-only spacing/font values**: Used in CSS files (match Tailwind defaults but defined for clarity)
+
+## Usage Guidelines
+
+1. **Global styles**: Imported once in `main-layout.astro` via `styles/index.css`
+2. **Component styles**: Each component imports its own CSS file from the same folder (principle of locality)
+3. **Page styles**: Each page imports its own CSS file from the same folder (principle of locality)
+4. **Tailwind classes**: Use directly in HTML/JSX for most styling (utility-first approach)
+5. **CSS classes**: Only use for complex styles that can't be easily expressed with Tailwind:
+   - Complex pseudo-elements (`::before`, `::after`)
+   - Complex animations and keyframes
+   - Complex gradients and shadows
+   - Browser-specific features (`@supports`, etc.)
+6. **CSS variables**: Use `var(--variable-name)` for consistency
+7. **Utility classes**: Create in `utilities/index.css` when the same combination of Tailwind classes is repeated frequently
+
+## Font Families
+
+Fonts are standardized using Tailwind v4's `@theme` directive in `global/tokens.css`. This automatically creates Tailwind utilities.
+
+### Available Font Utilities
+
+- `font-sans`: Inter, Open Sans (default) - Use for body text
+- `font-mono`: System monospace fonts - Use for code/server addresses
+- `font-spess`: SpessFont - Use for game-related content
+- `font-pixel`: Grand9K Pixel - Use for headings/titles
+- `font-vcr`: VCR OSD MONO - Use for retro/step indicators
+- `font-pixellari`: Pixellari - Use for UI elements (tabs, buttons)
+
+### Usage Pattern
+
+**In HTML/JSX (preferred):**
+
+```html
+<h1 class="font-pixel">Title</h1>
+<p class="font-spess">Game content</p>
+<code class="font-mono">server address</code>
+```
+
+**In CSS files (when needed):**
+
+```css
+.custom-class {
+  font-family: var(--font-spess);
+}
+```
+
+**Never use arbitrary values:**
+
+- ❌ `font-['Grand9K_Pixel']`
+- ✅ `font-pixel`
+
+## Migration Notes
+
+- Old `global.css` is deprecated - all styles moved to ITCSS structure
+- Components should import their own CSS files (principle of locality)
+- Use CSS variables instead of hardcoded values
+- Prefer Tailwind utilities over custom CSS when possible

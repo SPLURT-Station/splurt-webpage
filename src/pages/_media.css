@@ -1,0 +1,45 @@
+/* Media Page Component Styles */
+/* Page-specific styles that can't be easily replaced with Tailwind utilities */
+
+/* Ensure grid containers don't overflow */
+.grid {
+	max-width: 100%;
+	box-sizing: border-box;
+}
+
+.media-item {
+	position: relative;
+	overflow: hidden;
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--color-border-primary-light);
+	transition:
+		transform var(--transition-fast),
+		box-shadow var(--transition-fast);
+	box-shadow:
+		0 4px 15px rgba(0, 0, 0, 0.2),
+		0 0 15px rgba(255, 80, 180, 0.1);
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+
+	&:hover {
+		transform: translateY(-2px);
+		box-shadow:
+			0 8px 25px rgba(0, 0, 0, 0.4),
+			0 0 25px rgba(255, 80, 180, 0.3);
+		border-color: rgba(255, 150, 220, 0.5);
+	}
+
+	img {
+		width: 100%;
+		height: auto;
+		object-fit: cover;
+		min-height: 200px;
+		max-width: 100%;
+		background: linear-gradient(
+			135deg,
+			rgba(255, 80, 180, 0.15),
+			rgba(255, 150, 220, 0.15)
+		);
+	}
+}

@@ -1,0 +1,155 @@
+/* Defaults - Base styles that apply globally */
+/* Box sizing, resets, and global element defaults */
+
+@import "./variables.css";
+
+/* Box sizing */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* Global outline styles for keyboard navigation */
+*:focus-visible {
+	outline: 2px solid var(--color-primary);
+	outline-offset: 2px;
+}
+
+/* Remove default outline for mouse users */
+*:focus:not(:focus-visible) {
+	outline: none;
+}
+
+/* HTML and Body defaults */
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	min-height: 100%;
+}
+
+html {
+	font-family: var(--font-spess);
+	/* Reserve space for scrollbar to prevent layout shifts when content loads */
+	scrollbar-gutter: stable;
+}
+
+body {
+	background-color: var(--color-background);
+	color: var(--color-text-primary);
+	position: relative;
+	overflow-x: hidden;
+}
+
+/* Prevent content overflow on mobile - only apply to media elements */
+img,
+video,
+iframe,
+embed,
+object {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Ensure text wraps properly on mobile - but not too aggressively */
+p,
+span {
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}
+
+/* Ensure code elements wrap on mobile when needed, but preserve layout */
+code {
+	max-width: 100%;
+}
+
+/* Don't apply max-width to buttons as it can break layouts */
+
+/* Parallax Star Field Effect - Global animation styles */
+/* Stars are generated dynamically via JavaScript in main-layout.astro */
+#stars,
+#stars2,
+#stars3 {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 200%;
+	display: block;
+	pointer-events: none;
+	z-index: 0;
+	background: transparent;
+}
+
+/* Layer 1 - Fast moving, bright stars (700 stars) */
+#stars {
+	width: 1px;
+	height: 1px;
+}
+
+/* Layer 2 - Medium speed, medium brightness (200 stars) */
+#stars2 {
+	width: 2px;
+	height: 2px;
+}
+
+/* Layer 3 - Slow moving, dim stars (100 stars) */
+#stars3 {
+	width: 3px;
+	height: 3px;
+}
+
+/* Create seamless looping with :after pseudo-elements */
+#stars::after,
+#stars2::after,
+#stars3::after {
+	content: " ";
+	position: absolute;
+	top: 2000px;
+	width: inherit;
+	height: inherit;
+	background: transparent;
+	box-shadow: inherit;
+}
+
+/* Animation matching the original SCSS animStar */
+@keyframes animStar {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(-2000px);
+	}
+}
+
+/* Twinkling effect for stars */
+@keyframes twinkle {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.3;
+	}
+}
+
+#stars {
+	animation:
+		animStar 50s linear infinite,
+		twinkle 3s ease-in-out infinite;
+}
+
+#stars2 {
+	animation:
+		animStar 100s linear infinite,
+		twinkle 4s ease-in-out infinite;
+}
+
+#stars3 {
+	animation:
+		animStar 150s linear infinite,
+		twinkle 5s ease-in-out infinite;
+}

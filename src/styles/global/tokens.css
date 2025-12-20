@@ -1,0 +1,61 @@
+/* Design Tokens - CSS-only variables */
+/* These are used ONLY in CSS files, not via Tailwind utilities */
+/* Values used via Tailwind utilities are defined in @theme (see src/styles/index.css) */
+/* Note: Spacing, font-size, font-weight, etc. that match Tailwind defaults are available */
+/* via Tailwind's default CSS variables, but we define custom ones here for clarity */
+
+:root {
+	/* Layout - CSS-only values */
+	--nav-height: 3.5rem;
+	--content-padding-mobile: 1rem;
+	--content-padding-desktop: 2rem;
+	--content-width-default: 37.5rem;
+	--gutter: 1rem;
+
+	/* Spacing - CSS-only (used in CSS files, match Tailwind defaults) */
+	--spacing-sm: 0.5rem;
+	--spacing-md: 1rem;
+	--spacing-lg: 1.5rem;
+	--spacing-2xl: 3rem;
+	--spacing-3xl: 4rem;
+	--spacing-4xl: 6rem;
+
+	/* Font sizes - CSS-only (used in CSS files, match Tailwind defaults) */
+	--font-size-sm: 0.875rem;
+	--font-size-base: 1rem;
+	--font-size-lg: 1.125rem;
+	--font-size-xl: 1.25rem;
+	--font-size-2xl: 1.5rem;
+	--font-size-3xl: 1.875rem;
+	--font-size-4xl: 2.25rem;
+
+	/* Font weights - CSS-only (used in CSS files, match Tailwind defaults) */
+	--font-weight-medium: 500;
+	--font-weight-semibold: 600;
+	--font-weight-bold: 700;
+	--font-weight-extrabold: 800;
+
+	/* Line heights - CSS-only (used in CSS files) */
+	--line-height-relaxed: 1.6;
+
+	/* Letter spacing - CSS-only (used in CSS files) */
+	--letter-spacing-normal: 0.05em;
+	--letter-spacing-tight: 0.02em;
+	--letter-spacing-wide: 0.06em;
+
+	/* Border radius - CSS-only (used in CSS files, match Tailwind defaults) */
+	--radius-sm: 0.125rem;
+	--radius-md: 0.25rem;
+	--radius-lg: 0.5rem;
+	--radius-full: 9999px;
+
+	/* Glow effects - CSS-only (used in complex shadow combinations) */
+	--glow-primary: 0 0 20px rgba(255, 80, 180, 0.3);
+	--glow-primary-strong: 0 0 30px rgba(255, 80, 180, 0.5);
+	--glow-primary-inset: inset 0 0 60px rgba(255, 80, 180, 0.03);
+
+	/* Transitions - CSS-only (duration values, not used as utilities) */
+	--transition-fast: 200ms ease;
+	--transition-base: 300ms ease;
+	--transition-slow: 500ms ease;
+}

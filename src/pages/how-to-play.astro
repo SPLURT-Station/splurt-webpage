@@ -1,0 +1,180 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/main-layout.astro";
+import "./_how-to-play.css";
+import MaterialSymbolsFileCopyOutlineRounded from "~icons/material-symbols/file-copy-outline-rounded";
+import PixelarticonsCheck from "~icons/pixelarticons/check";
+import PixelarticonsExternalLink from "~icons/pixelarticons/external-link";
+import menuScreen from "/src/assets/images/menu.png";
+---
+
+<Layout
+	title="How To Play - S.P.L.U.R.T. Station"
+	description="Learn how to join and play on S.P.L.U.R.T. Station, a NSFW furry roleplaying server for Space Station 13."
+	pageTitle="How To Play"
+>
+	<div class="container mx-auto px-4 py-12 relative z-10">
+		<section class="flex items-center gap-8 lg:gap-14 mb-8">
+			<Image
+				class="hidden md:block max-w-[420px]"
+				src={menuScreen}
+				alt="Menu Screen"
+				width={420}
+				quality={80}
+				format="webp"
+				loading="eager"
+			/>
+
+			<div class="grow welcome-content">
+				<h2
+					class="mb-4 lg:mb-8 font-semibold uppercase tracking-wide text-3xl font-pixel"
+				>
+					Welcome to
+					<span class="font-bold splurt-title">S.P.L.U.R.T. Station</span>
+				</h2>
+				<p class="text-xl leading-8 font-spess">
+					Getting started is quick, easy, and completely free! Just follow these
+					simple steps below and you'll be arriving at the station in no time.
+				</p>
+			</div>
+		</section>
+
+		<section class="card">
+			<div class="flex gap-4 sm:gap-8">
+				<div class="how-to-step">
+					<span>1</span>
+				</div>
+				<div class="grow pb-6 md:pb-10 pt-2">
+					<h3 class="content-heading content-heading--secondary mb-4 font-vcr">
+						Download
+					</h3>
+					<p class="mb-4">
+						S.P.L.U.R.T. Station is built on a game platform called BYOND (Build
+						Your Own Net Dream), which you'll need to download and install to
+						play.
+					</p>
+					<a
+						href="https://www.byond.com/download/"
+						class="cta px-6 py-3 rounded-lg text-white inline-flex items-center"
+						target="_blank"
+						rel="external"
+					>
+						Download BYOND
+						<PixelarticonsExternalLink
+							class="inline-block ml-2 w-6 h-6"
+							aria-hidden="true"
+						/>
+					</a>
+				</div>
+			</div>
+
+			<div class="flex gap-4 sm:gap-8">
+				<div class="how-to-step">
+					<span>2</span>
+				</div>
+				<div class="grow pb-6 md:pb-10 pt-2">
+					<h3 class="content-heading content-heading--secondary mb-4 font-vcr">
+						Register
+					</h3>
+					<p class="mb-4">
+						Next, register a BYOND account. You'll be prompted to login to this
+						account when you launch BYOND, and S.P.L.U.R.T. Station requires it.
+					</p>
+					<a
+						href="https://secure.byond.com/Join"
+						class="cta px-6 py-3 rounded-lg text-white inline-flex items-center"
+						target="_blank"
+						rel="external"
+					>
+						Register Account
+						<PixelarticonsExternalLink
+							class="inline-block ml-2 w-6 h-6"
+							aria-hidden="true"
+						/>
+					</a>
+				</div>
+			</div>
+
+			<div class="flex gap-4 sm:gap-8">
+				<div class="how-to-step how-to-step--no-line">
+					<span>3</span>
+				</div>
+				<div class="grow pt-2">
+					<h3 class="content-heading content-heading--secondary mb-4 font-vcr">
+						Play!
+					</h3>
+					<p class="mb-4">
+						Now you're ready to join S.P.L.U.R.T. Station! Once you have BYOND
+						installed and your account registered, you can connect to our server
+						using one of the following methods:
+					</p>
+					<div class="play-methods">
+						<div class="method-card">
+							<strong>Direct Connection</strong>
+							<p>
+								Click the button below to open the game directly, or enter this
+								address in BYOND:
+							</p>
+							<code class="server-address" id="server-address">
+								byond://play.splurt.space:42069
+								<button
+									class="copy-button"
+									aria-label="Copy server address"
+									type="button"
+									data-copy-text="byond://play.splurt.space:42069"
+									onclick="copyToClipboard(this)"
+								>
+									<MaterialSymbolsFileCopyOutlineRounded class="copy-icon"/>
+									<PixelarticonsCheck class="check-icon"/>
+								</button>
+							</code>
+							<a
+								href="byond://play.splurt.space:42069"
+								class="cta--highlighted px-6 py-3 rounded-lg text-white mt-4 inline-flex items-center font-pixel"
+							>
+								Connect Now
+							</a>
+						</div>
+						<div class="method-card">
+							<strong>Read Our Rules</strong>
+							<p>
+								Before you start playing, make sure to familiarize yourself with
+								our server rules and guidelines.
+							</p>
+							<a
+								href="https://wiki.splurt.space/Rules"
+								class="cta px-6 py-3 rounded-lg text-white mt-4 inline-flex items-center"
+								target="_blank"
+								rel="external"
+							>
+								View Rules
+								<PixelarticonsExternalLink
+									class="inline-block ml-2 w-6 h-6"
+									aria-hidden="true"
+								/>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<script is:inline>
+		async function copyToClipboard(button) {
+			const textToCopy = button.getAttribute("data-copy-text");
+			if (!textToCopy) {
+				return;
+			}
+
+			try {
+				await navigator.clipboard.writeText(textToCopy);
+				button.classList.add("copied");
+				setTimeout(() => {
+					button.classList.remove("copied");
+				}, 2000);
+			} catch (err) {
+				console.error("Failed to copy: ", err);
+			}
+		}
+	</script>
+</Layout>

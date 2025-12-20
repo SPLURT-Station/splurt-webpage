@@ -1,0 +1,199 @@
+/* Age Gate Component Styles */
+/* Complex styles that can't be easily replaced with Tailwind utilities */
+
+.age-gate-overlay {
+	position: fixed;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
+	backdrop-filter: blur(2px);
+	font-family: var(--font-sans);
+	color: var(--color-text-primary);
+	background-image:
+		var(--gradient-background-overlay),
+		radial-gradient(
+			2px 2px at 23px 47px,
+			rgba(255, 100, 200, 1),
+			rgba(255, 100, 200, 0.3) 30%,
+			transparent 70%
+		),
+		radial-gradient(
+			1px 1px at 67px 23px,
+			rgba(255, 150, 220, 1),
+			rgba(255, 150, 220, 0.4) 25%,
+			transparent 60%
+		),
+		radial-gradient(
+			3px 3px at 41px 89px,
+			rgba(255, 80, 180, 1),
+			rgba(255, 80, 180, 0.5) 35%,
+			transparent 80%
+		),
+		radial-gradient(
+			1px 1px at 91px 13px,
+			rgba(255, 120, 200, 1),
+			rgba(255, 120, 200, 0.3) 20%,
+			transparent 50%
+		),
+		radial-gradient(
+			2px 2px at 17px 73px,
+			rgba(255, 100, 200, 1),
+			rgba(255, 100, 200, 0.4) 30%,
+			transparent 70%
+		);
+	background-repeat: repeat;
+	background-size:
+		cover,
+		231px 137px,
+		231px 137px,
+		231px 137px,
+		231px 137px,
+		231px 137px;
+}
+
+.age-gate-modal {
+	width: min(92vw, 640px);
+	background: var(--color-bg-card);
+	border: 1px solid var(--color-border-primary-light);
+	border-radius: 16px;
+	padding: var(--spacing-lg);
+	box-shadow:
+		0 20px 60px rgba(0, 0, 0, 0.6),
+		var(--glow-primary-strong),
+		var(--glow-primary-inset);
+	position: relative;
+	overflow: hidden;
+}
+
+.age-gate-modal::before {
+	content: "";
+	position: absolute;
+	inset: -2px;
+	border-radius: 18px;
+	padding: 2px;
+	background: var(--gradient-border-primary);
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	pointer-events: none;
+}
+
+.age-gate-header {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	margin-bottom: 0.75rem;
+}
+
+.age-gate-logo-wrap {
+	position: relative;
+	width: 72px;
+	height: 72px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.age-gate-logo {
+	filter: drop-shadow(0 6px 20px rgba(255, 80, 180, 0.15));
+	border-radius: 50%;
+}
+
+.age-gate-badge {
+	position: absolute;
+	right: -2px;
+	bottom: -2px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	background: var(--gradient-primary);
+	color: var(--color-text-primary);
+	font-weight: var(--font-weight-extrabold);
+	font-size: 10px;
+	letter-spacing: var(--letter-spacing-tight);
+	border: 2px solid rgba(255, 255, 255, 0.85);
+	box-shadow:
+		0 4px 12px rgba(255, 80, 180, 0.45),
+		var(--glow-primary);
+}
+
+.age-gate-title {
+	margin: 0;
+	font-size: 1.9rem;
+	font-weight: var(--font-weight-extrabold);
+	letter-spacing: -0.01em;
+	background-image: linear-gradient(
+		90deg,
+		#ffe1f7 0%,
+		#ff86d4 25%,
+		#ffe1f7 50%,
+		#ff86d4 75%,
+		#ffe1f7 100%
+	);
+	background-size: 250% 100%;
+	background-position: 0% 50%;
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	text-shadow: 0 0 18px rgba(255, 120, 210, 0.35);
+	animation: ageTitleShimmer 12s ease-in-out infinite;
+	transition: background-position 120ms ease-out;
+}
+
+@keyframes ageTitleShimmer {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 200% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.age-gate-text {
+	margin: 0 0 1.25rem 0;
+	color: var(--color-text-secondary);
+	line-height: var(--line-height-relaxed);
+}
+
+.age-gate-actions {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.age-continue-button {
+	background: var(--gradient-primary-animated);
+	color: var(--color-text-primary);
+	border: 2px solid var(--color-border-primary-strong);
+	padding: 0.85rem var(--spacing-lg);
+	font-size: var(--font-size-base);
+	font-weight: var(--font-weight-bold);
+	border-radius: 12px;
+	cursor: pointer;
+	transition: all 0.25s ease;
+	box-shadow:
+		0 8px 25px rgba(255, 80, 180, 0.3),
+		var(--glow-primary);
+	text-transform: uppercase;
+	letter-spacing: var(--letter-spacing-wide);
+}
+
+.age-continue-button:hover {
+	transform: translateY(-2px);
+	box-shadow:
+		0 12px 35px rgba(255, 80, 180, 0.45),
+		var(--glow-primary-strong);
+}
+
+.age-continue-button:active {
+	transform: translateY(0);
+}

@@ -1,0 +1,282 @@
+/* Utility Classes */
+/* Reusable classes that combine multiple Tailwind utilities */
+/* Use @apply to create utility classes that are used frequently */
+
+@layer utilities {
+	/* Content spacing utility */
+	.content {
+		padding: var(--spacing-2xl) 0;
+	}
+
+	@media (min-width: 1024px) {
+		.content {
+			font-size: var(--font-size-lg);
+			padding: var(--spacing-3xl) 0;
+		}
+	}
+
+	@media (min-width: 1280px) {
+		.content {
+			padding: var(--spacing-4xl) 0;
+		}
+	}
+
+	/* Card utility - commonly used card style */
+	.card {
+		background-color: var(--color-bg-card);
+		backdrop-filter: blur(4px);
+		border-radius: var(--radius-lg);
+		padding: var(--spacing-lg);
+		box-shadow: var(--shadow-card);
+		border: 1px solid var(--color-border-primary);
+		position: relative;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+	}
+
+	.card::before {
+		content: "";
+		position: absolute;
+		inset: -1px;
+		border-radius: var(--radius-lg);
+		padding: 1px;
+		background: var(--gradient-border-primary);
+		-webkit-mask:
+			linear-gradient(#000 0 0) content-box,
+			linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		pointer-events: none;
+		opacity: 0.6;
+		z-index: -1;
+	}
+
+	/* Content heading utilities */
+	.content-heading {
+		font-size: var(--font-size-2xl);
+		font-weight: var(--font-weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: var(--letter-spacing-normal);
+		margin-bottom: var(--spacing-md);
+		padding: var(--spacing-sm);
+		border-radius: var(--radius-sm);
+	}
+
+	@media (min-width: 1024px) {
+		.content-heading {
+			font-size: var(--font-size-3xl);
+			margin-bottom: 1.25rem;
+			padding: var(--spacing-sm) 0.75rem;
+		}
+	}
+
+	.content-heading--primary {
+		position: relative;
+		color: var(--color-text-primary);
+		background: var(--gradient-primary);
+		text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.8);
+		z-index: 1;
+	}
+
+	.card .content-heading--primary::before {
+		display: none;
+	}
+
+	.card .content-heading--primary::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 20vw;
+		right: 0;
+		bottom: 0;
+		background: linear-gradient(
+			135deg,
+			transparent 0%,
+			transparent 25%,
+			rgba(255, 255, 255, 0.2) 35%,
+			rgba(255, 255, 255, 0.5) 50%,
+			rgba(255, 255, 255, 0.2) 65%,
+			transparent 75%,
+			transparent 100%
+		);
+		border-radius: var(--radius-sm);
+		pointer-events: none;
+		z-index: 3;
+	}
+
+	.content-heading--primary-dark {
+		color: var(--color-primary);
+	}
+
+	.content-heading--primary-separator {
+		background: none;
+		padding-bottom: var(--spacing-md);
+	}
+
+	.content-heading--primary-separator::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background: var(--gradient-primary);
+		border-radius: var(--radius-sm);
+	}
+
+	.content-heading--secondary {
+		font-size: var(--font-size-xl);
+		color: var(--color-text-primary);
+		background: var(--gradient-secondary);
+		position: relative;
+	}
+
+	@media (min-width: 1024px) {
+		.content-heading--secondary {
+			font-size: var(--font-size-2xl);
+		}
+	}
+
+	/* Space glow utility */
+	.space-glow {
+		box-shadow: 0 0 20px 2px var(--color-secondary);
+	}
+
+	/* Primary gradient utility */
+	.primary-gradient {
+		background: var(--gradient-primary);
+	}
+
+	/* CTA Button Utilities - Base styles for all buttons */
+	/* Use Tailwind classes for size/shape variations (px-*, py-*, rounded-*, etc.) */
+	.cta {
+		color: var(--color-text-primary);
+		background-color: var(--color-primary);
+		font-weight: var(--font-weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: var(--letter-spacing-normal);
+		transition: all var(--transition-fast);
+		display: inline-flex;
+		align-items: center;
+		text-decoration: none;
+		cursor: pointer;
+		font-family: var(--font-spess);
+		border: none;
+
+		&:hover {
+			background-color: var(--color-primary-darker);
+		}
+
+		&:active {
+			transform: scale(0.98);
+		}
+	}
+
+	/* Highlighted CTA - Primary gradient button with enhanced styling */
+	/* Font can be overridden via Tailwind classes (e.g., font-spess, font-pixel) */
+	.cta--highlighted {
+		color: var(--color-text-primary);
+		background: var(--gradient-primary-animated);
+		border: 2px solid var(--color-border-primary-strong);
+		font-weight: var(--font-weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: var(--letter-spacing-normal);
+		transition: all var(--transition-base);
+		display: inline-flex;
+		align-items: center;
+		text-decoration: none;
+		cursor: pointer;
+		box-shadow: var(--shadow-button);
+		text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+
+		&:hover {
+			background: var(--gradient-primary-dark);
+			color: var(--color-text-primary);
+			transform: translateY(-3px);
+			box-shadow: var(--shadow-button-hover);
+			border-color: rgba(255, 150, 220, 0.8);
+			text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+		}
+
+		&:active {
+			transform: translateY(-1px);
+			box-shadow:
+				0 3px 20px rgba(255, 79, 240, 0.4),
+				0 -3px 20px rgba(255, 79, 240, 0.3),
+				inset 0 1px 0 rgba(255, 255, 255, 0.1);
+		}
+	}
+
+	/* Discord CTA - Discord-specific gradient and styling */
+	/* Font can be overridden via Tailwind classes (e.g., font-spess, font-pixel) */
+	.cta--discord {
+		background: linear-gradient(135deg, #5865f2, #7289da, #5865f2);
+		border: 2px solid rgba(88, 101, 242, 0.5);
+		box-shadow:
+			0 4px 25px rgba(88, 101, 242, 0.4),
+			0 -4px 25px rgba(88, 101, 242, 0.3),
+			0 0 20px rgba(114, 137, 218, 0.3),
+			inset 0 1px 0 rgba(255, 255, 255, 0.1);
+		text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+		color: var(--color-text-primary);
+		font-weight: var(--font-weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: var(--letter-spacing-normal);
+		transition: all var(--transition-base);
+		display: inline-flex;
+		align-items: center;
+		text-decoration: none;
+		cursor: pointer;
+
+		&:hover {
+			background: linear-gradient(135deg, #4752c4, #5b6eae, #4752c4);
+			box-shadow:
+				0 6px 35px rgba(88, 101, 242, 0.6),
+				0 -6px 35px rgba(88, 101, 242, 0.5),
+				0 0 30px rgba(114, 137, 218, 0.8),
+				inset 0 1px 0 rgba(255, 255, 255, 0.2);
+			border-color: rgba(114, 137, 218, 0.8);
+			text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+		}
+
+		&:active {
+			box-shadow:
+				0 3px 20px rgba(88, 101, 242, 0.4),
+				0 -3px 20px rgba(88, 101, 242, 0.3),
+				inset 0 1px 0 rgba(255, 255, 255, 0.1);
+		}
+	}
+
+	/* Discord icon styling - applies to icons within .cta--discord */
+	/* Overrides navigation styles to ensure white icon in button */
+	.cta--discord svg,
+	.cta--discord .discord-icon,
+	a.cta--discord svg,
+	a.cta--discord .discord-icon {
+		width: 1.5rem;
+		height: 1.5rem;
+		display: inline-block;
+		color: var(--color-text-primary) !important;
+		fill: var(--color-text-primary) !important;
+		flex-shrink: 0;
+		filter: none !important;
+
+		path {
+			fill: var(--color-text-primary) !important;
+		}
+	}
+
+	.cta--discord .discord-icon svg,
+	a.cta--discord .discord-icon svg {
+		width: 1.5rem !important;
+		height: 1.5rem !important;
+		max-width: 1.5rem !important;
+		max-height: 1.5rem !important;
+		color: var(--color-text-primary) !important;
+		fill: var(--color-text-primary) !important;
+		filter: none !important;
+	}
+}

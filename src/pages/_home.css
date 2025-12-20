@@ -1,0 +1,56 @@
+/* Home Page Component Styles */
+/* Page-specific styles that can't be easily replaced with Tailwind utilities */
+
+.features {
+	li {
+		position: relative;
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: 10px;
+			left: -16px;
+			width: 8px;
+			height: 8px;
+			background: var(--color-primary);
+		}
+	}
+}
+
+.game-shot-card {
+	background-color: var(--color-bg-card-light);
+	border-radius: var(--radius-sm);
+	border: 1px solid var(--color-border-primary);
+	box-shadow:
+		0 4px 15px rgba(0, 0, 0, 0.2),
+		var(--glow-primary);
+}
+
+/* S.P.L.U.R.T. Station inline text styling - Pink 3D effect */
+.card .splurt-text {
+	position: relative;
+	display: inline-block;
+	color: var(--color-primary-light);
+	font-weight: var(--font-weight-semibold);
+	text-shadow:
+		var(--splurt-text-shadow-gradient), var(--splurt-text-shadow-3d-inline),
+		var(--splurt-text-shadow-glow-inline);
+	filter: drop-shadow(0 0 4px rgba(255, 80, 180, 0.4));
+}
+
+/* Mobile-specific styling for the typewriter card title */
+@media (max-width: 1023px) {
+	.card .content-heading--primary {
+		padding: 0.75rem 1rem;
+		font-size: var(--font-size-xl);
+		text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
+		margin-bottom: var(--spacing-md);
+		line-height: 1.3;
+		border-radius: 0.75rem;
+	}
+
+	/* Remove glow effect on mobile */
+	.card .content-heading--primary::after {
+		display: none;
+	}
+}
