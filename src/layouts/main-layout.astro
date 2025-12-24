@@ -14,6 +14,7 @@ import { ClientRouter } from "astro:transitions";
 import { SEO } from "astro-seo";
 import ReplacementSwap from "astro-vtbot/components/ReplacementSwap.astro";
 import { links } from "unplugin-fonts/head";
+import GoogleAnalytics from "../components/google-analytics/google-analytics.astro";
 
 // Optimize the banner image for background use
 const optimizedBanner = await getImage({
@@ -102,6 +103,8 @@ const ogImageUrl =
 			const attrs = link?.attrs || {};
 			return <link {...attrs} data-unfont />;
 		})}
+
+		<GoogleAnalytics/>
 
 		<!-- Sitemap link for search engines -->
 		<link rel="sitemap" href="/sitemap-index.xml">
