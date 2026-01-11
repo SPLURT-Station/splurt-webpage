@@ -1,5 +1,6 @@
 // @ts-check
 
+import partytown from "@astrojs/partytown";
 import sitemap from "@astrojs/sitemap";
 import solidJs from "@astrojs/solid-js";
 import nurodevbun from "@nurodev/astro-bun";
@@ -57,6 +58,11 @@ export default defineConfig({
 		}),
 		vtbot(),
 		sitemap(),
+		partytown({
+			config: {
+				forward: ["dataLayer.push"],
+			},
+		}),
 	],
 
 	vite: {

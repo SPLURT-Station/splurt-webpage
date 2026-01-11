@@ -14,7 +14,6 @@ import { ClientRouter } from "astro:transitions";
 import { SEO } from "astro-seo";
 import ReplacementSwap from "astro-vtbot/components/ReplacementSwap.astro";
 import { links } from "unplugin-fonts/head";
-import GoogleAnalytics from "../components/google-analytics/google-analytics.astro";
 
 // Optimize the banner image for background use
 const optimizedBanner = await getImage({
@@ -104,7 +103,20 @@ const ogImageUrl =
 			return <link {...attrs} data-unfont />;
 		})}
 
-		<GoogleAnalytics/>
+		<!-- Google tag (gtag.js) -->
+		<script
+			async
+			type="text/partytown"
+			src="https://www.googletagmanager.com/gtag/js?id=G-KT0NG9N2C9"
+			is:inline
+		></script>
+		<script type="text/partytown" is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', 'G-KT0NG9N2C9');
+		</script>
 
 		<!-- Sitemap link for search engines -->
 		<link rel="sitemap" href="/sitemap-index.xml">
