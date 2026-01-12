@@ -10,3 +10,12 @@ updates:
       - "@me"
     commit-message:
       prefix: "github-actions"
+  - package-ecosystem: "bun"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "@me"
+    commit-message:
+      prefix: "bun-update"
