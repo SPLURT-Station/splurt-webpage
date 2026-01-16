@@ -33,7 +33,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.16.8",
     "astro-favicons": "^3.1.5",
-    "astro-og-canvas": "^0.7.2",
+    "astro-og-canvas": "^0.10.0",
     "astro-seo": "^0.8.4",
     "astro-vtbot": "^2.1.10",
     "exifreader": "^4.36.0",
