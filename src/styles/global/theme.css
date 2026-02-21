@@ -38,11 +38,11 @@
 		0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.1),
 		0 0 20px rgba(255, 80, 180, 0.3), inset 0 0 60px rgba(255, 80, 180, 0.03);
 	--shadow-button:
-		0 4px 25px rgba(255, 80, 180, 0.4), 0 -4px 25px rgba(255, 80, 180, 0.3), 0 0
-		20px rgba(255, 100, 200, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+		0 4px 25px rgba(255, 80, 180, 0.4), 0 -4px 25px rgba(255, 80, 180, 0.3),
+		0 0 20px rgba(255, 100, 200, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 	--shadow-button-hover:
-		0 6px 35px rgba(255, 80, 180, 0.6), 0 -6px 35px rgba(255, 80, 180, 0.5), 0 0
-		30px rgba(255, 100, 200, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+		0 6px 35px rgba(255, 80, 180, 0.6), 0 -6px 35px rgba(255, 80, 180, 0.5),
+		0 0 30px rgba(255, 100, 200, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2);
 
 	/* Max Width - creates max-w-content utility */
 	--max-width-content: 80rem;

@@ -336,7 +336,7 @@ const ImageModal: Component<{
 	);
 };
 
-type ZoomableImageProps = {
+interface ZoomableImageProps {
 	/** Optimized image URL (from Astro Image component) */
 	src: string;
 	/** Full resolution image URL for zoom (optional, defaults to src) */
@@ -351,7 +351,7 @@ type ZoomableImageProps = {
 	height?: number;
 	/** Image metadata (optional) */
 	metadata?: ImageMetadataInfo;
-};
+}
 
 /**
  * Zoomable image component that wraps an image with zoom functionality

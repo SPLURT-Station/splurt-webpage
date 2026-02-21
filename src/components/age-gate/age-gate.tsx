@@ -5,9 +5,9 @@ import {
 } from "../../utils/age-gate";
 import "./age-gate.css";
 
-type Props = {
+interface Props {
 	logoUrl?: string;
-};
+}
 
 export default function AgeGate(props: Props) {
 	const [show, setShow] = createSignal(false);

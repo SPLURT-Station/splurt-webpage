@@ -13,10 +13,10 @@ import {
 import type { MediaItem } from "../../utils/media-fetcher";
 import ZoomableImage from "../zoomable-image/zoomable-image";
 
-type Props = {
+interface Props {
 	splashScreens?: MediaItem[];
 	inGameScreenshots?: MediaItem[];
-};
+}
 
 type TabType = "splash" | "screenshots";
 

@@ -25,7 +25,7 @@ export type {
 
 import type { ImageMetadataInfo } from "./image-metadata";
 
-export type MediaItem = {
+export interface MediaItem {
 	url: string;
 	originalUrl?: string; // Original URL before optimization
 	name: string;
@@ -33,7 +33,7 @@ export type MediaItem = {
 	size?: number;
 	lastModified?: string;
 	metadata?: ImageMetadataInfo; // Optional image metadata
-};
+}
 
 /**
  * Convert a glob pattern to a regex pattern
