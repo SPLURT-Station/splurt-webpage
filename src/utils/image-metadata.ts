@@ -82,7 +82,7 @@ function extractUserCommentFromImage(imageBuffer: Buffer): string | null {
 
 			if (valueBuffer) {
 				// UserComment format: "ASCII\0\0\0" (8 bytes) + actual data
-				return valueBuffer.slice(8).toString("utf8").trim();
+				return valueBuffer.subarray(8).toString("utf8").trim();
 			}
 		}
 
