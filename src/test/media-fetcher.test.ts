@@ -110,12 +110,12 @@ describe("Media Fetcher Utilities", () => {
 			expect(items.length).toBeLessThanOrEqual(2);
 		});
 
-		test("should handle fetch errors", async () => {
+		test("should handle fetch errors", () => {
 			global.fetch = mock(
 				async () => new Response("Not Found", { status: 404 })
 			) as unknown as typeof fetch;
 
-			await expect(
+			return expect(
 				fetchImagesFromUrl("https://example.com/images", ["*.png"], 10)
 			).rejects.toThrow();
 		});
@@ -197,7 +197,7 @@ describe("Media Fetcher Utilities", () => {
 			expect(Array.isArray(result.screenshots)).toBe(true);
 		});
 
-		test("should throw error when baseUrl is missing for url source", async () => {
+		test("should throw error when baseUrl is missing for url source", () => {
 			const config = {
 				splashSource: {
 					sourceType: "url" as const,
@@ -212,10 +212,10 @@ describe("Media Fetcher Utilities", () => {
 				cacheDuration: 3600,
 			} as MediaConfig;
 
-			await expect(fetchMediaItems(config)).rejects.toThrow();
+			return expect(fetchMediaItems(config)).rejects.toThrow();
 		});
 
-		test("should throw error when localFolder is missing for folder source", async () => {
+		test("should throw error when localFolder is missing for folder source", () => {
 			// This will only work server-side
 			// We test that it throws the expected error
 			const config = {
@@ -231,10 +231,10 @@ describe("Media Fetcher Utilities", () => {
 				cacheDuration: 3600,
 			} as MediaConfig;
 
-			await expect(fetchMediaItems(config)).rejects.toThrow();
+			return expect(fetchMediaItems(config)).rejects.toThrow();
 		});
 
-		test("should handle unknown source type", async () => {
+		test("should handle unknown source type", () => {
 			const config = {
 				splashSource: {
 					sourceType: "unknown" as "url" | "folder",
@@ -249,7 +249,7 @@ describe("Media Fetcher Utilities", () => {
 				cacheDuration: 3600,
 			} as MediaConfig;
 
-			await expect(fetchMediaItems(config)).rejects.toThrow();
+			return expect(fetchMediaItems(config)).rejects.toThrow();
 		});
 	});
 });
