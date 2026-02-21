@@ -29,7 +29,7 @@ import {
 	readImageMetadataFromFile,
 } from "./image-metadata";
 
-type EnrichOptions = {
+interface EnrichOptions {
 	title?: string;
 	description?: string;
 	author?: string;
@@ -41,7 +41,7 @@ type EnrichOptions = {
 	noOptimize?: boolean;
 	overwrite?: boolean;
 	read?: boolean;
-};
+}
 
 /**
  * Show help message

@@ -5,19 +5,19 @@
 
 export type MediaSourceType = "url" | "folder";
 
-export type MediaSourceConfig = {
+export interface MediaSourceConfig {
 	sourceType: MediaSourceType;
 	baseUrl?: string;
 	localFolder?: string;
 	patterns: string[];
-};
+}
 
-export type MediaConfig = {
+export interface MediaConfig {
 	splashSource: MediaSourceConfig;
 	screenshotSource: MediaSourceConfig;
 	maxImages?: number;
 	cacheDuration: number;
-};
+}
 
 /**
  * Parse patterns from environment variable

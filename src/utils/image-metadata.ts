@@ -11,7 +11,7 @@ const QUERY_PARAMS_REGEX = /[?#].*$/;
 const AT_FS_PREFIX_REGEX = /^.*?@fs[\\/]/;
 const WINDOWS_ABSOLUTE_PATH_REGEX = /^[A-Za-z]:[\\/]/;
 
-export type ImageMetadataInfo = {
+export interface ImageMetadataInfo {
 	/** Title of the image (required, falls back to filename) */
 	title?: string;
 	/** Description of the image */
@@ -20,7 +20,7 @@ export type ImageMetadataInfo = {
 	author?: string;
 	/** List of source URLs where the image is posted */
 	sources?: string[];
-};
+}
 
 /**
  * Extract filename from URL or path

@@ -68,9 +68,9 @@ function PatreonIcon(props: {
 	);
 }
 
-type Props = {
+interface Props {
 	logoUrl?: string;
-};
+}
 
 export default function Navigation(props: Props) {
 	const [navOpen, setNavOpen] = createSignal(false);

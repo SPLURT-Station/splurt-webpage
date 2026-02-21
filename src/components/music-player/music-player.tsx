@@ -18,16 +18,16 @@ const PLAYLIST_ID_REGEX = /^[a-zA-Z0-9_-]+$/;
 const URL_LIST_REGEX = /[?&]list=([a-zA-Z0-9_-]+)/;
 const PLAYLIST_URL_REGEX = /playlist\/([a-zA-Z0-9_-]+)/;
 
-type PlaylistItem = {
+interface PlaylistItem {
 	videoId: string;
 	title: string;
-};
+}
 
-type CachedPlaylist = {
+interface CachedPlaylist {
 	playlistId: string;
 	items: PlaylistItem[];
 	timestamp: number;
-};
+}
 
 // Extract playlist ID from URL or use as-is
 function extractPlaylistId(playlistInput: string): string | null {

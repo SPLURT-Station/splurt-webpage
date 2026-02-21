@@ -2,21 +2,21 @@ import { createEffect, createSignal, type JSX, onMount } from "solid-js";
 import { Portal } from "solid-js/web";
 import "./typewriter-text.css";
 
-type TypewriterTextProps = {
+interface TypewriterTextProps {
 	children: JSX.Element;
 	speed?: number;
 	delay?: number;
 	showCursor?: boolean;
 	storageKey?: string;
-};
+}
 
-type TextSegment = {
+interface TextSegment {
 	originalNode: Text;
 	cloneNode: Text;
 	startIndex: number;
 	endIndex: number;
 	originalText: string;
-};
+}
 
 const STORAGE_KEY_PREFIX = "typewriter-animation-shown-";
 
