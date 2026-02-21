@@ -55,7 +55,7 @@ const shadowsBig = generateStarShadowsWithOpacity(
 	0.3 // 30% cross stars in big layer
 );
 
-type Props = {
+interface Props {
 	title?: string;
 	description?: string;
 	image?: string;
@@ -63,7 +63,7 @@ type Props = {
 	type?: string;
 	imageStrategy?: "auto" | "thumbnail" | "logo" | "both";
 	pageTitle?: string;
-};
+}
 
 const {
 	title = "S.P.L.U.R.T. Station",
@@ -176,9 +176,9 @@ const ogImageUrl =
 				],
 			}}
 		/>
-		<ClientRouter/>
-		<ReplacementSwap/>
-		<Linter/>
+		<ClientRouter />
+		<ReplacementSwap />
+		<Linter />
 	</head>
 	<body class="flex flex-col min-h-screen">
 		<div id="stars" style={`box-shadow: ${shadowsSmall};`}></div>
@@ -195,18 +195,18 @@ const ogImageUrl =
 			style="background-image: linear-gradient(135deg, rgba(5, 0, 15, 0.95) 0%, rgba(25, 5, 30, 0.92) 30%, rgba(60, 15, 40, 0.88) 70%, rgba(120, 30, 80, 0.85) 100%);"
 			aria-hidden="true"
 		></div>
-		<AgeGate client:load logoUrl={optimizedLogo.src}/>
+		<AgeGate client:load logoUrl={optimizedLogo.src} />
 		<section data-vtbot-replace="navigation">
-			<Navigation client:load logoUrl={optimizedLogo.src}/>
+			<Navigation client:load logoUrl={optimizedLogo.src} />
 		</section>
-		<MusicPlayer client:load/>
+		<MusicPlayer client:load />
 		<section data-vtbot-replace="header">
 			{pageTitle && <PageHeader title={pageTitle} />}
 		</section>
 		<main class="relative z-10" data-vtbot-replace="main">
-			<slot/>
+			<slot />
 		</main>
-		<Footer/>
+		<Footer />
 	</body>
 </html>
 
