@@ -38,7 +38,7 @@
     "astro-vtbot": "^2.1.10",
     "exifreader": "^4.36.0",
     "solid-js": "^1.9.10",
-    "tailwindcss": "^4.1.18",
+    "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
     "youtube-player": "^5.6.0"
   },
