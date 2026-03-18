@@ -12,6 +12,17 @@ import UnfontsAstro from "unplugin-fonts/astro";
 import Icons from "unplugin-icons/vite";
 import solidSvg from "vite-plugin-solid-svg";
 
+const isEntrypointRuntime = process.argv.some((arg) =>
+	arg.includes("entry.mjs")
+);
+const isProductionLike =
+	process.env.NODE_ENV === "production" ||
+	process.env.ASTRO_MODE === "production" ||
+	isEntrypointRuntime;
+const imageEndpointEntrypoint = isProductionLike
+	? "astro/assets/endpoint/node"
+	: "astro/assets/endpoint/dev";
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://splurt.space",
@@ -26,7 +37,7 @@ export default defineConfig({
 
 		endpoint: {
 			route: "/_image",
-			entrypoint: "astro/assets/endpoint/node",
+			entrypoint: imageEndpointEntrypoint,
 		},
 	},
 	integrations: [
