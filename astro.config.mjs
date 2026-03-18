@@ -23,6 +23,11 @@ export default defineConfig({
 		remotePatterns: [{ protocol: "https" }],
 		// Optional: specify domains explicitly for better security
 		// domains: ["splurt.space", "example.com"],
+
+		endpoint: {
+			route: "/_image",
+			entrypoint: "astro/assets/endpoint/node",
+		},
 	},
 	integrations: [
 		favicons({

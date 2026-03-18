@@ -1,5 +1,5 @@
 ---
-import { getImage, Image } from "astro:assets";
+import { getImage } from "astro:assets";
 import DiscordIcon from "~icons/ic/baseline-discord";
 import ArrowDownIcon from "~icons/mdi/arrow-down";
 import bannerPoster from "/src/assets/backgrounds/banner-video-preview.png";
@@ -14,17 +14,24 @@ const optimizedBannerPoster = await getImage({
 	format: "webp",
 	quality: 80,
 });
+
+const optimizedLogo = await getImage({
+	src: logo,
+	width: 800,
+	format: "webp",
+	quality: 80,
+});
 ---
 
 <header class="intro">
 	<div class="relative z-30">
-		<Image
-			src={logo}
+		<img
+			src={optimizedLogo.src}
 			alt="S.P.L.U.R.T. Station"
 			class="logo max-w-full p-4"
 			width={800}
 			loading="eager"
-		/>
+		>
 		<div
 			class="text-center mt-8 mx-4 flex flex-col sm:flex-row gap-4 justify-center items-center font-spess"
 		>

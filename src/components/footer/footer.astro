@@ -1,20 +1,28 @@
 ---
-import { Image } from "astro:assets";
+import { getImage } from "astro:assets";
 import GithubIcon from "~icons/mdi/github";
 import logo from "/src/assets/logos/splurtpaw2_alt3.png";
+
+const optimizedFooterLogo = await getImage({
+	src: logo,
+	width: 80,
+	height: 80,
+	format: "webp",
+	quality: 80,
+});
 ---
 
 <footer class="site-footer mt-auto">
 	<div
 		class="max-w-7xl mx-auto px-4 py-6 text-center text-neutral-50 text-sm font-spess"
 	>
-		<Image
-			src={logo}
+		<img
+			src={optimizedFooterLogo.src}
 			alt="S.P.L.U.R.T. Station Logo"
 			class="w-20 mx-auto mb-4"
 			width={80}
 			height={80}
-		/>
+		>
 		<p class="flex items-center justify-center">S.P.L.U.R.T. Station</p>
 		<p class="flex items-center justify-center mt-2">
 			Source available on
