@@ -38,11 +38,11 @@
     "astro-seo": "^0.8.4",
     "astro-vtbot": "^2.1.10",
     "exifreader": "^4.36.0",
+    "pm2": "^6.0.14",
     "solid-js": "^1.9.10",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3",
-    "youtube-player": "^5.6.0",
-    "pm2": "^5.4.3"
+    "youtube-player": "^5.6.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.11",
