@@ -8,6 +8,8 @@ import "./_home.css";
 import TypewriterText from "../components/typewriter-text/typewriter-text.tsx";
 import ZoomableImage from "../components/zoomable-image/zoomable-image.tsx";
 
+export const prerender = false;
+
 // Get optimized image URLs for zoomable images
 const optimizedMobInteraction = await getImage({
 	src: mobInteraction,

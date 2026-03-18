@@ -3,6 +3,8 @@ import MediaTabs from "../components/media-tabs/media-tabs.tsx";
 import Layout from "../layouts/main-layout.astro";
 import "./_media.css";
 
+export const prerender = false;
+
 // Page is pre-rendered at build time
 // Media data is fetched client-side in the SolidJS component
 ---
