@@ -215,7 +215,10 @@ The repo includes a **multi-stage Dockerfile** and **`docker-compose.dokploy.yml
 
 1. In Dokploy, create a **Docker Compose** service and point it at this repository.
 2. Set **Compose path** to `docker-compose.dokploy.yml`.
-3. **Environment variables** (Dokploy docs: *Docker Compose → Environment*): use the built-in editor — Dokploy writes a `.env` file next to your compose file. The compose service uses `env_file: .env`, so all `PUBLIC_*`, `MEDIA_*`, YouTube keys, etc. from [`.env.example`](.env.example) are loaded into the container on every start.
+3. **Environment variables** (Dokploy docs: *Docker Compose → Environment*): use the built-in editor — Dokploy writes a `.env` file next to your compose file. The compose service uses:
+   - `build.args` to pass `PUBLIC_*`, `MEDIA_*`, and YouTube variables into the Docker **build stage** (so Vite/Astro can inline `import.meta.env.*` during `bun run build`), and
+   - `env_file: .env` + `environment` to provide runtime variables to the container on start.
+   Fill values from [`.env.example`](.env.example).
 4. The compose file binds **`127.0.0.1:${PUBLISH_PORT:-4321}`** → container **`${PORT:-4321}`** so only local nginx can reach the app. In nginx: `proxy_pass http://127.0.0.1:4321;` (or whatever **`PUBLISH_PORT`** you set). If you change **`PORT`** in `.env`, update the right-hand side of the `ports:` mapping in `docker-compose.dokploy.yml` to match.
 
 **Creating `.env` on the server (SSH)**  
