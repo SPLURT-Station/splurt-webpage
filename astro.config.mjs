@@ -66,6 +66,10 @@ export default defineConfig({
 	],
 
 	vite: {
+		server: {
+			port: process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 4321,
+			host: process.env.HOST ?? "0.0.0.0",
+		},
 		plugins: [
 			tailwindcss(),
 			solidSvg({
