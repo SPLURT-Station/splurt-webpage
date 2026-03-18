@@ -4,18 +4,18 @@ import "./typewriter-text.css";
 
 interface TypewriterTextProps {
 	children: JSX.Element;
-	speed?: number;
 	delay?: number;
 	showCursor?: boolean;
+	speed?: number;
 	storageKey?: string;
 }
 
 interface TextSegment {
-	originalNode: Text;
 	cloneNode: Text;
-	startIndex: number;
 	endIndex: number;
+	originalNode: Text;
 	originalText: string;
+	startIndex: number;
 }
 
 const STORAGE_KEY_PREFIX = "typewriter-animation-shown-";

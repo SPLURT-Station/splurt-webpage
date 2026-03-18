@@ -39,16 +39,16 @@
 
 .nav-logo {
 	&:after {
-		content: "";
 		position: absolute;
-		z-index: -1;
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%, -50%);
+		z-index: -1;
 		width: 0;
 		height: 0;
-		border-radius: 50%;
+		content: "";
 		background: color-mix(in srgb, var(--color-primary) 80%, transparent);
+		border-radius: 50%;
+		transform: translate(-50%, -50%);
 		transition: all 300ms ease-in-out;
 	}
 
@@ -67,16 +67,16 @@
 		position: relative;
 
 		&:after {
-			content: "";
 			position: absolute;
-			left: 0;
 			right: 0;
 			bottom: 0;
+			left: 0;
+			z-index: -1;
 			height: 0;
+			margin-bottom: -2px;
+			content: "";
 			background-color: rgba(255, 80, 176, 0.8);
 			transition: all var(--transition-fast);
-			z-index: -1;
-			margin-bottom: -2px;
 		}
 
 		&.active:after {
@@ -118,15 +118,15 @@
 }
 
 .discord-icon {
+	overflow: hidden;
 	color: #9ca3af;
 	transition: color var(--transition-fast);
-	overflow: hidden;
 }
 
 .discord-icon svg {
 	width: 100%;
-	height: 100%;
 	max-width: 20px;
+	height: 100%;
 	max-height: 20px;
 	filter: grayscale(100%) brightness(0.8);
 	transition: filter var(--transition-fast);
@@ -141,15 +141,15 @@
 }
 
 .github-icon {
+	overflow: hidden;
 	color: #9ca3af;
 	transition: color var(--transition-fast);
-	overflow: hidden;
 }
 
 .github-icon svg {
 	width: 100%;
-	height: 100%;
 	max-width: 20px;
+	height: 100%;
 	max-height: 20px;
 	filter: grayscale(100%) brightness(0.8);
 	transition: filter var(--transition-fast);
@@ -164,15 +164,15 @@
 }
 
 .patreon-icon {
+	overflow: hidden;
 	color: #9ca3af;
 	transition: color var(--transition-fast);
-	overflow: hidden;
 }
 
 .patreon-icon svg {
 	width: 100%;
-	height: 100%;
 	max-width: 20px;
+	height: 100%;
 	max-height: 20px;
 	filter: grayscale(100%) brightness(0.8);
 	transition: filter var(--transition-fast);
@@ -187,20 +187,20 @@
 }
 
 .toggle-nav {
+	position: relative;
 	width: 50px;
 	height: 50px;
-	position: relative;
 
 	span {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
 		width: 20px;
 		height: 2px;
 		margin: auto;
 		background: var(--color-text-primary);
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
 		transition: all 0.4s ease;
 
 		&.top {
@@ -217,8 +217,8 @@
 			transform: rotate(-45deg);
 		}
 		.mid {
-			transform: translateX(-20px) rotate(360deg);
 			opacity: 0;
+			transform: translateX(-20px) rotate(360deg);
 		}
 		.bottom {
 			transform: rotate(45deg);
@@ -230,18 +230,18 @@
 .mobile-menu {
 	position: fixed;
 	top: 56px; /* Height of nav bar */
-	left: 0;
 	right: 0;
 	bottom: 0;
-	width: 100%;
-	height: calc(100vh - 56px);
-	background: rgba(14, 17, 24, 0.98);
-	backdrop-filter: blur(12px);
+	left: 0;
 	z-index: 50;
-	overflow-y: auto;
 	display: none;
 	visibility: hidden;
+	width: 100%;
+	height: calc(100vh - 56px);
+	overflow-y: auto;
+	background: rgba(14, 17, 24, 0.98);
 	opacity: 0;
+	backdrop-filter: blur(12px);
 	transition:
 		opacity 0.3s ease-out,
 		visibility 0.3s ease-out;
@@ -257,15 +257,15 @@
 .mobile-menu-backdrop {
 	position: absolute;
 	top: 0;
-	left: 0;
 	right: 0;
 	bottom: 0;
+	left: 0;
+	z-index: 1;
 	width: 100%;
 	height: 100%;
+	cursor: default;
 	background: transparent;
 	border: none;
-	cursor: default;
-	z-index: 1;
 }
 
 @keyframes slideDown {
@@ -280,13 +280,13 @@
 }
 
 .mobile-menu-content {
+	position: relative;
+	z-index: 2;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	min-height: calc(100vh - 56px);
 	padding: 2rem 1.5rem;
-	position: relative;
-	z-index: 2;
 }
 
 .mobile-page-links {
@@ -297,33 +297,33 @@
 }
 
 .mobile-page-link {
+	position: relative;
 	display: block;
 	padding: 1rem 1.25rem;
+	font-family: var(--font-pixel);
 	font-size: 1.125rem;
 	font-weight: 600;
+	color: #ff50b0;
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
 	text-decoration: none;
+	text-shadow: 0 0 10px rgba(255, 80, 176, 0.5);
 	border-radius: 0.5rem;
 	transition: all var(--transition-fast);
-	position: relative;
-	font-family: var(--font-pixel);
-	color: #ff50b0;
-	text-shadow: 0 0 10px rgba(255, 80, 176, 0.5);
 }
 
 .mobile-page-link:hover,
 .mobile-page-link:focus {
-	background: rgba(255, 80, 176, 0.15);
 	color: #ff6bc8;
 	text-shadow: 0 0 15px rgba(255, 80, 176, 0.8);
+	background: rgba(255, 80, 176, 0.15);
 	transform: translateX(4px);
 }
 
 .mobile-page-link.active {
-	background: rgba(255, 80, 176, 0.2);
 	color: #ff6bc8;
 	text-shadow: 0 0 15px rgba(255, 80, 176, 0.9);
+	background: rgba(255, 80, 176, 0.2);
 	border-left: 3px solid #ff50b0;
 }
 
@@ -334,9 +334,9 @@
 
 .mobile-social-icons {
 	display: flex;
-	justify-content: center;
-	align-items: center;
 	gap: 1.5rem;
+	align-items: center;
+	justify-content: center;
 	padding: 2rem 0 1rem;
 	margin-top: auto;
 	border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -348,19 +348,19 @@
 	justify-content: center;
 	width: 48px;
 	height: 48px;
-	border-radius: 50%;
+	text-decoration: none;
 	background: rgba(255, 255, 255, 0.05);
 	border: 2px solid rgba(255, 255, 255, 0.1);
+	border-radius: 50%;
 	transition: all var(--transition-fast);
-	text-decoration: none;
 }
 
 .mobile-social-icon:hover,
 .mobile-social-icon:focus {
 	background: rgba(255, 255, 255, 0.1);
 	border-color: rgba(255, 80, 176, 0.5);
-	transform: translateY(-2px);
 	box-shadow: 0 4px 12px rgba(255, 80, 176, 0.3);
+	transform: translateY(-2px);
 }
 
 .mobile-social-icon svg,
@@ -368,8 +368,8 @@
 .mobile-social-icon .github-icon,
 .mobile-social-icon .patreon-icon {
 	color: #9ca3af;
-	transition: all var(--transition-fast);
 	filter: grayscale(100%) brightness(0.8);
+	transition: all var(--transition-fast);
 }
 
 .mobile-social-icon:hover svg,

@@ -4,11 +4,10 @@
 .age-gate-overlay {
 	position: fixed;
 	inset: 0;
+	z-index: 9999;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	z-index: 9999;
-	backdrop-filter: blur(2px);
 	font-family: var(--font-sans);
 	color: var(--color-text-primary);
 	background-image:
@@ -51,56 +50,57 @@
 		231px 137px,
 		231px 137px,
 		231px 137px;
+	backdrop-filter: blur(2px);
 }
 
 .age-gate-modal {
+	position: relative;
 	width: min(92vw, 640px);
+	padding: var(--spacing-lg);
+	overflow: hidden;
 	background: var(--color-bg-card);
 	border: 1px solid var(--color-border-primary-light);
 	border-radius: 16px;
-	padding: var(--spacing-lg);
 	box-shadow:
 		0 20px 60px rgba(0, 0, 0, 0.6),
 		var(--glow-primary-strong),
 		var(--glow-primary-inset);
-	position: relative;
-	overflow: hidden;
 }
 
 .age-gate-modal::before {
-	content: "";
 	position: absolute;
 	inset: -2px;
-	border-radius: 18px;
 	padding: 2px;
+	pointer-events: none;
+	content: "";
 	background: var(--gradient-border-primary);
+	border-radius: 18px;
 	-webkit-mask:
 		linear-gradient(#000 0 0) content-box,
 		linear-gradient(#000 0 0);
 	-webkit-mask-composite: xor;
 	mask-composite: exclude;
-	pointer-events: none;
 }
 
 .age-gate-header {
 	display: flex;
-	align-items: center;
 	gap: 0.75rem;
+	align-items: center;
 	margin-bottom: 0.75rem;
 }
 
 .age-gate-logo-wrap {
 	position: relative;
-	width: 72px;
-	height: 72px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	width: 72px;
+	height: 72px;
 }
 
 .age-gate-logo {
-	filter: drop-shadow(0 6px 20px rgba(255, 80, 180, 0.15));
 	border-radius: 50%;
+	filter: drop-shadow(0 6px 20px rgba(255, 80, 180, 0.15));
 }
 
 .age-gate-badge {
@@ -112,13 +112,13 @@
 	justify-content: center;
 	width: 26px;
 	height: 26px;
-	border-radius: 50%;
-	background: var(--gradient-primary);
-	color: var(--color-text-primary);
-	font-weight: var(--font-weight-extrabold);
 	font-size: 10px;
+	font-weight: var(--font-weight-extrabold);
+	color: var(--color-text-primary);
 	letter-spacing: var(--letter-spacing-tight);
+	background: var(--gradient-primary);
 	border: 2px solid rgba(255, 255, 255, 0.85);
+	border-radius: 50%;
 	box-shadow:
 		0 4px 12px rgba(255, 80, 180, 0.45),
 		var(--glow-primary);
@@ -128,7 +128,9 @@
 	margin: 0;
 	font-size: 1.9rem;
 	font-weight: var(--font-weight-extrabold);
+	color: transparent;
 	letter-spacing: -0.01em;
+	text-shadow: 0 0 18px rgba(255, 120, 210, 0.35);
 	background-image: linear-gradient(
 		90deg,
 		#ffe1f7 0%,
@@ -137,14 +139,12 @@
 		#ff86d4 75%,
 		#ffe1f7 100%
 	);
-	background-size: 250% 100%;
 	background-position: 0% 50%;
 	-webkit-background-clip: text;
 	background-clip: text;
-	color: transparent;
-	text-shadow: 0 0 18px rgba(255, 120, 210, 0.35);
-	animation: ageTitleShimmer 12s ease-in-out infinite;
+	background-size: 250% 100%;
 	transition: background-position 120ms ease-out;
+	animation: ageTitleShimmer 12s ease-in-out infinite;
 }
 
 @keyframes ageTitleShimmer {
@@ -161,8 +161,8 @@
 
 .age-gate-text {
 	margin: 0 0 1.25rem 0;
-	color: var(--color-text-secondary);
 	line-height: var(--line-height-relaxed);
+	color: var(--color-text-secondary);
 }
 
 .age-gate-actions {
@@ -171,27 +171,27 @@
 }
 
 .age-continue-button {
-	background: var(--gradient-primary-animated);
-	color: var(--color-text-primary);
-	border: 2px solid var(--color-border-primary-strong);
 	padding: 0.85rem var(--spacing-lg);
 	font-size: var(--font-size-base);
 	font-weight: var(--font-weight-bold);
-	border-radius: 12px;
+	color: var(--color-text-primary);
+	text-transform: uppercase;
+	letter-spacing: var(--letter-spacing-wide);
 	cursor: pointer;
-	transition: all 0.25s ease;
+	background: var(--gradient-primary-animated);
+	border: 2px solid var(--color-border-primary-strong);
+	border-radius: 12px;
 	box-shadow:
 		0 8px 25px rgba(255, 80, 180, 0.3),
 		var(--glow-primary);
-	text-transform: uppercase;
-	letter-spacing: var(--letter-spacing-wide);
+	transition: all 0.25s ease;
 }
 
 .age-continue-button:hover {
-	transform: translateY(-2px);
 	box-shadow:
 		0 12px 35px rgba(255, 80, 180, 0.45),
 		var(--glow-primary-strong);
+	transform: translateY(-2px);
 }
 
 .age-continue-button:active {

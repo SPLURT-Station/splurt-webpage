@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, test } from "bun:test";
-import { Window } from "happy-dom";
+import type { Window } from "happy-dom";
+import { createHappyDomWindow } from "./happy-dom-window";
 
 // Age gate HTML structure (matches WorkInProgress.astro component)
 const AGE_GATE_HTML = `
@@ -27,7 +28,7 @@ const AGE_GATE_HTML = `
 `;
 
 function createDOMEnvironment(): Window {
-	const window = new Window({
+	const window = createHappyDomWindow({
 		url: "http://localhost:3000",
 	});
 	// Set up global environment for happy-dom

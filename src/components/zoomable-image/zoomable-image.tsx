@@ -337,20 +337,20 @@ const ImageModal: Component<{
 };
 
 interface ZoomableImageProps {
-	/** Optimized image URL (from Astro Image component) */
-	src: string;
-	/** Full resolution image URL for zoom (optional, defaults to src) */
-	fullResolutionUrl?: string;
 	/** Alt text for the image */
 	alt: string;
 	/** Additional CSS classes */
 	class?: string;
-	/** Width attribute */
-	width?: number;
+	/** Full resolution image URL for zoom (optional, defaults to src) */
+	fullResolutionUrl?: string;
 	/** Height attribute */
 	height?: number;
 	/** Image metadata (optional) */
 	metadata?: ImageMetadataInfo;
+	/** Optimized image URL (from Astro Image component) */
+	src: string;
+	/** Width attribute */
+	width?: number;
 }
 
 /**

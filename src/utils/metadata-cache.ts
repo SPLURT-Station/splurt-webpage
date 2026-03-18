@@ -95,8 +95,8 @@ export async function hasCachedMetadata(
  * Used to distinguish between "not cached" and "cached as null"
  */
 interface CacheEntry {
-	metadata: ImageMetadataInfo | null;
 	_cached: true; // Marker to indicate this is a cache entry
+	metadata: ImageMetadataInfo | null;
 }
 
 /**

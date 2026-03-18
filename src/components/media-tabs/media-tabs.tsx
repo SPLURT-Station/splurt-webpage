@@ -14,8 +14,8 @@ import type { MediaItem } from "../../utils/media-fetcher";
 import ZoomableImage from "../zoomable-image/zoomable-image";
 
 interface Props {
-	splashScreens?: MediaItem[];
 	inGameScreenshots?: MediaItem[];
+	splashScreens?: MediaItem[];
 }
 
 type TabType = "splash" | "screenshots";

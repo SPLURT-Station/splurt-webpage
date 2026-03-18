@@ -16,7 +16,7 @@ import solidSvg from "vite-plugin-solid-svg";
 export default defineConfig({
 	site: "https://splurt.space",
 	adapter: nurodevbun(),
-	output: "static",
+	output: "server",
 	image: {
 		// Allow remote image optimization from any HTTPS source
 		// For production, consider restricting to specific domains

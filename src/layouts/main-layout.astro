@@ -56,13 +56,13 @@ const shadowsBig = generateStarShadowsWithOpacity(
 );
 
 interface Props {
-	title?: string;
 	description?: string;
 	image?: string;
-	url?: string;
-	type?: string;
 	imageStrategy?: "auto" | "thumbnail" | "logo" | "both";
+	ogType?: string;
 	pageTitle?: string;
+	title?: string;
+	url?: string;
 }
 
 const {
@@ -70,7 +70,7 @@ const {
 	description = "S.P.L.U.R.T. Station - A NSFW furry roleplaying server for Space Station 13. Join our community for exciting lewdness!",
 	image,
 	url = Astro.url.href,
-	type = "website",
+	ogType = "website",
 	pageTitle,
 } = Astro.props;
 
@@ -92,6 +92,56 @@ const ogImagePath =
 const ogImagePathUrl = `/api/og/${ogImagePath}.png`;
 const ogImageUrl =
 	image || new URL(ogImagePathUrl, Astro.site || Astro.url.origin).href;
+
+const seoOpenGraph = {
+	basic: {
+		title,
+		type: ogType,
+		image: ogImageUrl,
+		url,
+	},
+	optional: {
+		description,
+		siteName: "S.P.L.U.R.T. Station",
+		locale: "en_US",
+	},
+	image: {
+		width: 1200,
+		height: 630,
+		alt: "S.P.L.U.R.T. Station",
+		type: "image/png",
+	},
+};
+
+const seoTwitter = {
+	card: "summary_large_image",
+	title,
+	description,
+	image: ogImageUrl,
+	imageAlt: "S.P.L.U.R.T. Station",
+};
+
+const seoExtend = {
+	meta: [
+		{
+			name: "author",
+			content: "S.P.L.U.R.T. Station",
+		},
+		{
+			name: "keywords",
+			content:
+				"Space Station 13, SS13, Gaming, Multiplayer, S.P.L.U.R.T., SPLURT, furry, furry games, furry roleplay, furry rp, furry roleplaying, furry roleplay games, furry roleplaying games, furry roleplaying server, furry roleplaying servers, furry roleplaying servers list, furry roleplaying servers list 2025, furry roleplaying servers list 2026, furry roleplaying servers list 2027, furry roleplaying servers list 2028, furry roleplaying servers list 2029, furry roleplaying servers list 2030, furry fandom",
+		},
+		{
+			property: "og:color",
+			content: "#ff50b0",
+		},
+		{
+			name: "msapplication-navbutton-color",
+			content: "#ff50b0",
+		},
+	],
+};
 ---
 
 <html lang="en">
@@ -110,11 +160,13 @@ const ogImageUrl =
 			is:inline
 		></script>
 		<script type="text/partytown" is:inline>
-			window.dataLayer = window.dataLayer || [];
-			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-
-			gtag('config', 'G-KT0NG9N2C9');
+			"use strict";
+window.dataLayer = window.dataLayer || [];
+function gtag(...args) {
+	window.dataLayer.push(args);
+}
+gtag("js", new Date());
+gtag("config", "G-KT0NG9N2C9");
 		</script>
 
 		<!-- Sitemap link for search engines -->
@@ -128,52 +180,9 @@ const ogImageUrl =
 			title={title}
 			description={description}
 			canonical={url}
-			openGraph={{
-				basic: {
-					title: title,
-					type: type,
-					image: ogImageUrl,
-					url: url,
-				},
-				optional: {
-					description: description,
-					siteName: "S.P.L.U.R.T. Station",
-					locale: "en_US",
-				},
-				image: {
-					width: 1200,
-					height: 630,
-					alt: "S.P.L.U.R.T. Station",
-					type: "image/png",
-				},
-			}}
-			twitter={{
-				card: "summary_large_image",
-				title: title,
-				description: description,
-				image: ogImageUrl,
-				imageAlt: "S.P.L.U.R.T. Station",
-			}}
-			extend={{
-				meta: [
-					{
-						name: "author",
-						content: "S.P.L.U.R.T. Station",
-					},
-					{
-						name: "keywords",
-						content: "Space Station 13, SS13, Gaming, Multiplayer, S.P.L.U.R.T., SPLURT, furry, furry games, furry roleplay, furry rp, furry roleplaying, furry roleplay games, furry roleplaying games, furry roleplaying server, furry roleplaying servers, furry roleplaying servers list, furry roleplaying servers list 2025, furry roleplaying servers list 2026, furry roleplaying servers list 2027, furry roleplaying servers list 2028, furry roleplaying servers list 2029, furry roleplaying servers list 2030, furry fandom",
-					},
-					{
-						property: "og:color",
-						content: "#ff50b0",
-					},
-					{
-						name: "msapplication-navbutton-color",
-						content: "#ff50b0",
-					},
-				],
-			}}
+			openGraph={seoOpenGraph}
+			twitter={seoTwitter}
+			extend={seoExtend}
 		/>
 		<ClientRouter />
 		<ReplacementSwap />
@@ -202,9 +211,7 @@ const ogImageUrl =
 		<section data-vtbot-replace="header">
 			{pageTitle && <PageHeader title={pageTitle} />}
 		</section>
-		<main class="relative z-10" data-vtbot-replace="main">
-			<slot />
-		</main>
+		<main class="relative z-10" data-vtbot-replace="main"><slot /></main>
 		<Footer />
 	</body>
 </html>
@@ -212,9 +219,9 @@ const ogImageUrl =
 <style>
 	html,
 	body {
-		margin: 0;
-		padding: 0;
 		width: 100%;
 		min-height: 100%;
+		padding: 0;
+		margin: 0;
 	}
 </style>

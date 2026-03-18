@@ -2,11 +2,10 @@
 .age-gate-overlay {
 	position: fixed;
 	inset: 0;
+	z-index: 9999;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	z-index: 9999;
-	backdrop-filter: blur(2px);
 	font-family:
 		"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
 	color: #ffffff;
@@ -56,60 +55,61 @@
 		231px 137px,
 		231px 137px,
 		231px 137px;
+	backdrop-filter: blur(2px);
 }
 
 .age-gate-modal {
+	position: relative;
 	width: min(92vw, 640px);
+	padding: 1.5rem;
+	overflow: hidden;
 	background: rgba(15, 5, 20, 0.7);
 	border: 1px solid rgba(255, 100, 200, 0.3);
 	border-radius: 16px;
-	padding: 1.5rem;
 	box-shadow:
 		0 20px 60px rgba(0, 0, 0, 0.6),
 		0 0 30px rgba(255, 80, 180, 0.3),
 		inset 0 0 60px rgba(255, 80, 180, 0.05);
-	position: relative;
-	overflow: hidden;
 }
 
 .age-gate-modal::before {
-	content: "";
 	position: absolute;
 	inset: -2px;
-	border-radius: 18px;
 	padding: 2px;
+	pointer-events: none;
+	content: "";
 	background: linear-gradient(
 		135deg,
 		rgba(255, 80, 180, 0.6),
 		rgba(255, 150, 220, 0.4)
 	);
+	border-radius: 18px;
 	-webkit-mask:
 		linear-gradient(#000 0 0) content-box,
 		linear-gradient(#000 0 0);
 	-webkit-mask-composite: xor;
 	mask-composite: exclude;
-	pointer-events: none;
 }
 
 .age-gate-header {
 	display: flex;
-	align-items: center;
 	gap: 0.75rem;
+	align-items: center;
 	margin-bottom: 0.75rem;
 }
 
 .age-gate-logo-wrap {
 	position: relative;
-	width: 72px;
-	height: 72px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
+	width: 72px;
+	height: 72px;
 }
 
 .age-gate-logo {
-	filter: drop-shadow(0 6px 20px rgba(255, 80, 180, 0.15));
 	border-radius: 50%;
+	filter: drop-shadow(0 6px 20px rgba(255, 80, 180, 0.15));
 }
 
 .age-gate-badge {
@@ -121,13 +121,13 @@
 	justify-content: center;
 	width: 26px;
 	height: 26px;
-	border-radius: 50%;
-	background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
-	color: white;
-	font-weight: 800;
 	font-size: 10px;
+	font-weight: 800;
+	color: white;
 	letter-spacing: 0.02em;
+	background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
 	border: 2px solid rgba(255, 255, 255, 0.85);
+	border-radius: 50%;
 	box-shadow:
 		0 4px 12px rgba(255, 80, 180, 0.45),
 		0 0 10px rgba(255, 100, 200, 0.6);
@@ -141,7 +141,9 @@
 	margin: 0;
 	font-size: 1.9rem;
 	font-weight: 800;
+	color: transparent;
 	letter-spacing: -0.01em;
+	text-shadow: 0 0 18px rgba(255, 120, 210, 0.35);
 	background-image: linear-gradient(
 		90deg,
 		#ffe1f7 0%,
@@ -150,14 +152,12 @@
 		#ff86d4 75%,
 		#ffe1f7 100%
 	);
-	background-size: 250% 100%;
 	background-position: 0% 50%;
 	-webkit-background-clip: text;
 	background-clip: text;
-	color: transparent;
-	text-shadow: 0 0 18px rgba(255, 120, 210, 0.35);
-	animation: ageTitleShimmer 12s ease-in-out infinite;
+	background-size: 250% 100%;
 	transition: background-position 120ms ease-out;
+	animation: ageTitleShimmer 12s ease-in-out infinite;
 }
 
 @keyframes ageTitleShimmer {
@@ -174,8 +174,8 @@
 
 .age-gate-text {
 	margin: 0 0 1.25rem 0;
-	color: rgba(255, 255, 255, 0.9);
 	line-height: 1.6;
+	color: rgba(255, 255, 255, 0.9);
 }
 
 .age-gate-actions {
@@ -184,28 +184,28 @@
 }
 
 .age-continue-button {
-	background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
-	color: white;
-	border: 2px solid rgba(255, 100, 200, 0.5);
 	padding: 0.85rem 1.5rem;
 	font-size: 1rem;
 	font-weight: 700;
-	border-radius: 12px;
+	color: white;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
 	cursor: pointer;
-	transition: all 0.25s ease;
+	background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
+	border: 2px solid rgba(255, 100, 200, 0.5);
+	border-radius: 12px;
 	box-shadow:
 		0 8px 25px rgba(255, 80, 180, 0.3),
 		0 0 20px rgba(255, 100, 200, 0.25),
 		inset 0 1px 0 rgba(255, 255, 255, 0.08);
-	text-transform: uppercase;
-	letter-spacing: 0.06em;
+	transition: all 0.25s ease;
 }
 
 .age-continue-button:hover {
-	transform: translateY(-2px);
 	box-shadow:
 		0 12px 35px rgba(255, 80, 180, 0.45),
 		0 0 28px rgba(255, 100, 200, 0.6);
+	transform: translateY(-2px);
 }
 
 .age-continue-button:active {
@@ -213,27 +213,29 @@
 }
 
 .container {
-	min-height: 100vh;
+	position: relative;
 	display: flex;
 	flex-direction: column;
+	min-height: 100vh;
+	overflow: hidden;
 	font-family:
 		"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
-	background-size: cover;
-	background-position: top right;
+	color: white;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
-	color: white;
-	position: relative;
-	overflow: hidden;
+	background-position: top right;
+	background-size: cover;
 }
 
 .container::before {
-	content: "";
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: 1;
 	width: 100%;
 	height: 100%;
+	pointer-events: none;
+	content: "";
 	background:
 		radial-gradient(
 			2px 2px at 23px 47px,
@@ -279,19 +281,19 @@
 		);
 	background-repeat: repeat;
 	background-size: 231px 137px;
-	animation: sparkle1 3.7s ease-in-out infinite;
-	pointer-events: none;
-	z-index: 1;
 	filter: blur(0.3px);
+	animation: sparkle1 3.7s ease-in-out infinite;
 }
 
 .container::after {
-	content: "";
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: 2;
 	width: 100%;
 	height: 100%;
+	pointer-events: none;
+	content: "";
 	background:
 		radial-gradient(
 			2px 2px at 29px 71px,
@@ -343,10 +345,8 @@
 		);
 	background-repeat: repeat;
 	background-size: 307px 179px;
-	animation: sparkle2 5.2s ease-in-out infinite reverse;
-	pointer-events: none;
-	z-index: 2;
 	filter: blur(0.2px);
+	animation: sparkle2 5.2s ease-in-out infinite reverse;
 }
 
 @keyframes sparkle1 {
@@ -387,12 +387,14 @@
 
 /* Additional star layers for more variety - moved to body level to prevent overlapping content */
 body::before {
-	content: "";
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: -1;
 	width: 100%;
 	height: 100%;
+	pointer-events: none;
+	content: "";
 	background:
 		radial-gradient(
 			1px 1px at 53px 103px,
@@ -432,19 +434,19 @@ body::before {
 		);
 	background-repeat: repeat;
 	background-size: 347px 211px;
-	animation: sparkle3 4.3s ease-in-out infinite;
-	pointer-events: none;
-	z-index: -1;
 	filter: blur(0.1px);
+	animation: sparkle3 4.3s ease-in-out infinite;
 }
 
 body::after {
-	content: "";
 	position: fixed;
 	top: 0;
 	left: 0;
+	z-index: -2;
 	width: 100%;
 	height: 100%;
+	pointer-events: none;
+	content: "";
 	background:
 		radial-gradient(
 			1px 1px at 71px 157px,
@@ -490,10 +492,8 @@ body::after {
 		);
 	background-repeat: repeat;
 	background-size: 389px 239px;
-	animation: sparkle4 6.1s ease-in-out infinite reverse;
-	pointer-events: none;
-	z-index: -2;
 	filter: blur(0.15px);
+	animation: sparkle4 6.1s ease-in-out infinite reverse;
 }
 
 @keyframes sparkle3 {
@@ -538,46 +538,46 @@ body::after {
 
 /* Navigation */
 .navbar {
-	display: flex;
-	justify-content: center;
-	gap: 2rem;
-	padding: 1.5rem 0;
 	position: relative;
 	z-index: 10;
+	display: flex;
+	gap: 2rem;
+	justify-content: center;
+	padding: 1.5rem 0;
 }
 
 .nav-link {
+	position: relative;
+	padding: 0.5rem 1rem;
+	font-weight: 500;
 	color: white;
 	text-decoration: none;
-	font-weight: 500;
-	padding: 0.5rem 1rem;
 	border-radius: 0.5rem;
 	transition: all 0.3s ease;
-	position: relative;
 }
 
 .nav-link:hover {
+	text-shadow: 0 0 10px rgba(255, 100, 200, 0.8);
 	background: rgba(255, 100, 200, 0.2);
 	transform: translateY(-2px);
-	text-shadow: 0 0 10px rgba(255, 100, 200, 0.8);
 }
 
 .nav-link.active {
-	background: rgba(255, 80, 180, 0.3);
 	text-shadow: 0 0 8px rgba(255, 100, 200, 0.6);
+	background: rgba(255, 80, 180, 0.3);
 }
 
 .nav-link::after {
-	content: "";
 	position: absolute;
-	width: 0;
-	height: 2px;
 	bottom: -5px;
 	left: 50%;
+	width: 0;
+	height: 2px;
+	content: "";
 	background: linear-gradient(90deg, #ff50b0, #ff80d0, #ff50b0);
 	box-shadow: 0 0 8px rgba(255, 80, 180, 0.8);
-	transition: all 0.3s ease;
 	transform: translateX(-50%);
+	transition: all 0.3s ease;
 }
 
 .nav-link:hover::after {
@@ -586,23 +586,23 @@ body::after {
 
 /* Main Content */
 .main-content {
-	flex: 1;
+	position: relative;
+	z-index: 10;
 	display: flex;
+	flex: 1;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	text-align: center;
 	padding: 2rem;
-	position: relative;
-	z-index: 10;
+	text-align: center;
 }
 
 .logo {
 	width: 200px;
 	height: auto;
 	margin-bottom: 2rem;
-	filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
 	opacity: 0;
+	filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
 	transform: translateY(30px);
 	animation:
 		logoEntrance 1s ease-out 0.5s forwards,
@@ -642,72 +642,72 @@ body::after {
 }
 
 .wip-text {
+	margin: 0 0 2rem 0;
 	font-size: 2.5rem;
 	font-weight: 700;
-	margin: 0 0 2rem 0;
+	color: #ffffff;
+	letter-spacing: -0.02em;
 	text-shadow:
 		0 0 20px rgba(255, 80, 180, 0.8),
 		0 0 40px rgba(255, 100, 200, 0.6),
 		0 4px 8px rgba(0, 0, 0, 0.3);
-	letter-spacing: -0.02em;
-	color: #ffffff;
 	opacity: 0;
 	transform: translateY(20px);
 	animation: fadeInUp 1s ease-out 1s forwards;
 }
 
 .play-button {
-	background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
-	color: white;
-	border: 2px solid rgba(255, 100, 200, 0.5);
 	padding: 1rem 3rem;
 	font-size: 1.25rem;
 	font-weight: 600;
-	border-radius: 50px;
+	color: white;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 	cursor: pointer;
-	transition: all 0.3s ease;
+	background: linear-gradient(135deg, #ff50b0, #ff80d0, #ff50b0);
+	border: 2px solid rgba(255, 100, 200, 0.5);
+	border-radius: 50px;
 	box-shadow:
 		0 8px 25px rgba(255, 80, 180, 0.4),
 		0 0 20px rgba(255, 100, 200, 0.3),
 		inset 0 1px 0 rgba(255, 255, 255, 0.1);
-	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 	opacity: 0;
 	transform: translateY(20px);
+	transition: all 0.3s ease;
 	animation: fadeInUp 1s ease-out 1.5s forwards;
 }
 
 .play-button:hover {
 	background: linear-gradient(135deg, #ff30a0, #ff60c0, #ff30a0);
-	transform: translateY(-3px);
+	border-color: rgba(255, 150, 220, 0.8);
 	box-shadow:
 		0 12px 35px rgba(255, 80, 180, 0.6),
 		0 0 30px rgba(255, 100, 200, 0.8),
 		inset 0 1px 0 rgba(255, 255, 255, 0.2);
-	border-color: rgba(255, 150, 220, 0.8);
+	transform: translateY(-3px);
 }
 
 .play-button:active {
-	transform: translateY(-1px);
 	box-shadow: 0 6px 20px rgba(255, 79, 240, 0.4);
+	transform: translateY(-1px);
 }
 
 /* Footer */
 .footer {
-	padding: 1.5rem;
-	text-align: center;
 	position: relative;
 	z-index: 10;
+	padding: 1.5rem;
+	text-align: center;
 }
 
 .footer-link {
+	display: inline-flex;
+	gap: 0.5rem;
+	align-items: center;
+	font-size: 0.9rem;
 	color: rgba(255, 255, 255, 0.8);
 	text-decoration: none;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
-	font-size: 0.9rem;
 	transition: color 0.3s ease;
 }
 
@@ -738,8 +738,8 @@ body::after {
 	}
 
 	.wip-text {
-		font-size: 2rem;
 		margin-bottom: 1.5rem;
+		font-size: 2rem;
 	}
 
 	.play-button {

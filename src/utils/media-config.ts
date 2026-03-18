@@ -6,17 +6,17 @@
 export type MediaSourceType = "url" | "folder";
 
 export interface MediaSourceConfig {
-	sourceType: MediaSourceType;
 	baseUrl?: string;
 	localFolder?: string;
 	patterns: string[];
+	sourceType: MediaSourceType;
 }
 
 export interface MediaConfig {
-	splashSource: MediaSourceConfig;
-	screenshotSource: MediaSourceConfig;
-	maxImages?: number;
 	cacheDuration: number;
+	maxImages?: number;
+	screenshotSource: MediaSourceConfig;
+	splashSource: MediaSourceConfig;
 }
 
 /**

@@ -19,13 +19,13 @@ const URL_LIST_REGEX = /[?&]list=([a-zA-Z0-9_-]+)/;
 const PLAYLIST_URL_REGEX = /playlist\/([a-zA-Z0-9_-]+)/;
 
 interface PlaylistItem {
-	videoId: string;
 	title: string;
+	videoId: string;
 }
 
 interface CachedPlaylist {
-	playlistId: string;
 	items: PlaylistItem[];
+	playlistId: string;
 	timestamp: number;
 }
 
@@ -202,10 +202,10 @@ export default function MusicPlayer() {
 	// Load saved mute state from localStorage
 	const loadSavedMuteState = () => {
 		const savedMuted = localStorage.getItem(STORAGE_KEY_MUTED);
-		if (savedMuted !== null) {
-			setIsMuted(savedMuted === "true");
-		} else {
+		if (savedMuted === null) {
 			setIsMuted(false); // Default to sound on
+		} else {
+			setIsMuted(savedMuted === "true");
 		}
 	};
 

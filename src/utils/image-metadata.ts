@@ -12,14 +12,14 @@ const AT_FS_PREFIX_REGEX = /^.*?@fs[\\/]/;
 const WINDOWS_ABSOLUTE_PATH_REGEX = /^[A-Za-z]:[\\/]/;
 
 export interface ImageMetadataInfo {
-	/** Title of the image (required, falls back to filename) */
-	title?: string;
-	/** Description of the image */
-	description?: string;
 	/** Author information - can be plain text or HTML link */
 	author?: string;
+	/** Description of the image */
+	description?: string;
 	/** List of source URLs where the image is posted */
 	sources?: string[];
+	/** Title of the image (required, falls back to filename) */
+	title?: string;
 }
 
 /**

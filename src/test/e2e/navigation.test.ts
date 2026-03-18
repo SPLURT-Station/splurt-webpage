@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, test } from "bun:test";
-import { Window } from "happy-dom";
+import type { Window } from "happy-dom";
+import { createHappyDomWindow } from "./happy-dom-window";
 
 // Mock navigation HTML structure (represents rendered navigation component)
 const NAVIGATION_HTML = `
@@ -37,7 +38,7 @@ const NAVIGATION_HTML = `
 `;
 
 function createDOMEnvironment(): Window {
-	const window = new Window({
+	const window = createHappyDomWindow({
 		url: "http://localhost:4321",
 	});
 	global.window = window as any;

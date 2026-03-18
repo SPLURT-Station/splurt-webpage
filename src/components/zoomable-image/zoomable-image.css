@@ -3,8 +3,11 @@
 	/* Account for container padding (p-2 = 0.5rem each side)
 	   Vertical: 0.5rem top + 0.5rem bottom = 1rem total
 	   Horizontal: 0.5rem left + 0.5rem right = 1rem total */
-	max-height: calc(90vh - 1rem);
 	max-width: calc(90vw - 1rem);
+	/* Account for container padding (p-2 = 0.5rem each side)
+	   Vertical: 0.5rem top + 0.5rem bottom = 1rem total
+	   Horizontal: 0.5rem left + 0.5rem right = 1rem total */
+	max-height: calc(90vh - 1rem);
 }
 
 /* On desktop (lg+), when metadata panel is visible, also subtract panel min-width */

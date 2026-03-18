@@ -5,8 +5,8 @@
 	z-index: 50;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	gap: 0.5rem;
+	align-items: center;
 	opacity: 0;
 	transform: translateX(200px);
 	transition:
@@ -59,23 +59,23 @@
 
 .music-player-controls {
 	display: flex;
-	align-items: center;
 	gap: 0.5rem;
+	align-items: center;
 }
 
 .music-player-button {
+	padding: 0;
+	cursor: pointer;
 	background: transparent;
 	border: none;
-	cursor: pointer;
-	padding: 0;
 	opacity: 1;
 	transition: transform 0.2s ease-out;
 	animation: fadeOutButton 2s ease-out 3s forwards;
 }
 
 .music-player-container:hover .music-player-button {
-	animation: none;
 	opacity: 1;
+	animation: none;
 }
 
 .music-player-button:hover {
@@ -89,40 +89,40 @@
 }
 
 .music-player-track-info {
-	text-align: center;
-	max-width: 200px;
-	opacity: 0;
-	pointer-events: none;
-	transition: opacity 0.2s;
+	position: relative;
 	display: flex;
+	gap: 0.5rem;
 	align-items: center;
 	justify-content: center;
-	gap: 0.5rem;
-	position: relative;
+	max-width: 200px;
+	text-align: center;
+	pointer-events: none;
+	opacity: 0;
+	transition: opacity 0.2s;
 }
 
 .music-player-container:hover .music-player-track-info {
-	opacity: 1;
 	pointer-events: auto;
+	opacity: 1;
 }
 
 .music-player-nav-button {
+	padding: 0;
+	font-family: var(--font-vcr);
+	font-size: 1rem;
+	line-height: 1.2;
+	color: white;
+	pointer-events: none;
+	cursor: pointer;
 	background: transparent;
 	border: none;
-	color: white;
-	cursor: pointer;
-	padding: 0;
-	font-size: 1rem;
-	font-family: var(--font-vcr);
-	transition: opacity 0.2s;
 	opacity: 0;
-	pointer-events: none;
-	line-height: 1.2;
+	transition: opacity 0.2s;
 }
 
 .music-player-container:hover .music-player-nav-button {
-	opacity: 1;
 	pointer-events: auto;
+	opacity: 1;
 }
 
 .music-player-nav-button:hover:not(:disabled) {
@@ -130,19 +130,19 @@
 }
 
 .music-player-nav-button:disabled {
-	opacity: 0.5;
 	cursor: not-allowed;
+	opacity: 0.5;
 }
 
 .music-player-track-title {
-	color: white;
-	text-decoration: none;
-	font-size: 1.5rem;
 	display: none;
-	transition: opacity 0.2s;
-	word-wrap: break-word;
 	font-family: var(--font-tinyunicode);
+	font-size: 1.5rem;
 	line-height: 0.8;
+	color: white;
+	word-wrap: break-word;
+	text-decoration: none;
+	transition: opacity 0.2s;
 }
 
 @media (min-width: 1024px) {
@@ -152,14 +152,14 @@
 }
 
 .music-player-track-title:hover {
-	opacity: 0.8;
 	text-decoration: underline;
+	opacity: 0.8;
 }
 
 .music-player-iframe-container {
 	position: absolute;
+	visibility: hidden;
 	width: 0;
 	height: 0;
 	overflow: hidden;
-	visibility: hidden;
 }

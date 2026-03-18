@@ -8,9 +8,9 @@
 
 .typewriter-cursor {
 	display: inline-block;
-	animation: blink 1s infinite;
-	color: #ff50b0;
 	font-weight: bold;
+	color: #ff50b0;
+	animation: blink 1s infinite;
 }
 
 @keyframes blink {

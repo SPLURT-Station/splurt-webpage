@@ -26,13 +26,13 @@ export type {
 import type { ImageMetadataInfo } from "./image-metadata";
 
 export interface MediaItem {
-	url: string;
-	originalUrl?: string; // Original URL before optimization
-	name: string;
 	alt: string;
-	size?: number;
 	lastModified?: string;
 	metadata?: ImageMetadataInfo; // Optional image metadata
+	name: string;
+	originalUrl?: string; // Original URL before optimization
+	size?: number;
+	url: string;
 }
 
 /**

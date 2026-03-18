@@ -3,7 +3,13 @@
 
 .page-header {
 	position: relative;
+	z-index: 30;
+	box-sizing: border-box;
+	display: flow-root;
+	width: 100%;
+	min-height: fit-content;
 	padding-top: var(--nav-height);
+	overflow: hidden;
 	background: linear-gradient(
 		135deg,
 		color-mix(in srgb, var(--color-secondary) 90%, transparent) 0%,
@@ -11,67 +17,61 @@
 	);
 	background-clip: border-box;
 	background-origin: border-box;
-	overflow: hidden;
-	z-index: 30;
-	width: 100%;
-	display: flow-root;
-	box-sizing: border-box;
-	min-height: fit-content;
 }
 
 .page-header::after {
-	content: "";
 	position: absolute;
+	right: 0;
 	bottom: 0;
 	left: 0;
-	right: 0;
+	z-index: 1;
 	height: 1px;
+	content: "";
 	background: linear-gradient(90deg, var(--color-tertiary) 0%, transparent 70%);
 	opacity: 0.2;
-	z-index: 1;
 }
 
 .page-header h1 {
 	position: relative;
+	display: block;
 	max-width: 80rem;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: var(--spacing-lg);
-	margin-bottom: var(--spacing-lg);
-	padding-left: var(--spacing-2xl);
 	padding-right: var(--spacing-2xl);
+	padding-left: var(--spacing-2xl);
+	margin-top: var(--spacing-lg);
+	margin-right: auto;
+	margin-bottom: var(--spacing-lg);
+	margin-left: auto;
+	font-family: var(--font-pixel);
+	font-size: var(--font-size-4xl);
 	font-weight: var(--font-weight-bold);
 	color: var(--color-text-primary);
-	font-size: var(--font-size-4xl);
 	text-transform: uppercase;
 	letter-spacing: var(--letter-spacing-wide);
-	font-family: var(--font-pixel);
-	display: block;
 }
 
 .page-header h1::before {
-	content: "";
 	position: absolute;
 	top: 0;
 	bottom: -3px;
 	left: var(--spacing-md);
 	width: 2px;
+	content: "";
 	background: var(--color-primary);
 	box-shadow: var(--glow-primary);
 }
 
 @media (min-width: 640px) {
 	.page-header h1 {
-		padding-left: 2.5rem;
 		padding-right: 2.5rem;
+		padding-left: 2.5rem;
 		font-size: var(--font-size-3xl);
 	}
 }
 
 @media (min-width: 1024px) {
 	.page-header h1 {
+		padding-left: 3rem;
 		margin-top: var(--spacing-2xl);
 		margin-bottom: var(--spacing-2xl);
-		padding-left: 3rem;
 	}
 }

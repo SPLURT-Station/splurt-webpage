@@ -30,17 +30,17 @@ import {
 } from "./image-metadata";
 
 interface EnrichOptions {
-	title?: string;
-	description?: string;
 	author?: string;
-	sources?: string[];
-	output?: string;
-	quality?: number;
+	description?: string;
 	format?: "webp" | "jpg" | "png";
-	width?: number;
 	noOptimize?: boolean;
+	output?: string;
 	overwrite?: boolean;
+	quality?: number;
 	read?: boolean;
+	sources?: string[];
+	title?: string;
+	width?: number;
 }
 
 /**
