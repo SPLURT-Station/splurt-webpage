@@ -63,6 +63,8 @@ COPY --chown=splurt:splurt package.json bun.lock ecosystem.config.cjs ./
 RUN mkdir -p logs && chown splurt:splurt logs
 
 USER splurt
+ENV HOST=0.0.0.0
+ENV PORT=4321
 EXPOSE 4321
 
 # PORT can be overridden via env; shell form reads it at check time
