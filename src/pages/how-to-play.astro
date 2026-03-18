@@ -1,18 +1,11 @@
 ---
-import { getImage } from "astro:assets";
+import { Image } from "astro:assets";
 import Layout from "../layouts/main-layout.astro";
 import "./_how-to-play.css";
 import MaterialSymbolsFileCopyOutlineRounded from "~icons/material-symbols/file-copy-outline-rounded";
 import PixelarticonsCheck from "~icons/pixelarticons/check";
 import PixelarticonsExternalLink from "~icons/pixelarticons/external-link";
 import menuScreen from "/src/assets/images/menu.png";
-
-const optimizedMenuScreen = await getImage({
-	src: menuScreen,
-	width: 420,
-	quality: 80,
-	format: "webp",
-});
 ---
 
 <Layout
@@ -22,13 +15,15 @@ const optimizedMenuScreen = await getImage({
 >
 	<div class="container mx-auto px-4 py-12 relative z-10">
 		<section class="flex items-center gap-8 lg:gap-14 mb-8">
-			<img
+			<Image
 				class="hidden md:block max-w-[420px]"
-				src={optimizedMenuScreen.src}
+				src={menuScreen}
 				alt="Menu Screen"
 				width={420}
+				quality={80}
+				format="webp"
 				loading="eager"
-			>
+			/>
 
 			<div class="grow welcome-content">
 				<h2
