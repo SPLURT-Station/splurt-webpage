@@ -1,0 +1,36 @@
+# Dependencies & build output
+node_modules
+dist
+.turbo
+.cache
+
+# Git & IDE
+.git
+.gitattributes
+.github
+.cursor
+.vscode
+*.md
+!README.md
+
+# Env & local secrets (inject via Compose env_file / Dokploy)
+.env
+.env.*
+!.env.example
+
+# Logs & OS
+logs
+*.log
+.DS_Store
+Thumbs.db
+
+# Tests & tooling
+coverage
+.husky
+biome.json
+TESTING.md
+
+# Docker (avoid recursive context)
+Dockerfile*
+docker-compose*.yml
+!docker-compose.dokploy.yml

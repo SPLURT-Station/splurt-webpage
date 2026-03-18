@@ -54,7 +54,7 @@ Inspired by <https://github.com/spacestation13/website>
 | **UI Components** | [Solid.js](https://www.solidjs.com/)                            |
 | **Styling**       | [Tailwind CSS](https://tailwindcss.com/) 4.x                    |
 | **Linting**       | [Ultracite](https://github.com/haydenbleasel/ultracite) (Biome) |
-| **Deployment**    | PM2 on VPS (Proxmox LXC)                                        |
+| **Deployment**    | Docker + Dokploy (PM2 in-container) or PM2 on VPS             |
 
 ## 📋 Prerequisites
 
@@ -209,27 +209,43 @@ PUBLIC_YOUTUBE_API_KEY=...
 
 ## 🚢 Deployment
 
-The site is automatically deployed to a VPS (Proxmox LXC container) via GitHub Actions when pushing to `main` or `master`.
+### Dokploy (Docker + PM2)
 
-### Deployment Workflow
+The repo includes a **multi-stage Dockerfile** and **`docker-compose.dokploy.yml`** for [Dokploy](https://dokploy.com): the image is built from the repository on each deploy, and the app runs under **`pm2-runtime`** (PM2 as PID 1 — auto-restart, logs).
 
-1. **Tests** run on every push and PR (`.github/workflows/test.yml`)
-2. **Deploy** runs on push to main/master (`.github/workflows/deploy-vps.yml`)
-   - Builds the Astro site
-   - Creates the production `.env` from GitHub secrets
-   - Starts/restarts the PM2 process
+1. In Dokploy, create a **Docker Compose** service and point it at this repository.
+2. Set **Compose path** to `docker-compose.dokploy.yml`.
+3. **Environment variables** (Dokploy docs: *Docker Compose → Environment*): use the built-in editor — Dokploy writes a `.env` file next to your compose file. The compose service uses `env_file: .env`, so all `PUBLIC_*`, `MEDIA_*`, YouTube keys, etc. from [`.env.example`](.env.example) are loaded into the container on every start.
+4. The compose file binds **`127.0.0.1:${PUBLISH_PORT:-4321}`** → container **`${PORT:-4321}`** so only local nginx can reach the app. In nginx: `proxy_pass http://127.0.0.1:4321;` (or whatever **`PUBLISH_PORT`** you set). If you change **`PORT`** in `.env`, update the right-hand side of the `ports:` mapping in `docker-compose.dokploy.yml` to match.
 
-### Manual Deployment
+**Creating `.env` on the server (SSH)**  
+If you prefer a file on disk, SSH into the host and create `.env` in the **same directory as the compose file** Dokploy uses (the deployment working directory), then redeploy. Example:
 
 ```bash
-# Build the application
+cd /path/to/dokploy/compose/project   # your actual path from Dokploy
+nano .env   # paste variables from .env.example
+```
+
+**Auto Deploy + persistent secrets**  
+Dokploy re-clones the repo on each deploy, so a `.env` you only put *inside* the clone can disappear. Prefer the **Environment** tab in Dokploy, or a **File Mount** (`Advanced → Mounts`) and change `env_file` to e.g. `../files/splurt-webpage.env` per [Dokploy file mounts](https://docs.dokploy.com/docs/core/troubleshooting).
+
+**Local Docker smoke test**
+
+```bash
+cp .env.example .env   # fill in values
+docker compose -f docker-compose.dokploy.yml up --build
+# Or: docker build -t splurt-webpage . && docker run --rm -p 4321:4321 --env-file .env splurt-webpage
+```
+
+### VPS via GitHub Actions (legacy)
+
+The site can still be deployed to a self-hosted runner (Proxmox LXC) on push to `main` / `master` (`.github/workflows/deploy-vps.yml`): build on the runner, `.env` from GitHub secrets, PM2 on the host.
+
+### Manual deployment (no Docker)
+
+```bash
 bun build
-
-# Start with PM2
-bun pm2:start
-
-# Or run directly
-bun start
+bun pm2:start   # or bun start
 ```
 
 ## 🤝 Contributing

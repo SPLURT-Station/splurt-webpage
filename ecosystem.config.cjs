@@ -9,8 +9,8 @@ module.exports = {
 			exec_mode: "fork",
 			env: {
 				NODE_ENV: "production",
-				PORT: 4321,
-				HOST: "0.0.0.0",
+				PORT: process.env.PORT ?? "4321",
+				HOST: process.env.HOST ?? "0.0.0.0",
 				PATH: process.env.HOME
 					? `${process.env.HOME}/.bun/bin:${process.env.PATH}`
 					: process.env.PATH,

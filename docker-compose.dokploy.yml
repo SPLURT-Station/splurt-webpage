@@ -1,0 +1,26 @@
+# Dokploy: Docker Compose — image built from this repo on each deploy.
+# Docs: https://docs.dokploy.com/docs/core/docker-compose
+#
+# Traffic: point nginx (outside Dokploy) at the published host port, e.g.
+#   proxy_pass http://127.0.0.1:4321;
+#
+# Environment:
+# - Dokploy “Environment” UI writes a .env next to this file, or create `.env` on the server.
+# - With Auto Deploy, prefer Dokploy env UI or a File Mount + env_file (see README).
+#
+# PUBLISH_PORT — host port nginx connects to (default 4321).
+# PORT — port the app listens on inside the container (default 4321; keep both in sync unless you map explicitly).
+
+services:
+  splurt-webpage:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+    ports:
+      - "127.0.0.1:${PUBLISH_PORT:-4321}:${PORT:-4321}"
