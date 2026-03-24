@@ -26,7 +26,7 @@
       },
       "devDependencies": {
         "@biomejs/biome": "2.4.7",
-        "@iconify/json": "^2.2.451",
+        "@iconify/json": "^2.2.454",
         "@types/bun": "^1.3.10",
         "@types/youtube-player": "^5.5.11",
         "happy-dom": "^20.8.4",
@@ -193,7 +193,7 @@
 
     "@googleapis/youtube": ["@googleapis/youtube@31.0.0", "", { "dependencies": { "googleapis-common": "^8.0.0" } }, "sha512-xXgg1yl+C426d/4qrHs+fOu76ftfR1AH5CofpFPEdA9tPOx0C4ky0TJ9XBO5MUrrVMR7W5KmopUZX5tTP6ug5Q=="],
 
-    "@iconify/json": ["@iconify/json@2.2.451", "", { "dependencies": { "@iconify/types": "*", "pathe": "^2.0.3" } }, "sha512-dDAPVdlpXdjtqYReacSWtwa3Mix0Cg4ezZ5SORLjLqyPSQttaHn03sjndnqgXfeY1zckOuLUgYUMLiZfIoD2oQ=="],
+    "@iconify/json": ["@iconify/json@2.2.454", "", { "dependencies": { "@iconify/types": "*", "pathe": "^2.0.3" } }, "sha512-U1c0+LBtcF4YDQGOVZpoA4w96hBcIVHFjBcg60pFdnF+CApRjnlIp27Jf1g7BaZlJ+vYcExyc/1EjUyZrY8MFQ=="],
 
     "@iconify/types": ["@iconify/types@2.0.0", "", {}, "sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg=="],
 
