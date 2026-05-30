@@ -29,7 +29,7 @@
     "@astrojs/partytown": "^2.1.5",
     "@astrojs/sitemap": "^3.7.1",
     "@astrojs/solid-js": "^6.0.0",
-    "@googleapis/youtube": "^31.0.0",
+    "@googleapis/youtube": "^32.0.0",
     "@nurodev/astro-bun": "^2.1.2",
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^6.0.5",
