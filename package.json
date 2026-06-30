@@ -32,7 +32,7 @@
     "@googleapis/youtube": "^31.0.0",
     "@nurodev/astro-bun": "^2.1.2",
     "@tailwindcss/vite": "^4.2.2",
-    "astro": "^6.0.5",
+    "astro": "^7.0.3",
     "astro-favicons": "^3.1.6",
     "astro-og-canvas": "^0.10.1",
     "astro-seo": "^1.1.0",
