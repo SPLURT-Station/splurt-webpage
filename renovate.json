@@ -16,23 +16,41 @@
   "packageRules": [
     {
       "groupName": "Astro",
-      "matchPackagePatterns": ["^astro", "^@astrojs/"]
+      "matchPackageNames": [
+        "/^astro/",
+        "/^@astrojs//"
+      ]
     },
     {
       "groupName": "Solid.js",
-      "matchPackagePatterns": ["^solid-js", "^@solidjs/"]
+      "matchPackageNames": [
+        "/^solid-js/",
+        "/^@solidjs//"
+      ]
     },
     {
       "groupName": "Tailwind CSS",
-      "matchPackagePatterns": ["tailwind", "postcss", "autoprefixer"]
+      "matchPackageNames": [
+        "/tailwind/",
+        "/postcss/",
+        "/autoprefixer/"
+      ]
     },
     {
       "groupName": "Linting & Formatting",
-      "matchPackagePatterns": ["biome", "ultracite", "typescript"]
+      "matchPackageNames": [
+        "/biome/",
+        "/ultracite/",
+        "/typescript/"
+      ]
     },
     {
       "groupName": "Testing",
-      "matchPackagePatterns": ["vitest", "playwright", "@playwright/"]
+      "matchPackageNames": [
+        "/vitest/",
+        "/playwright/",
+        "/@playwright//"
+      ]
     },
     {
       "matchDepTypes": ["devDependencies"],
